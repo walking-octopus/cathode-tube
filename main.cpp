@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
     qDebug() << "Starting app from main.cpp";
 
     QProcess internalServer;
-    internalServer.start("./lib/node", QStringList() << "./yt-ws/index.js");
-    if (!internalServer.waitForStarted())
-        return false;
+    internalServer.start("node", QStringList() << "./yt-ws/index.js");
+    if (!internalServer.waitForReadyRead())
+        return 1;
     QString result = internalServer.readAll();
     qDebug() << result;
 
