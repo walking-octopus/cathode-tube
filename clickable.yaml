@@ -1,0 +1,20 @@
+clickable_minimum_required: 7.1.2
+builder: cmake
+kill: cathode-tube
+
+image_setup:
+  run:
+  - curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+  - apt-get install -y nodejs
+
+scripts:
+  fetch: cd yt-ws; npm install --omit=dev
+
+install_bin:
+  - "/usr/bin/node"
+
+install_data:
+  yt-ws: yt-ws
+
+install_lib:
+- /usr/lib/${ARCH_TRIPLET}/libatomic.so*

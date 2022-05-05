@@ -1,0 +1,15 @@
+{
+    "name": "cathode-tube.walking-octopus",
+    "description": "A native YouTube client for UT",
+    "architecture": "@CLICK_ARCH@",
+    "title": "Cathode",
+    "hooks": {
+        "cathode-tube": {
+            "apparmor": "cathode-tube.apparmor",
+            "desktop":  "cathode-tube.desktop"
+        }
+    },
+    "version": "1.0.0",
+    "maintainer": "walking-octopus <github.dphn6@aleeas.com>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "yt-ws",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@folder/xdg": "^3.1.2",
+    "make-dir": "^3.1.0",
+    "ws": "^8.5.0",
+    "youtubei.js": "^1.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
