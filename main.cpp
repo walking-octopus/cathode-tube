@@ -29,11 +29,13 @@ int main(int argc, char *argv[])
     qDebug() << "Starting app from main.cpp";
 
     QProcess internalServer;
-    internalServer.start("node", QStringList() << "./yt-ws/index.js");
+    internalServer.setWorkingDirectory("./yt-ws");
+    internalServer.start("node", QStringList() << "--version");
     if (!internalServer.waitForReadyRead())
+        qDebug() << "Error starting internal server: " << internalServer.errorString();
+        qDebug().noquote() << internalServer.readAllStandardOutput();
+        qDebug() << internalServer.exitCode();
         return 1;
-    QString result = internalServer.readAll();
-    qDebug() << result;
 
     qDebug() << "Loading the QML...";
 

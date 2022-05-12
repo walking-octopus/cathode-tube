@@ -5,16 +5,25 @@ kill: cathode-tube
 image_setup:
   run:
   - curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+  - apt-get update
   - apt-get install -y nodejs
+  - node --version
+
+#install_bin:
+  #- "/usr/bin/node"
 
 scripts:
-  fetch: cd yt-ws; npm install --omit=dev
+  fetch: cd yt-ws; npm install --omit=dev;
 
-install_bin:
-  - "/usr/bin/node"
+libraries:
+  nodejs:
+    builder: custom
+    src_dir: yt-ws
+    build:
+      - ${ROOT}/download_node.sh ${ARCH} ${SRC_DIR}
 
 install_data:
-  yt-ws: yt-ws
+  yt-ws: .
 
 install_lib:
 - /usr/lib/${ARCH_TRIPLET}/libatomic.so*

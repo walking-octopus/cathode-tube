@@ -1,3 +1,4 @@
 build
 .clickable
-./yt-ws/node_modules
+yt-ws/node_modules
+yt-ws/nodeJS
