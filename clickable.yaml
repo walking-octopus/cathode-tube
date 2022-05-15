@@ -2,12 +2,14 @@ clickable_minimum_required: 7.1.2
 builder: cmake
 kill: cathode-tube
 
-image_setup:
-  run:
-  - curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
-  - apt-get update
-  - apt-get install -y nodejs
-  - node --version
+#image_setup:
+  #run:
+  #- which node
+  #- cd /home/stas/cathode-tube/; cd ./yt-ws/; ./nodeJS/bin/node index.js
+  #- curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+  #- apt-get update
+  #- apt-get install -y nodejs
+  #- node --version
 
 #install_bin:
   #- "/usr/bin/node"

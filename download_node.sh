@@ -14,7 +14,7 @@ case $ARCH in
         echo "$ARCH doesn't have nodeJS version"; exit;;
 esac
 
-NODE_VERSION="v18.1.0"
+NODE_VERSION="v17.9.0"
 NODE_DIST="node-$NODE_VERSION-linux-$NODE_ARCH"
 
 pwd; ls ${SOURCE_DIR}

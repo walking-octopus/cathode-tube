@@ -30,12 +30,14 @@ int main(int argc, char *argv[])
 
     QProcess internalServer;
     internalServer.setWorkingDirectory("./yt-ws");
-    internalServer.start("node", QStringList() << "--version");
-    if (!internalServer.waitForReadyRead())
-        qDebug() << "Error starting internal server: " << internalServer.errorString();
-        qDebug().noquote() << internalServer.readAllStandardOutput();
-        qDebug() << internalServer.exitCode();
-        return 1;
+    internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
+    // Todo: Add actual error handeling and remove autoreconnects
+
+//     if (!internalServer.waitForReadyRead())
+//         qDebug() << "Error starting internal server: " << internalServer.errorString();
+//         qDebug().noquote() << internalServer.readAllStandardOutput();
+//         qDebug() << internalServer.exitCode();
+//         return 1;
 
     qDebug() << "Loading the QML...";
 
@@ -45,4 +47,6 @@ int main(int argc, char *argv[])
     view->show();
 
     return app->exec();
+
+    // Todo: terminate the internal server when the app is closed
 }

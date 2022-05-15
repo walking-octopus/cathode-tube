@@ -33,6 +33,12 @@ Page {
             if (status == WebSocket.Open) {
                 console.log("Open");
                 websocket.sendTextMessage('{ "topic": "GetFeed" }');
+            } else if (status == WebSocket.Closed) {
+                console.log("Closed");
+                websocket.active = false;
+                websocket.active = true;
+            } else if (status == WebSocket.Connecting) {
+                console.log("Reconnecting");
             }
         }
         onTextMessageReceived: function(message) {
@@ -40,6 +46,11 @@ Page {
             let json = JSON.parse(message);
     
             switch (json.topic) {
+                case "signIn": {
+                    print("Hey! This is still WIP, so I didn't add the login page yet.");
+                    print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`)
+                }
+
                 case "updateStatus": {
                     print(json.payload);
                     break;
