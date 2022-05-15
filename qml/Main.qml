@@ -34,58 +34,28 @@ MainView {
     height: units.gu(75)
     anchorToKeyboard: true
 
-    // signal messageReceived(string message)
-
     PageStack {
         id: pStack
-        // property alias onWSTextMessageReceived: websocket.onTextMessageReceived
-        // property var onWSTextMessageReceived: websocket.onTextMessageReceived
 
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"))
     }
 
-    //WebSocket {
-        //id: websocket
-        //url: "ws://localhost:8999"
-        //active: true
+    WebSocket {
+        id: websocket
+        url: "ws://localhost:8999"
+        active: true
 
-        //onStatusChanged: function(status) {
-            //print(status)
-
-            //if (status == WebSocket.Open) {
-                ////view.model.status = status
-                //console.log("Open");
-                //pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"))
-            //}
-        //}
-
-        //onTextMessageReceived: function(message) {
-            //print("Main.qml: Recived message!")
-            //// root.messageReceived(message);
-        //}
-
-        // onTextMessageReceived: function(message) {
-        //     print(message);
-        //     let json = JSON.parse(message);
-
-        //     switch (json.topic) {
-        //         case "updateStatus": {
-        //             print(json.payload);
-        //             break;
-        //         }
-        //         case "updateFeed": {
-        //             videoModel.clear();
-        //             for (let video of json.payload.videos) {
-        //                 videoModel.append(
-        //                     {
-        //                         "videoTitle": video.title,
-        //                         "channel": video.channel
-        //                     }
-        //                 );
-        //             }
-        //             break;
-        //         }
-        //     }
-        // }
-    //}
+        onStatusChanged: function(status) {
+            if (status == WebSocket.Open) {
+                console.log("Open");
+                pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"))
+            } else if (status == WebSocket.Closed) {
+                console.log("Closed");
+                websocket.active = false;
+                websocket.active = true;
+            } else if (status == WebSocket.Connecting) {
+                console.log("Connecting");
+            }
+        }
+    }
 }
