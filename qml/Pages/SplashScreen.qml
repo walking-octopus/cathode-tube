@@ -30,9 +30,9 @@ Page {
             running: splashScreen.visible
         }
 
-        transitions: Transition {
-            NumberAnimation { property: "opacity"; duration: 400}
-        }
+        //transitions: Transition {
+            //NumberAnimation { property: "opacity"; duration: 400}
+        //}
 
         //states: [
             //State { when: !root.serverLoaded;

@@ -32,7 +32,7 @@ Page {
             actions: [
                 Action {
                     iconName: "reload"
-                    text: i18n.tr("Refresh")
+                    text: i18n.tr("Reload")
                     onTriggered: websocket.sendTextMessage('{ "topic": "GetFeed" }')
                 }
             ]
@@ -89,7 +89,7 @@ Page {
 
             model: videoModel
             delegate: ListItem {
-                height: layout.height/1.2
+                height: units.gu(8.5)
                 onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
 
                 ListItemLayout {

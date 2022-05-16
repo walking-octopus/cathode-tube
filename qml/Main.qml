@@ -37,12 +37,12 @@ MainView {
     PageStack {
         id: pStack
 
-        Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/Loading.qml"))
+        Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
     }
 
     Timer {
         id: reconnect
-        interval: 10
+        interval: 12
         onTriggered: {
             websocket.active = false;
             websocket.active = true;
@@ -62,12 +62,7 @@ MainView {
                 }
                 case WebSocket.Open: {
                     print("Open");
-
                     reconnect.running = false;
-
-                    pStack.pop();
-                    pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"));
-
                     break;
                 }
                 case WebSocket.Closing: {
@@ -89,11 +84,21 @@ MainView {
                 case "signIn": {
                     print("Hey! This is still WIP, so I didn't add the login page yet.");
                     print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`);
+
+                    pStack.pop();
+                    pStack.push(
+                        Qt.resolvedUrl("./Pages/LoginPage.qml"),
+                        {
+                            verification_url: json.payload.url,
+                            code: json.payload.code,
+                        },
+                    );
                     break;
                 }
 
-                case "updateStatus": {
-                    print(json.payload);
+                case "signedIn": {
+                    pStack.pop();
+                    pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"));
                     break;
                 }
             }
