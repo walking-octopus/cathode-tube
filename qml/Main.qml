@@ -37,7 +37,7 @@ MainView {
     PageStack {
         id: pStack
 
-        Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"))
+        Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/Loading.qml"))
     }
 
     WebSocket {
@@ -48,14 +48,28 @@ MainView {
         onStatusChanged: function(status) {
             if (status == WebSocket.Open) {
                 console.log("Open");
-                pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"))
+
+                reconnect.running = false;
+
+                pStack.pop();
+                pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"));
             } else if (status == WebSocket.Closed) {
                 console.log("Closed");
-                websocket.active = false;
-                websocket.active = true;
+
+                reconnect.running = true;
             } else if (status == WebSocket.Connecting) {
                 console.log("Connecting");
             }
+        }
+    }
+
+    Timer {
+        id: reconnect
+        interval: 10
+        repeat: true
+        onTriggered: {
+            websocket.active = false;
+            websocket.active = true;
         }
     }
 }
