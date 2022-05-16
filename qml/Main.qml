@@ -43,7 +43,6 @@ MainView {
     Timer {
         id: reconnect
         interval: 10
-        repeat: true
         onTriggered: {
             websocket.active = false;
             websocket.active = true;
