@@ -31,13 +31,20 @@ int main(int argc, char *argv[])
     QProcess internalServer;
     internalServer.setWorkingDirectory("./yt-ws");
     internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
-    // Todo: Add actual error handeling and remove autoreconnects
+    // Todo: Use signals for error handeling and waiting for start
 
-//     if (!internalServer.waitForReadyRead())
-//         qDebug() << "Error starting internal server: " << internalServer.errorString();
-//         qDebug().noquote() << internalServer.readAllStandardOutput();
-//         qDebug() << internalServer.exitCode();
-//         return 1;
+    // FixMe: For some reason, it doesn't wait for it to start. It returns false, but later tells it's successfully running.
+    if (!internalServer.waitForStarted()) {
+        // Workaround
+        if (internalServer.state() != QProcess::Running) {
+            qDebug() << "Error starting internal server: " << internalServer.errorString();
+            qDebug() << "Last output: " << internalServer.readAllStandardOutput();
+            qDebug() << internalServer.exitCode();
+            qDebug() << internalServer.state();
+
+            return 1;
+        }
+    }
 
     qDebug() << "Loading the QML...";
 
@@ -48,5 +55,5 @@ int main(int argc, char *argv[])
 
     return app->exec();
 
-    // Todo: terminate the internal server when the app is closed
+    // Todo: gracefully shut-down the internal server when the app is closed
 }
