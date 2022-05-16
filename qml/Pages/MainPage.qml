@@ -46,14 +46,7 @@ Page {
 
         onStatusChanged: function(status) {
             if (status == WebSocket.Open) {
-                console.log("Open");
                 websocket.sendTextMessage('{ "topic": "GetFeed" }');
-            } else if (status == WebSocket.Closed) {
-                console.log("Closed");
-                websocket.active = false;
-                websocket.active = true;
-            } else if (status == WebSocket.Connecting) {
-                console.log("Reconnecting");
             }
         }
         onTextMessageReceived: function(message) {

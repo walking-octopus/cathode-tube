@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Main.qml</file>
         <file>Pages/MainPage.qml</file>
+        <file>Pages/Loading.qml</file>
     </qresource>
 </RCC>
