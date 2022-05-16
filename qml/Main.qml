@@ -40,29 +40,6 @@ MainView {
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/Loading.qml"))
     }
 
-    WebSocket {
-        id: websocket
-        url: "ws://localhost:8999"
-        active: true
-
-        onStatusChanged: function(status) {
-            if (status == WebSocket.Open) {
-                console.log("Open");
-
-                reconnect.running = false;
-
-                pStack.pop();
-                pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"));
-            } else if (status == WebSocket.Closed) {
-                console.log("Closed");
-
-                reconnect.running = true;
-            } else if (status == WebSocket.Connecting) {
-                console.log("Connecting");
-            }
-        }
-    }
-
     Timer {
         id: reconnect
         interval: 10
@@ -70,6 +47,57 @@ MainView {
         onTriggered: {
             websocket.active = false;
             websocket.active = true;
+        }
+    }
+
+    WebSocket {
+        id: websocket
+        url: "ws://localhost:8999"
+        active: true
+
+        onStatusChanged: function(status) {
+            switch (status) {
+                case WebSocket.Connecting: {
+                    print("Connecting...");
+                    break;
+                }
+                case WebSocket.Open: {
+                    print("Open");
+
+                    reconnect.running = false;
+
+                    pStack.pop();
+                    pStack.push(Qt.resolvedUrl("./Pages/MainPage.qml"));
+
+                    break;
+                }
+                case WebSocket.Closing: {
+                    print("Closed");
+                    break;
+                }
+                case WebSocket.Error: {
+                    print("Error");
+                    reconnect.running = true;
+                    break;
+                }
+            }
+        }
+
+        onTextMessageReceived: function(message) {
+            let json = JSON.parse(message);
+
+            switch (json.topic) {
+                case "signIn": {
+                    print("Hey! This is still WIP, so I didn't add the login page yet.");
+                    print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`);
+                    break;
+                }
+
+                case "updateStatus": {
+                    print(json.payload);
+                    break;
+                }
+            }
         }
     }
 }

@@ -50,21 +50,9 @@ Page {
             }
         }
         onTextMessageReceived: function(message) {
-            print(message);
             let json = JSON.parse(message);
     
             switch (json.topic) {
-                case "signIn": {
-                    print("Hey! This is still WIP, so I didn't add the login page yet.");
-                    print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`);
-                    break;
-                }
-
-                case "updateStatus": {
-                    print(json.payload);
-                    break;
-                }
-                
                 case "updateFeed": {
                     videoModel.clear();
                     for (let video of json.payload.videos) {
