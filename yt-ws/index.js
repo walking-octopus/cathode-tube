@@ -70,6 +70,9 @@ async function start() {
       newMessage('signedIn', 'Done'),
     ));
 
+    // FixMe: This hack for feed continuations assumes the feed is always loaded before continuations
+    var lastFeed
+
     ws.on('message', async (data) => {
       const json = JSON.parse(data);
 
@@ -79,8 +82,24 @@ async function start() {
           ws.send(JSON.stringify(
             newMessage('updateFeed', homefeed),
           ));
+
+          lastFeed = homefeed;
+
           break;
         }
+
+        case 'GetContinuation': {
+          const continuation = await lastFeed.getContinuation();
+
+          ws.send(JSON.stringify(
+            newMessage('updateContinuation', continuation),
+          ));
+
+          lastFeed = continuation;
+
+          break;
+        }
+
         default: {
           ws.send(new Error('Wrong query').message);
         }

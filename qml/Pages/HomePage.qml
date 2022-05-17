@@ -33,7 +33,7 @@ Page {
                 Action {
                     iconName: "reload"
                     text: i18n.tr("Reload")
-                    onTriggered: websocket.sendTextMessage('{ "topic": "GetFeed" }')
+                    onTriggered: youtube.getHomeFeed()
                 }
             ]
         }
@@ -47,16 +47,18 @@ Page {
 
         onStatusChanged: function(status) {
             if (status == WebSocket.Open) {
-                websocket.sendTextMessage('{ "topic": "GetFeed" }');
+                youtube.getHomeFeed();
             }
         }
         onTextMessageReceived: function(message) {
             let json = JSON.parse(message);
     
             switch (json.topic) {
-                case "updateFeed": {
-                    videoModel.clear();
+                // Fall-through here doesn't look right
 
+                case "updateFeed": videoModel.clear()
+
+                case "updateContinuation": {
                     for (let video of json.payload.videos) {
                         videoModel.append({
                             "videoTitle": video.title,
@@ -74,10 +76,25 @@ Page {
         }
     }
 
+    QtObject {
+        id: youtube
+
+        function getHomeFeed() {
+            websocket.sendTextMessage('{ "topic": "GetFeed" }');
+        }
+
+        function getContinuation(content) {
+            websocket.sendTextMessage(
+                JSON.stringify({
+                    topic: "GetContinuation"
+                })
+            );
+        }
+    }
+
     ListModel {
         id: videoModel
     }
-
 
     ScrollView {
         id: scrollView
@@ -106,6 +123,14 @@ Page {
                         height: units.gu(6)
                         source: thumbnail
                     }
+                }
+            }
+
+            onAtYEndChanged: {
+                if (view.atYEnd && videoModel.count > 0) {
+                    print("Loading tail videos...");
+
+                    youtube.getContinuation(youtube.currentFeedData)
                 }
             }
         }
