@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
     QProcess internalServer;
     internalServer.setWorkingDirectory("./yt-ws");
     internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
-    // Todo: Use signals for error handeling and waiting for start
+    // TODO: Use signals for error handeling and waiting for start
 
-    // FixMe: For some reason, it doesn't wait for it to start. It returns false, but later tells it's successfully running.
+    // FIXME: For some reason, it doesn't wait for it to start. It returns false, but later tells it's successfully running.
     if (!internalServer.waitForStarted()) {
         // Workaround
         if (internalServer.state() != QProcess::Running) {
@@ -55,5 +55,5 @@ int main(int argc, char *argv[])
 
     return app->exec();
 
-    // Todo: gracefully shut-down the internal server when the app is closed
+    // TODO: gracefully shut-down the internal server when the app is closed
 }

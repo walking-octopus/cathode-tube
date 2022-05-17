@@ -22,7 +22,7 @@ async function start() {
 
   console.log("Listening on port 8999...")
 
-  // FixMe: it seems we create a new session for every socket.
+  // FIXME: it seems we create a new session for every socket.
   wss.on('connection', async (ws) => {
     youtube.ev.on('auth', (data) => {
       switch (data.status) {
@@ -41,7 +41,7 @@ async function start() {
         }
         case 'SUCCESS': {
           fs.writeFileSync(credsPath, JSON.stringify(data.credentials));
-          // Workaround for the login loop
+          // FIXME: Workaround for the login loop
           creds = (fs.existsSync(credsPath) && JSON.parse(fs.readFileSync(credsPath).toString())) || {};
 
           console.log('Successfully signed-in, enjoy!');
@@ -70,7 +70,7 @@ async function start() {
       newMessage('signedIn', 'Done'),
     ));
 
-    // FixMe: This hack for feed continuations assumes the feed is always loaded before continuations
+    // FIXME: This hack for feed continuations assumes the feed is always loaded before continuations
     var lastFeed
 
     ws.on('message', async (data) => {

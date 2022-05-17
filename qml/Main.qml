@@ -15,7 +15,6 @@
  */
 
 
-//import Example 1.0
 import QtQuick 2.9
 import Ubuntu.Components 1.3
 import QtWebSockets 1.1
