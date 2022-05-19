@@ -26,24 +26,23 @@ int main(int argc, char *argv[])
     QGuiApplication *app = new QGuiApplication(argc, (char**)argv);
     app->setApplicationName("cathode-tube.walking-octopus");
 
-    qDebug() << "Starting app from main.cpp";
+    qDebug() << "Starting the internal server...";
 
     QProcess internalServer;
     internalServer.setWorkingDirectory("./yt-ws");
     internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
-    // TODO: Use signals for error handeling and waiting for start
+    // TODO: Switch to signals for error handeling and logging
+    // TODO: Wait for process start in QML splash screen through signals
+    // TODO: 
 
-    // FIXME: For some reason, it doesn't wait for it to start. It returns false, but later tells it's successfully running.
+    // waitForReadyRead could be used to wait, since the server prints out a message when it's ready, but that sounds like a hack.
     if (!internalServer.waitForStarted()) {
-        // Workaround
-        if (internalServer.state() != QProcess::Running) {
-            qDebug() << "Error starting internal server: " << internalServer.errorString();
-            qDebug() << "Last output: " << internalServer.readAllStandardOutput();
-            qDebug() << internalServer.exitCode();
-            qDebug() << internalServer.state();
+        qDebug() << "Error starting internal server: " << internalServer.errorString();
+        qDebug() << "Last output: " << internalServer.readAllStandardOutput();
+        qDebug() << internalServer.exitCode();
+        qDebug() << internalServer.state();
 
-            return 1;
-        }
+        return 1;
     }
 
     qDebug() << "Loading the QML...";
@@ -55,5 +54,5 @@ int main(int argc, char *argv[])
 
     return app->exec();
 
-    // TODO: gracefully shut-down the internal server when the app is closed
+    // TODO: Gracefully shutdown the internal server when the app is closed
 }

@@ -66,7 +66,7 @@ async function start() {
       ));
     }
 
-    // FIXME: This hack for feed continuations assumes the feed is always loaded first
+    // FIXME: This assumes the feed is always loaded first and uses a global varriable
     // I think there is a better way
     let lastFeed;
 
@@ -86,8 +86,14 @@ async function start() {
         }
 
         case 'GetContinuation': {
-          const continuation = await lastFeed.getContinuation();
+          if (lastFeed == null) {
+            ws.send(JSON.stringify(
+              newMessage('error', new Error('No feed').message),
+            ));
+            return;
+          }
 
+          const continuation = await lastFeed.getContinuation();
           ws.send(JSON.stringify(
             newMessage('updateContinuation', continuation),
           ));
@@ -97,9 +103,10 @@ async function start() {
           break;
         }
 
-        default: {
-          ws.send(new Error('Wrong query').message);
-        }
+        default:
+          ws.send(JSON.stringify(
+            newMessage('error', new Error('Wrong query').message),
+          ));
       }
     });
   });

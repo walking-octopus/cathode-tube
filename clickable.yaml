@@ -15,7 +15,7 @@ kill: cathode-tube
   #- "/usr/bin/node"
 
 scripts:
-  fetch: cd yt-ws; npm install --omit=dev;
+  fetch: cd yt-ws; npm install --omit=dev; npm prune --production;
 
 libraries:
   nodejs:

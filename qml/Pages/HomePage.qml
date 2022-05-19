@@ -54,7 +54,7 @@ Page {
             let json = JSON.parse(message);
     
             switch (json.topic) {
-                // Fall-through here doesn't look right
+                // STYLE: This use of fall-through doesn't look elegent
 
                 case "updateFeed": videoModel.clear()
 
@@ -66,6 +66,7 @@ Page {
                             "thumbnail": video.metadata.thumbnail.url,
                             "published": video.metadata.published,
                             "views": video.metadata.short_view_count_text.simple_text,
+                            "duration": video.metadata.duration.simple_text,
                             "id": video.id
                         });
                     }
@@ -83,7 +84,7 @@ Page {
             websocket.sendTextMessage('{ "topic": "GetFeed" }');
         }
 
-        function getContinuation(content) {
+        function getContinuation() {
             websocket.sendTextMessage(
                 JSON.stringify({
                     topic: "GetContinuation"
@@ -115,7 +116,7 @@ Page {
                     
                     title.text: videoTitle
                     subtitle.text: channel.name
-                    summary.text: `${views} | ${published}`
+                    summary.text: `${duration} | ${views} | ${published}`
 
                     Image {
                         SlotsLayout.position: SlotsLayout.Leading
@@ -130,7 +131,7 @@ Page {
                 if (view.atYEnd && videoModel.count > 0) {
                     print("Loading tail videos...");
 
-                    youtube.getContinuation(youtube.currentFeedData)
+                    youtube.getContinuation()
                 }
             }
         }
