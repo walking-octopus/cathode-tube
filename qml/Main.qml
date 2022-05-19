@@ -81,7 +81,6 @@ MainView {
 
             switch (json.topic) {
                 case "signIn": {
-                    print("Hey! This is still WIP, so I didn't add the login page yet.");
                     print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`);
 
                     pStack.pop();
