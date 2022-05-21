@@ -75,20 +75,41 @@ async function start() {
 
       switch (json.topic) {
         case 'GetFeed': {
-          const homefeed = await youtube.getHomeFeed();
-          ws.send(JSON.stringify(
-            newMessage('updateFeed', homefeed),
-          ));
+          const feedType = json.payload;
+          let feed;
 
-          lastFeed = homefeed;
+          switch (feedType) {
+            case 'Home':
+              feed = await youtube.getHomeFeed();
+              break;
+
+            case 'Subscriptions':
+              feed = await youtube.getSubscriptionsFeed();
+              break;
+
+            case 'Trending':
+              feed = await youtube.getTrending();
+              break;
+
+            default: {
+              ws.send(JSON.stringify(
+                newMessage('error', new Error('Invalid feed type').message),
+              ));
+            }
+          }
+
+          ws.send(JSON.stringify(
+            newMessage('updateFeed', feed),
+          ));
+          lastFeed = feed;
 
           break;
         }
 
         case 'GetContinuation': {
-          if (lastFeed == null) {
+          if (lastFeed.getContinuation == null) {
             ws.send(JSON.stringify(
-              newMessage('error', new Error('No feed').message),
+              newMessage('error', new Error('No continuation or feed').message),
             ));
             return;
           }
@@ -97,7 +118,6 @@ async function start() {
           ws.send(JSON.stringify(
             newMessage('updateContinuation', continuation),
           ));
-
           lastFeed = continuation;
 
           break;

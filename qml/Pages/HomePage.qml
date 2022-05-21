@@ -33,7 +33,24 @@ Page {
                 Action {
                     iconName: "reload"
                     text: i18n.tr("Reload")
-                    onTriggered: youtube.getHomeFeed()
+                    onTriggered: youtube.getFeed(youtube.currentFeedType)
+                }
+            ]
+        }
+
+        extension:  Sections {
+            actions: [
+                Action {
+                    text: "Home"
+                    onTriggered: youtube.getFeed("Home")
+                },
+                Action {
+                    text: "Subscriptions"
+                    onTriggered: youtube.getFeed("Subscriptions")
+                },
+                Action {
+                    text: "Trending"
+                    onTriggered: youtube.getFeed("Trending")
                 }
             ]
         }
@@ -47,7 +64,7 @@ Page {
 
         onStatusChanged: function(status) {
             if (status == WebSocket.Open) {
-                youtube.getHomeFeed();
+                youtube.getFeed(youtube.currentFeedType);
             }
         }
         onTextMessageReceived: function(message) {
@@ -59,17 +76,67 @@ Page {
                 case "updateFeed": videoModel.clear()
 
                 case "updateContinuation": {
-                    for (let video of json.payload.videos) {
-                        videoModel.append({
-                            "videoTitle": video.title,
-                            "channel": video.channel,
-                            "thumbnail": video.metadata.thumbnail.url,
-                            "published": video.metadata.published,
-                            "views": video.metadata.short_view_count_text.simple_text,
-                            "duration": video.metadata.duration.simple_text,
-                            "id": video.id
-                        });
+                    // FIXME: I think feed types should be handeled the server
+                    let feedType = youtube.currentFeedType;
+                    
+                    switch (feedType) {
+                        case "Home":
+                            for (let video of json.payload.videos) {
+                                // FIXME: Different feeds give out different information. This doesn't account for it.
+                                videoModel.append({
+                                    "videoTitle": video.title,
+                                    "channel": video.channel,
+                                    "thumbnail": video.metadata.thumbnail.url,
+                                    "published": video.metadata.published,
+                                    "views": video.metadata.short_view_count_text.simple_text,
+                                    "duration": video.metadata.duration.simple_text,
+                                    "id": video.id
+                                });
+                            }
+                            break;
+
+                        // TODO: Add proper subscription/trending parsing
+                        case "Subscriptions":
+                            for (let item of json.payload.items) {
+                                print(item.date)
+                                for (let video of item.videos) {
+                                    videoModel.append({
+                                        "videoTitle": video.title,
+                                        "channel": video.channel,
+                                        "thumbnail": video.metadata.thumbnail.url,
+                                        "published": video.metadata.published,
+                                        "views": video.metadata.short_view_count_text.simple_text,
+                                        // "duration": video.metadata.duration.simple_text,
+                                        "id": video.id
+                                    });
+                                }
+                            }
+                            break;
+
+                        case "Trending":
+                            for (let item of json.payload.now.content) {
+                                print(item.title);
+                                for (let video of item.videos) {
+                                    videoModel.append({
+                                        "videoTitle": video.title,
+                                        "channel": video.channel,
+                                        "thumbnail": video.metadata.thumbnail.url,
+                                        "published": video.metadata.published,
+                                        "views": video.metadata.short_view_count_text.simple_text,
+                                        // "duration": video.metadata.duration.simple_text,
+                                        "id": video.id
+                                    });
+                                }
+                            }
+                            break;
+
+                        default: {
+                            print("Error: invalid feed type");
+                            print(feedType);
+                            return;
+                        }
                     }
+
 
                     break;
                 }
@@ -80,8 +147,11 @@ Page {
     QtObject {
         id: youtube
 
-        function getHomeFeed() {
-            websocket.sendTextMessage('{ "topic": "GetFeed" }');
+        property string currentFeedType: "Home"
+
+        function getFeed(type) {
+            currentFeedType = type;
+            websocket.sendTextMessage(`{ "topic": "GetFeed", "payload": "${type}" }`);
         }
 
         function getContinuation() {
@@ -116,7 +186,7 @@ Page {
                     
                     title.text: videoTitle
                     subtitle.text: channel.name
-                    summary.text: `${duration} | ${views} | ${published}`
+                    summary.text: duration ? `${duration} | ${views} | ${published}` : `${views} | ${published}`
 
                     Image {
                         SlotsLayout.position: SlotsLayout.Leading
@@ -131,7 +201,8 @@ Page {
                 if (view.atYEnd && videoModel.count > 0) {
                     print("Loading tail videos...");
 
-                    youtube.getContinuation()
+                    // FIXME: The trending feed isn't infinite, so don't try fetching more of it.
+                    youtube.getContinuation();
                 }
             }
         }

@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
     // TODO: Switch to signals for error handeling and logging
     // TODO: Wait for process start in QML splash screen through signals
-    // TODO: 
+    // FIXME: The server crashes with no network connection, because it couldn't get the session. Maybe auto restart could help...
 
     // waitForReadyRead could be used to wait, since the server prints out a message when it's ready, but that sounds like a hack.
     if (!internalServer.waitForStarted()) {
