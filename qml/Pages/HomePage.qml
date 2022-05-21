@@ -28,28 +28,30 @@ Page {
         flickable: scrollView.flickableItem
         title: i18n.tr('Home')
 
-        trailingActionBar {
-            actions: [
-                Action {
-                    iconName: "reload"
-                    text: i18n.tr("Reload")
-                    onTriggered: youtube.getFeed(youtube.currentFeedType)
-                }
-            ]
+        // leadingActionBar.actions: Action {
+        //     iconName: "navigation-menu"
+        //     text: i18n.tr("Menu")
+        //     onTriggered: print("Placeholder")
+        // }
+
+        trailingActionBar.actions: Action {
+            iconName: "reload"
+            text: i18n.tr("Reload")
+            onTriggered: youtube.getFeed(youtube.currentFeedType)
         }
 
-        extension:  Sections {
+        extension: Sections {
             actions: [
                 Action {
-                    text: "Home"
+                    text: i18n.tr("Home")
                     onTriggered: youtube.getFeed("Home")
                 },
                 Action {
-                    text: "Subscriptions"
+                    text: i18n.tr("Subscriptions")
                     onTriggered: youtube.getFeed("Subscriptions")
                 },
                 Action {
-                    text: "Trending"
+                    text: i18n.tr("Trending")
                     onTriggered: youtube.getFeed("Trending")
                 }
             ]
@@ -73,15 +75,15 @@ Page {
             switch (json.topic) {
                 // STYLE: This use of fall-through doesn't look elegent
 
-                case "updateFeed": videoModel.clear()
+                case "feedEvent": videoModel.clear()
 
-                case "updateContinuation": {
+                case "continuationEvent": {
                     // FIXME: I think feed types should be handeled the server
                     let feedType = youtube.currentFeedType;
                     
                     switch (feedType) {
                         case "Home":
-                            for (let video of json.payload.videos) {
+                            for (const video of json.payload.videos) {
                                 // FIXME: Different feeds give out different information. This doesn't account for it.
                                 videoModel.append({
                                     "videoTitle": video.title,
@@ -97,7 +99,7 @@ Page {
 
                         // TODO: Add proper subscription/trending parsing
                         case "Subscriptions":
-                            for (let item of json.payload.items) {
+                            for (const item of json.payload.items) {
                                 print(item.date)
                                 for (let video of item.videos) {
                                     videoModel.append({
@@ -114,7 +116,7 @@ Page {
                             break;
 
                         case "Trending":
-                            for (let item of json.payload.now.content) {
+                            for (const item of json.payload.now.content) {
                                 print(item.title);
                                 for (let video of item.videos) {
                                     videoModel.append({

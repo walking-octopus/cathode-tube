@@ -80,7 +80,7 @@ MainView {
             let json = JSON.parse(message);
 
             switch (json.topic) {
-                case "signIn": {
+                case "authorizationPendingEvent": {
                     print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`);
 
                     pStack.pop();
@@ -94,7 +94,7 @@ MainView {
                     break;
                 }
 
-                case "signedIn": {
+                case "loginEvent": {
                     pStack.pop();
                     pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"));
                     break;

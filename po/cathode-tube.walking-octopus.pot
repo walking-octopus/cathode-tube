@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-21 09:39+0000\n"
+"POT-Creation-Date: 2022-05-21 17:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Pages/HomePage.qml:29
+#: ../qml/Pages/HomePage.qml:29 ../qml/Pages/HomePage.qml:45
 msgid "Home"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:35
+#: ../qml/Pages/HomePage.qml:33
+msgid "Menu"
+msgstr ""
+
+#: ../qml/Pages/HomePage.qml:38
 msgid "Reload"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:58
+#: ../qml/Pages/HomePage.qml:49
+msgid "Subscriptions"
+msgstr ""
+
+#: ../qml/Pages/HomePage.qml:53
+msgid "Trending"
+msgstr ""
+
+#: ../qml/Pages/HomePage.qml:59
 msgid "YT Home"
 msgstr ""
 

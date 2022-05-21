@@ -33,7 +33,7 @@ async function start() {
             );
 
             ws.send(JSON.stringify(
-              newMessage('signIn', {
+              newMessage('authorizationPendingEvent', {
                 url: data.verification_url,
                 code: data.code,
               }),
@@ -43,9 +43,6 @@ async function start() {
           case 'SUCCESS': {
             fs.writeFileSync(credsPath, JSON.stringify(data.credentials));
             console.log('Successfully signed-in, enjoy!');
-            // ws.send(JSON.stringify(
-            //   newMessage('updateStatus', 'Done'),
-            // ));
             break;
           }
           default: console.error('Unhandled auth data: ', data.status);
@@ -55,14 +52,11 @@ async function start() {
       youtube.ev.on('update-credentials', (data) => {
         fs.writeFileSync(credsPath, JSON.stringify(data.credentials));
         console.log('Credentials updated!', data);
-        // ws.send(JSON.stringify(
-        //   newMessage('updateStatus', 'Done'),
-        // ));
       });
 
       await youtube.signIn(creds);
       ws.send(JSON.stringify(
-        newMessage('signedIn', 'Done'),
+        newMessage('loginEvent', 'Done'),
       ));
     }
 
@@ -73,6 +67,7 @@ async function start() {
     ws.on('message', async (data) => {
       const json = JSON.parse(data);
 
+      // FIXME: Since different feeds provide different fields and require different parsing, it's weird to have them under the same topic
       switch (json.topic) {
         case 'GetFeed': {
           const feedType = json.payload;
@@ -93,13 +88,13 @@ async function start() {
 
             default: {
               ws.send(JSON.stringify(
-                newMessage('error', new Error('Invalid feed type').message),
+                newMessage('errorEvent', new Error('Invalid feed type').message),
               ));
             }
           }
 
           ws.send(JSON.stringify(
-            newMessage('updateFeed', feed),
+            newMessage('feedEvent', feed),
           ));
           lastFeed = feed;
 
@@ -116,7 +111,7 @@ async function start() {
 
           const continuation = await lastFeed.getContinuation();
           ws.send(JSON.stringify(
-            newMessage('updateContinuation', continuation),
+            newMessage('continuationEvent', continuation),
           ));
           lastFeed = continuation;
 
