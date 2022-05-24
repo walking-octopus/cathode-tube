@@ -60,7 +60,7 @@ async function start() {
       ));
     }
 
-    // FIXME: This assumes the feed is always loaded first and uses a global varriable
+    // FIXME: This assumes the feed is always loaded first and uses a global variable
     // I think there is a better way
     let lastFeed;
 

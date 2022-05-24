@@ -81,68 +81,59 @@ Page {
                 case "feedEvent": videoModel.clear()
 
                 case "continuationEvent": {
-                    // FIXME: I think feed types should be handeled the server
+                    // FIXME: Feed types should be handeled the server
                     // FIXME: Most of the code is repeated, just because some feeds don't contain video duration
                     let feedType = youtube.currentFeedType;
+                    let videos;
                     
                     switch (feedType) {
-                        case "Home":
-                            for (const video of json.payload.videos) {
-                                // FIXME: Different feeds give out different information. This doesn't account for it.
-                                videoModel.append({
-                                    "videoTitle": video.title,
-                                    "channel": video.channel,
-                                    "thumbnail": video.metadata.thumbnail.url,
-                                    "published": video.metadata.published,
-                                    "views": video.metadata.short_view_count_text.simple_text,
-                                    "duration": video.metadata.duration.simple_text,
-                                    "id": video.id
-                                });
-                            }
+                        case "Home": {
+                            videos = json.payload.videos;
                             break;
+                        }
 
-                        // TODO: Add proper subscription/trending parsing
-                        case "Subscriptions":
+                        case "Subscriptions": {
+                            videos = [];
                             for (const item of json.payload.items) {
-                                print(item.date)
-                                for (let video of item.videos) {
-                                    videoModel.append({
-                                        "videoTitle": video.title,
-                                        "channel": video.channel,
-                                        "thumbnail": video.metadata.thumbnail.url,
-                                        "published": video.metadata.published,
-                                        "views": video.metadata.short_view_count_text.simple_text,
-                                        // "duration": video.metadata.duration.simple_text,
-                                        "id": video.id
-                                    });
+                                print(item.date);
+
+                                for (const video of item.videos) {
+                                    videos.push(video);
                                 }
                             }
                             break;
-
-                        case "Trending":
+                        }
+                            
+                        // TODO: Use categories trending parsing
+                        case "Trending": {
+                            videos = [];
                             for (const item of json.payload.now.content) {
                                 print(item.title);
+
                                 for (let video of item.videos) {
-                                    videoModel.append({
-                                        "videoTitle": video.title,
-                                        "channel": video.channel,
-                                        "thumbnail": video.metadata.thumbnail.url,
-                                        "published": video.metadata.published,
-                                        "views": video.metadata.short_view_count_text.simple_text,
-                                        // "duration": video.metadata.duration.simple_text,
-                                        "id": video.id
-                                    });
+                                    videos.push(video);
                                 }
                             }
                             break;
+                        }
 
                         default: {
-                            print("Error: invalid feed type");
-                            print(feedType);
+                            print(`Error: invalid feed type ${feedType}`);
                             return;
                         }
                     }
 
+                    for (const video of videos) {
+                        videoModel.append({
+                            "videoTitle": video.title,
+                            "channel": video.channel,
+                            "thumbnail": video.metadata.thumbnail.url,
+                            "published": video.metadata.published,
+                            "views": video.metadata.short_view_count_text.simple_text,
+                            "duration": video.metadata.duration,
+                            "id": video.id
+                        });
+                    }
 
                     break;
                 }
@@ -194,11 +185,11 @@ Page {
                     
                     title.text: videoTitle
                     subtitle.text: channel.name
-                    summary.text: duration ? `${duration} | ${views} | ${published}` : `${views} | ${published}`
+                    summary.text: duration ? `${duration.simple_text} | ${views} | ${published}` : `${views} | ${published}`
 
                     Image {
                         SlotsLayout.position: SlotsLayout.Leading
-                        width: units.gu(10) // 16/9
+                        width: units.gu(10) // 16:9
                         height: units.gu(6)
                         source: thumbnail
                     }
