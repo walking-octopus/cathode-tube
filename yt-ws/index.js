@@ -76,14 +76,17 @@ async function start() {
           switch (feedType) {
             case 'Home':
               feed = await youtube.getHomeFeed();
+              feed['feedType'] = "Home";
               break;
 
             case 'Subscriptions':
               feed = await youtube.getSubscriptionsFeed();
+              feed['feedType'] = "Subscriptions";
               break;
 
             case 'Trending':
               feed = await youtube.getTrending();
+              feed['feedType'] = "Trending";
               break;
 
             default: {
@@ -109,7 +112,8 @@ async function start() {
             return;
           }
 
-          const continuation = await lastFeed.getContinuation();
+          let continuation = await lastFeed.getContinuation();
+          continuation['feedType'] = lastFeed['feedType'];
           ws.send(JSON.stringify(
             newMessage('continuationEvent', continuation),
           ));
@@ -118,10 +122,12 @@ async function start() {
           break;
         }
 
-        default:
+        default: {
           ws.send(JSON.stringify(
             newMessage('error', new Error('Wrong query').message),
           ));
+          break;
+        }
       }
     });
   });

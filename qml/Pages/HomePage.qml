@@ -81,9 +81,7 @@ Page {
                 case "feedEvent": videoModel.clear()
 
                 case "continuationEvent": {
-                    // FIXME: Feed types should be handeled the server
-                    // FIXME: Most of the code is repeated, just because some feeds don't contain video duration
-                    let feedType = youtube.currentFeedType;
+                    let feedType = json.payload.feedType;
                     let videos;
                     
                     switch (feedType) {
@@ -135,6 +133,8 @@ Page {
                         });
                     }
 
+                    youtube.currentFeedType = feedType;
+
                     break;
                 }
             }
@@ -143,11 +143,9 @@ Page {
 
     QtObject {
         id: youtube
-
         property string currentFeedType: "Home"
 
         function getFeed(type) {
-            currentFeedType = type;
             websocket.sendTextMessage(`{ "topic": "GetFeed", "payload": "${type}" }`);
         }
 
@@ -200,7 +198,7 @@ Page {
                 if (view.atYEnd && videoModel.count > 0) {
                     print("Loading tail videos...");
 
-                    // FIXME: The trending feed isn't infinite, so don't try fetching more of it.
+                    if (youtube.currentFeedType == "Trending") { return; }
                     youtube.getContinuation();
                 }
             }
