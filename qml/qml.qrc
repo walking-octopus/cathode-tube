@@ -4,5 +4,6 @@
         <file>Pages/HomePage.qml</file>
         <file>Pages/SplashScreen.qml</file>
         <file>Pages/LoginPage.qml</file>
+        <file>Pages/SidebarPage.qml</file>
     </qresource>
 </RCC>

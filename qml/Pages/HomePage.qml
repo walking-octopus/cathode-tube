@@ -23,16 +23,19 @@ import Ubuntu.Components 1.3
 import QtWebSockets 1.1
 
 Page {
+    id: homePage
+
     header: PageHeader {
         id: header
         flickable: scrollView.flickableItem
         title: i18n.tr('Home')
 
-        // leadingActionBar.actions: Action {
-        //     iconName: "navigation-menu"
-        //     text: i18n.tr("Menu")
-        //     onTriggered: print("Placeholder")
-        // }
+        leadingActionBar.actions: Action {
+            iconName: "navigation-menu"
+            text: i18n.tr("Menu")
+            onTriggered: pStack.removePages(homePage)
+            visible: !primaryPage.visible
+        }
 
         trailingActionBar.actions: Action {
             iconName: "reload"
@@ -79,6 +82,7 @@ Page {
 
                 case "continuationEvent": {
                     // FIXME: I think feed types should be handeled the server
+                    // FIXME: Most of the code is repeated, just because some feeds don't contain video duration
                     let feedType = youtube.currentFeedType;
                     
                     switch (feedType) {
@@ -172,6 +176,8 @@ Page {
     ScrollView {
         id: scrollView
         anchors.fill: parent
+
+        // TODO: Add pull to refresh and activity indicators
 
         ListView {
             id: view

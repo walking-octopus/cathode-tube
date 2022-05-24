@@ -19,6 +19,12 @@ import QtQuick 2.9
 import Ubuntu.Components 1.3
 
 Page {
+    header: PageHeader {
+        id: header
+        // FIXME: Using null to disable the back button doesn't look right
+        leadingActionBar.actions: null
+    }
+
     Rectangle {
         id: splashScreen
         anchors.fill: parent

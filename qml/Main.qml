@@ -29,15 +29,24 @@ MainView {
     applicationName: 'cathode-tube.walking-octopus'
     automaticOrientation: true
 
-    width: units.gu(45)
+    width: units.gu(120)
     height: units.gu(75)
     anchorToKeyboard: true
 
-    PageStack {
+    // FIXME: `No sourcePage specified. Page will not be added.`
+    // TODO: Find the way to hide the sidebar is on the login page.
+    AdaptivePageLayout {
         id: pStack
+        anchors.fill: parent
+        
+        function push(page, properties) {
+            return pStack.addPageToNextColumn(primaryPage, page, properties);
+        }
 
+        primaryPageSource: Qt.resolvedUrl("./Pages/SidebarPage.qml")
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
     }
+
 
     Timer {
         id: reconnect
@@ -83,7 +92,6 @@ MainView {
                 case "authorizationPendingEvent": {
                     print(`Please go to ${json.payload.url} and enter ${json.payload.code} to sign in.`);
 
-                    pStack.pop();
                     pStack.push(
                         Qt.resolvedUrl("./Pages/LoginPage.qml"),
                         {
@@ -95,7 +103,7 @@ MainView {
                 }
 
                 case "loginEvent": {
-                    pStack.pop();
+                    pStack.primaryPage.isEnabled = true;
                     pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"));
                     break;
                 }

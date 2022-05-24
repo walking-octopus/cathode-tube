@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-21 17:54+0000\n"
+"POT-Creation-Date: 2022-05-24 19:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Pages/HomePage.qml:29 ../qml/Pages/HomePage.qml:45
+#: ../qml/Pages/HomePage.qml:31 ../qml/Pages/HomePage.qml:49
+#: ../qml/Pages/SidebarPage.qml:23
 msgid "Home"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:33
+#: ../qml/Pages/HomePage.qml:35
 msgid "Menu"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:38
+#: ../qml/Pages/HomePage.qml:42
 msgid "Reload"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:49
+#: ../qml/Pages/HomePage.qml:53
 msgid "Subscriptions"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:53
+#: ../qml/Pages/HomePage.qml:57
 msgid "Trending"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:59
+#: ../qml/Pages/HomePage.qml:63
 msgid "YT Home"
 msgstr ""
 
@@ -53,6 +54,10 @@ msgstr ""
 msgid "https://github.com/LuanRT/YouTube.js"
 msgstr ""
 
-#: cathode-tube.desktop.in.h:1
+#: ../qml/Pages/SidebarPage.qml:11 cathode-tube.desktop.in.h:1
 msgid "Cathode"
+msgstr ""
+
+#: ../qml/Pages/SidebarPage.qml:28
+msgid "Placeholder"
 msgstr ""
