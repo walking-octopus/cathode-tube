@@ -60,7 +60,7 @@ Page {
             ]
         }
     }
-    title: i18n.tr("YT Home")
+    // title: i18n.tr("YT Home")
 
     WebSocket {
         id: websocket
@@ -186,10 +186,26 @@ Page {
                     summary.text: duration ? `${duration.simple_text} | ${views} | ${published}` : `${views} | ${published}`
 
                     Image {
+                        id: image
+                        source: thumbnail
                         SlotsLayout.position: SlotsLayout.Leading
                         width: units.gu(10) // 16:9
                         height: units.gu(6)
-                        source: thumbnail
+
+                        opacity: 0
+                        states: State {
+                            name: 'loaded'; when: image.status == Image.Ready
+                            PropertyChanges { target: image; opacity: 1}
+                        }
+                        transitions: Transition {
+                            SpringAnimation {
+                                easing.type: Easing.InSine
+                                spring: 5
+                                epsilon: 0.3
+                                damping: 0.7
+                                properties: "opacity"
+                            }
+                        }
                     }
                 }
             }
