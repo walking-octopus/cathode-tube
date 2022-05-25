@@ -33,19 +33,19 @@ MainView {
     height: units.gu(75)
     anchorToKeyboard: true
 
-    // FIXME: `No sourcePage specified. Page will not be added.`
+    // FIXME: The splash screen isn't displayed. `sourcePage must be added to the view to add new page.`
     // TODO: Find the way to hide the sidebar is on the login page.
     AdaptivePageLayout {
         id: pStack
         anchors.fill: parent
         
         function push(page, properties) {
+            print(primaryPage, page)
             return pStack.addPageToNextColumn(primaryPage, page, properties);
         }
-
         primaryPageSource: Qt.resolvedUrl("./Pages/SidebarPage.qml")
-        Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
-    }
+        onPrimaryPageChanged: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
+     }
 
 
     Timer {
