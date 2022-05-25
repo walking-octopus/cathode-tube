@@ -18,10 +18,7 @@
 import QtQuick 2.9
 import Ubuntu.Components 1.3
 import QtWebSockets 1.1
-//import QtQuick.Controls 2.2
-//import QtQuick.Layouts 1.3
-// import Qt.labs.settings 1.0
-//import "./Components"
+import "./Pages"
 
 MainView {
     id: root
@@ -33,8 +30,8 @@ MainView {
     height: units.gu(75)
     anchorToKeyboard: true
 
-    // FIXME: The splash screen isn't displayed. `sourcePage must be added to the view to add new page.`
-    // TODO: Find the way to hide the sidebar is on the login page.
+    // TODO: Find the way to hide the sidebar on the login page.
+    // TODO: The sidebar is too wide on phones in horizontal orientation
     AdaptivePageLayout {
         id: pStack
         anchors.fill: parent
@@ -43,8 +40,18 @@ MainView {
             print(primaryPage, page)
             return pStack.addPageToNextColumn(primaryPage, page, properties);
         }
-        primaryPageSource: Qt.resolvedUrl("./Pages/SidebarPage.qml")
-        onPrimaryPageChanged: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
+
+        primaryPage: SidebarPage {
+            isEnabled: false
+            menuActions: [
+                Action {
+                    iconName: "go-home"
+                    text: i18n.tr("Home")
+                    onTriggered: pStack.push("./Pages/HomePage.qml")
+                }
+            ]
+        }
+        Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
      }
 
 

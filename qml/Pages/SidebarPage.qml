@@ -5,30 +5,13 @@ Page {
     id: sidebarPage
 
     property bool isEnabled: false
+    property list<Action> menuActions
     
     header: PageHeader {
         id: header
         title: i18n.tr("Cathode")
 
         automaticHeight: false
-    }
-
-    ListModel {
-        id: menuModel
-
-        // A workaround to allow translations
-        Component.onCompleted: {
-            append({
-                iconName: "go-home",
-                text: i18n.tr("Home"),
-                pagePath: "./HomePage.qml",
-            });
-            append({
-                iconName: "help",
-                text: i18n.tr("Placeholder"),
-                pagePath: "",
-            });
-        }
     }
 
     ListView {
@@ -39,11 +22,11 @@ Page {
             right: parent.right
         }
 
-        model: menuModel
         enabled: isEnabled
+        model: menuActions
 
         delegate: ListItem {
-            onClicked: pStack.push(Qt.resolvedUrl(pagePath))
+            onClicked: onTriggered
 
             ListItemLayout {
                 anchors.centerIn: parent

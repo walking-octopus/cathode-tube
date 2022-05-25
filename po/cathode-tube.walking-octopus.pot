@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-25 11:18+0000\n"
+"POT-Creation-Date: 2022-05-25 17:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Pages/HomePage.qml:31 ../qml/Pages/HomePage.qml:49
-#: ../qml/Pages/SidebarPage.qml:23
+#: ../qml/Main.qml:49 ../qml/Pages/HomePage.qml:31 ../qml/Pages/HomePage.qml:49
 msgid "Home"
 msgstr ""
 
@@ -50,10 +49,6 @@ msgstr ""
 msgid "https://github.com/LuanRT/YouTube.js"
 msgstr ""
 
-#: ../qml/Pages/SidebarPage.qml:11 cathode-tube.desktop.in.h:1
+#: ../qml/Pages/SidebarPage.qml:12 cathode-tube.desktop.in.h:1
 msgid "Cathode"
-msgstr ""
-
-#: ../qml/Pages/SidebarPage.qml:28
-msgid "Placeholder"
 msgstr ""

@@ -15,6 +15,8 @@ Use Clickable to build and package CathodeTube as a Click package ready to be in
 Make sure you clone the project with
 `git clone https://github.com/walking-octopus/cathode-tube`.
 
+The project uses bundled NodeJS, so you'd have to redownload each time you build for a different architecture.
+
 To test the build on your workstation:
 ```
 $  clickable build --libs nodejs; clickable desktop
@@ -25,7 +27,6 @@ To build for a different architecture:
 $  clickable build --libs nodejs --arch armhf; clickable --arch armhf
 ```
 where `arch` is one of: `amd64`, `arm64` or `armhf`.
-The project uses bundled NodeJS, so you'd have to redownload each time you build for a different architecture.
 
 For more information on the several options see the Clickable [documentation](https://clickable-ut.dev/en/latest/index.html)
 
