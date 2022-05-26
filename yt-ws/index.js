@@ -60,15 +60,13 @@ async function start() {
       ));
     }
 
-    // FIXME: This assumes the feed is always loaded first and uses a global variable
-    // I think there is a better way
-    // FIXME: TypeError: App crashes after some quick scrolling `Cannot read properties of undefined (reading 'continuationItemRenderer')`
+    // FIXME: This assumes the feed is always loaded first and uses a global variable.
     let lastFeed;
 
     ws.on('message', async (data) => {
       const json = JSON.parse(data);
 
-      // FIXME: Since different feeds provide different fields and require different parsing, it's weird to have them under the same topic
+      // FIXME: Different feeds require different parsing, so you may want to separate them
       switch (json.topic) {
         case 'GetFeed': {
           const feedType = json.payload;
@@ -77,17 +75,17 @@ async function start() {
           switch (feedType) {
             case 'Home':
               feed = await youtube.getHomeFeed();
-              feed['feedType'] = "Home";
+              feed.feedType = 'Home';
               break;
 
             case 'Subscriptions':
               feed = await youtube.getSubscriptionsFeed();
-              feed['feedType'] = "Subscriptions";
+              feed.feedType = 'Subscriptions';
               break;
 
             case 'Trending':
               feed = await youtube.getTrending();
-              feed['feedType'] = "Trending";
+              feed.feedType = 'Trending';
               break;
 
             default: {
@@ -105,6 +103,10 @@ async function start() {
           break;
         }
 
+        // FIXME: TypeError: App crashes after some quick scrolling
+        // `Cannot read properties of undefined (reading 'continuationItemRenderer')`
+        // This might be an upstreem issue.
+
         case 'GetContinuation': {
           if (lastFeed.getContinuation == null) {
             ws.send(JSON.stringify(
@@ -114,7 +116,7 @@ async function start() {
           }
 
           let continuation = await lastFeed.getContinuation();
-          continuation['feedType'] = lastFeed['feedType'];
+          continuation.feedType = lastFeed.feedType;
           ws.send(JSON.stringify(
             newMessage('continuationEvent', continuation),
           ));

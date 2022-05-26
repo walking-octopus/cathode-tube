@@ -66,6 +66,29 @@ Page {
         id: youtube
     }
 
+    ScrollView {
+        id: scrollView
+        anchors.fill: parent
+
+        // TODO: Add pull to refresh and activity indicators
+
+        ListView {
+            id: view
+            anchors.fill: parent
+
+            model: youtube.model
+            delegate: videoDelegate
+
+            onAtYEndChanged: {
+                if (view.atYEnd && youtube.model.count > 0) {
+                    print("Loading tail videos...");
+
+                    youtube.getContinuation();
+                }
+            }
+        }
+    }
+
     Component {
         id: videoDelegate
 
@@ -102,29 +125,6 @@ Page {
                             properties: "opacity"
                         }
                     }
-                }
-            }
-        }
-    }
-
-    ScrollView {
-        id: scrollView
-        anchors.fill: parent
-
-        // TODO: Add pull to refresh and activity indicators
-
-        ListView {
-            id: view
-            anchors.fill: parent
-
-            model: youtube.model
-            delegate: videoDelegate
-
-            onAtYEndChanged: {
-                if (view.atYEnd && youtube.model.count > 0) {
-                    print("Loading tail videos...");
-
-                    youtube.getContinuation();
                 }
             }
         }

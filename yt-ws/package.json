@@ -8,10 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@folder/xdg": "^3.1.2",
-    "eslint-plugin-qml-js": "^0.1.0",
     "make-dir": "^3.1.0",
     "ws": "^8.5.0",
     "youtubei.js": "^1.4.2"
