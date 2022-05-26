@@ -26,7 +26,8 @@ Page {
         model: menuActions
 
         delegate: ListItem {
-            onClicked: onTriggered
+            // This looks quite weird, but it required an argument
+            onClicked: onTriggered(null)
 
             ListItemLayout {
                 anchors.centerIn: parent

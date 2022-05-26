@@ -5,5 +5,6 @@
         <file>Pages/SplashScreen.qml</file>
         <file>Pages/LoginPage.qml</file>
         <file>Pages/SidebarPage.qml</file>
+        <file>Components/FeedModel.qml</file>
     </qresource>
 </RCC>

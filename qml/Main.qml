@@ -47,7 +47,7 @@ MainView {
                 Action {
                     iconName: "go-home"
                     text: i18n.tr("Home")
-                    onTriggered: pStack.push("./Pages/HomePage.qml")
+                    onTriggered: pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"))
                 }
             ]
         }

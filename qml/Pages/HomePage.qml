@@ -20,7 +20,7 @@ import Ubuntu.Components 1.3
 //import QtQuick.Controls 2.2
 //import QtQuick.Layouts 1.3
 //import Qt.labs.settings 1.0
-import QtWebSockets 1.1
+import "../Components"
 
 Page {
     id: homePage
@@ -28,7 +28,7 @@ Page {
     header: PageHeader {
         id: header
         flickable: scrollView.flickableItem
-        title: i18n.tr('Home')
+        title: youtube.loaded ? i18n.tr('Home') : i18n.tr('Loading...')
 
         leadingActionBar.actions: Action {
             iconName: "navigation-menu"
@@ -40,7 +40,7 @@ Page {
         trailingActionBar.actions: Action {
             iconName: "reload"
             text: i18n.tr("Reload")
-            onTriggered: youtube.getFeed(youtube.currentFeedType)
+            onTriggered: youtube.refresh()
         }
 
         extension: Sections {
@@ -62,104 +62,49 @@ Page {
     }
     // title: i18n.tr("YT Home")
 
-    WebSocket {
-        id: websocket
-        url: "ws://localhost:8999"
-        active: true
+    FeedModel {
+        id: youtube
+    }
 
-        onStatusChanged: function(status) {
-            if (status == WebSocket.Open) {
-                youtube.getFeed(youtube.currentFeedType);
-            }
-        }
-        onTextMessageReceived: function(message) {
-            let json = JSON.parse(message);
-    
-            switch (json.topic) {
-                // STYLE: This use of fall-through doesn't look elegent
+    Component {
+        id: videoDelegate
 
-                case "feedEvent": videoModel.clear()
+        ListItem {
+            height: units.gu(8.5)
+            onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
+            
+            ListItemLayout {
+                id: layout
+                anchors.centerIn: parent
+                
+                title.text: videoTitle
+                subtitle.text: channel.name
+                summary.text: duration ? `${duration.simple_text} | ${views} | ${published}` : `${views} | ${published}`
 
-                case "continuationEvent": {
-                    let feedType = json.payload.feedType;
-                    let videos;
-                    
-                    switch (feedType) {
-                        case "Home": {
-                            videos = json.payload.videos;
-                            break;
-                        }
+                Image {
+                    id: image
+                    source: thumbnail
+                    SlotsLayout.position: SlotsLayout.Leading
+                    width: units.gu(10) // 16:9
+                    height: units.gu(6)
 
-                        case "Subscriptions": {
-                            videos = [];
-                            for (const item of json.payload.items) {
-                                print(item.date);
-
-                                for (const video of item.videos) {
-                                    videos.push(video);
-                                }
-                            }
-                            break;
-                        }
-                            
-                        // TODO: Use categories trending parsing
-                        case "Trending": {
-                            videos = [];
-                            for (const item of json.payload.now.content) {
-                                print(item.title);
-
-                                for (let video of item.videos) {
-                                    videos.push(video);
-                                }
-                            }
-                            break;
-                        }
-
-                        default: {
-                            print(`Error: invalid feed type ${feedType}`);
-                            return;
+                    opacity: 0
+                    states: State {
+                        name: 'loaded'; when: image.status == Image.Ready
+                        PropertyChanges { target: image; opacity: 1}
+                    }
+                    transitions: Transition {
+                        SpringAnimation {
+                            easing.type: Easing.InSine
+                            spring: 5
+                            epsilon: 0.3
+                            damping: 0.7
+                            properties: "opacity"
                         }
                     }
-
-                    for (const video of videos) {
-                        videoModel.append({
-                            "videoTitle": video.title,
-                            "channel": video.channel,
-                            "thumbnail": video.metadata.thumbnail.url,
-                            "published": video.metadata.published,
-                            "views": video.metadata.short_view_count_text.simple_text,
-                            "duration": video.metadata.duration,
-                            "id": video.id
-                        });
-                    }
-
-                    youtube.currentFeedType = feedType;
-
-                    break;
                 }
             }
         }
-    }
-
-    QtObject {
-        id: youtube
-        property string currentFeedType: "Home"
-
-        function getFeed(type) {
-            websocket.sendTextMessage(`{ "topic": "GetFeed", "payload": "${type}" }`);
-        }
-
-        function getContinuation() {
-            websocket.sendTextMessage(
-                JSON.stringify({
-                    topic: "GetContinuation"
-                })
-            );
-        }
-    }
-
-    ListModel {
-        id: videoModel
     }
 
     ScrollView {
@@ -172,49 +117,13 @@ Page {
             id: view
             anchors.fill: parent
 
-            model: videoModel
-            delegate: ListItem {
-                height: units.gu(8.5)
-                onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
-
-                ListItemLayout {
-                    id: layout
-                    anchors.centerIn: parent
-                    
-                    title.text: videoTitle
-                    subtitle.text: channel.name
-                    summary.text: duration ? `${duration.simple_text} | ${views} | ${published}` : `${views} | ${published}`
-
-                    Image {
-                        id: image
-                        source: thumbnail
-                        SlotsLayout.position: SlotsLayout.Leading
-                        width: units.gu(10) // 16:9
-                        height: units.gu(6)
-
-                        opacity: 0
-                        states: State {
-                            name: 'loaded'; when: image.status == Image.Ready
-                            PropertyChanges { target: image; opacity: 1}
-                        }
-                        transitions: Transition {
-                            SpringAnimation {
-                                easing.type: Easing.InSine
-                                spring: 5
-                                epsilon: 0.3
-                                damping: 0.7
-                                properties: "opacity"
-                            }
-                        }
-                    }
-                }
-            }
+            model: youtube.model
+            delegate: videoDelegate
 
             onAtYEndChanged: {
-                if (view.atYEnd && videoModel.count > 0) {
+                if (view.atYEnd && youtube.model.count > 0) {
                     print("Loading tail videos...");
 
-                    if (youtube.currentFeedType == "Trending") { return; }
                     youtube.getContinuation();
                 }
             }

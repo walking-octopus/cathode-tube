@@ -62,6 +62,7 @@ async function start() {
 
     // FIXME: This assumes the feed is always loaded first and uses a global variable
     // I think there is a better way
+    // FIXME: TypeError: App crashes after some quick scrolling `Cannot read properties of undefined (reading 'continuationItemRenderer')`
     let lastFeed;
 
     ws.on('message', async (data) => {
