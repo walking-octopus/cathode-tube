@@ -93,7 +93,7 @@ Page {
         id: videoDelegate
 
         ListItem {
-            height: units.gu(8.5)
+            height: units.gu(10.5)
             onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
             
             ListItemLayout {
@@ -102,14 +102,15 @@ Page {
                 
                 title.text: videoTitle
                 subtitle.text: channel.name
-                summary.text: duration ? `${duration.simple_text} | ${views} | ${published}` : `${views} | ${published}`
+                summary.text: `${views} | ${published}`
+                summary.visible: (views != "N/A") ? true : false
 
                 Image {
                     id: image
                     source: thumbnail
                     SlotsLayout.position: SlotsLayout.Leading
-                    width: units.gu(10) // 16:9
-                    height: units.gu(6)
+                    width: units.gu(13.6) // 16:9
+                    height: units.gu(8)
 
                     opacity: 0
                     states: State {
@@ -123,6 +124,32 @@ Page {
                             epsilon: 0.3
                             damping: 0.7
                             properties: "opacity"
+                        }
+                    }
+
+                    Label {
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        anchors.rightMargin: units.gu(1)
+                        anchors.bottomMargin: units.gu(0.5)
+
+                        text: duration ? duration.simple_text : ""
+                        textSize: Label.Small
+                        font.weight: Font.DemiBold
+                        visible: !!duration
+                        color: 'white'
+                        
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.leftMargin: units.gu(-0.45)
+                            anchors.rightMargin: units.gu(-0.45)
+                            anchors.topMargin: units.gu(-0.1)
+                            anchors.bottomMargin: units.gu(-0.1)
+                            z: -1
+
+                            color: "black"
+                            opacity: 0.6
+                            radius: units.gu(0.4)
                         }
                     }
                 }

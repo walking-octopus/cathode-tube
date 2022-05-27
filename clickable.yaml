@@ -2,20 +2,12 @@ clickable_minimum_required: 7.1.2
 builder: cmake
 kill: cathode-tube
 
-#image_setup:
-  #run:
-  #- which node
-  #- cd /home/stas/cathode-tube/; cd ./yt-ws/; ./nodeJS/bin/node index.js
-  #- curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
-  #- apt-get update
-  #- apt-get install -y nodejs
-  #- node --version
-
-#install_bin:
-  #- "/usr/bin/node"
-
 scripts:
   fetch: cd yt-ws; npm install --omit=dev; npm prune --production;
+
+# NOT FOR PRODUCTION!
+# The review took too long for quick prototyping, so I disabled it.
+skip_review: true
 
 libraries:
   nodejs:
