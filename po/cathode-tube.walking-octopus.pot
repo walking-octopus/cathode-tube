@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-27 09:46+0000\n"
+"POT-Creation-Date: 2022-05-28 12:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:49 ../qml/Pages/HomePage.qml:31 ../qml/Pages/HomePage.qml:49
+#: ../qml/Main.qml:49 ../qml/Pages/HomePage.qml:32 ../qml/Pages/HomePage.qml:50
 msgid "Home"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:31
+#: ../qml/Pages/HomePage.qml:32
 msgid "Loading..."
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:35
+#: ../qml/Pages/HomePage.qml:36
 msgid "Menu"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:42
+#: ../qml/Pages/HomePage.qml:43
 msgid "Reload"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:53
+#: ../qml/Pages/HomePage.qml:55
 msgid "Subscriptions"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:57
+#: ../qml/Pages/HomePage.qml:59
 msgid "Trending"
 msgstr ""
 

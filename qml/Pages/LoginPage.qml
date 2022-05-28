@@ -26,7 +26,7 @@ Page {
 
     header: PageHeader {
         id: header
-        title: i18n.tr('Welcome!')
+        title: i18n.tr("Welcome!")
     }
     title: i18n.tr("Login")
 

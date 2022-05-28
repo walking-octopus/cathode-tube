@@ -21,7 +21,7 @@ import QtWebSockets 1.1
 Item {
     id: youtube
     property string currentFeedType: "Home"
-    property variant model: videoModel
+    property var model: videoModel
     property bool loaded: false
 
     ListModel {
@@ -35,6 +35,7 @@ Item {
 
         onStatusChanged: function(status) {
             if (status == WebSocket.Open) {
+                loaded = true;
                 youtube.refresh();
             }
         }
@@ -42,12 +43,11 @@ Item {
             let json = JSON.parse(message);
     
             switch (json.topic) {
-                // STYLE: This use of fall-through doesn't look elegent
-
                 case "error": {
                     print(json.payload);
                     break;
                 }
+                // STYLE: This use of fall-through doesn't look elegent
 
                 case "feedEvent": videoModel.clear()
                 case "continuationEvent": {
@@ -86,7 +86,7 @@ Item {
                         }
 
                         default: {
-                            print(`Error: invalid feed type ${feedType}`);
+                            print(`Error: invalid feed type "${feedType}"`);
                             return;
                         }
                     }
@@ -113,13 +113,20 @@ Item {
     }
 
     function getFeed(type) {
+        if (!youtube.loaded)
+            // I prevented getFeed from being called while something is loading, because could result in loading a feed twice or mixing up different feeds.
+            return;
+
         loaded = false;
+        print(`Loading ${type}...`);
         websocket.sendTextMessage(`{ "topic": "GetFeed", "payload": "${type}" }`);
     }
 
     function getContinuation() {
+        if (currentFeedType == "Trending")
+            return;
+
         loaded = false;
-        if (currentFeedType == "Trending") { return; }
         websocket.sendTextMessage(
             JSON.stringify({
                 topic: "GetContinuation"
@@ -128,7 +135,7 @@ Item {
     }
 
     function refresh() {
-        loaded = false;
+        print(`Refresh ${youtube.currentFeedType}...`);
         youtube.getFeed(youtube.currentFeedType);
     }
 }

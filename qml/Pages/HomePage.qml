@@ -28,7 +28,8 @@ Page {
     header: PageHeader {
         id: header
         flickable: scrollView.flickableItem
-        title: youtube.loaded ? i18n.tr('Home') : i18n.tr('Loading...')
+        // TODO: Add a proper actvity indicator
+        title: youtube.loaded ? i18n.tr("Home") : i18n.tr("Loading...")
 
         leadingActionBar.actions: Action {
             iconName: "navigation-menu"
@@ -48,6 +49,8 @@ Page {
                 Action {
                     text: i18n.tr("Home")
                     onTriggered: youtube.getFeed("Home")
+                    // The first action is triggered even before WebSocket is open
+                    // To not load the feed twice, I check for loading status in getFeed.
                 },
                 Action {
                     text: i18n.tr("Subscriptions")
@@ -85,6 +88,7 @@ Page {
 
                     youtube.getContinuation();
                 }
+                // TODO: Add a proper activity indicator for continuations
             }
         }
     }
@@ -108,13 +112,13 @@ Page {
                 Image {
                     id: image
                     source: thumbnail
-                    SlotsLayout.position: SlotsLayout.Leading
                     width: units.gu(13.6) // 16:9
                     height: units.gu(8)
+                    SlotsLayout.position: SlotsLayout.Leading
 
                     opacity: 0
                     states: State {
-                        name: 'loaded'; when: image.status == Image.Ready
+                        name: "loaded"; when: image.status == Image.Ready
                         PropertyChanges { target: image; opacity: 1}
                     }
                     transitions: Transition {
@@ -128,28 +132,32 @@ Page {
                     }
 
                     Label {
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        anchors.rightMargin: units.gu(1)
-                        anchors.bottomMargin: units.gu(0.5)
+                        anchors {
+                            right: parent.right
+                            bottom: parent.bottom
+                            rightMargin: units.gu(1)
+                            bottomMargin: units.gu(0.5)
+                        }
 
                         text: duration ? duration.simple_text : ""
+                        visible: !!duration
+                        color: "white"
                         textSize: Label.Small
                         font.weight: Font.DemiBold
-                        visible: !!duration
-                        color: 'white'
                         
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.leftMargin: units.gu(-0.45)
-                            anchors.rightMargin: units.gu(-0.45)
-                            anchors.topMargin: units.gu(-0.1)
-                            anchors.bottomMargin: units.gu(-0.1)
+                        UbuntuShape {
+                            anchors {
+                                fill: parent
+                                leftMargin: units.gu(-0.45)
+                                rightMargin: units.gu(-0.45)
+                                topMargin: units.gu(-0.1)
+                                bottomMargin: units.gu(-0.1)
+                            }
                             z: -1
 
                             color: "black"
-                            opacity: 0.6
-                            radius: units.gu(0.4)
+                            opacity: 0.65
+                            radius: "small"
                         }
                     }
                 }

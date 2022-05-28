@@ -16,7 +16,7 @@ async function start() {
   const path = await makeDir(`${dirs.config}/cathode-tube.walking-octopus/`);
   const credsPath = `${path}/yt_oauth_creds.json`;
 
-  let creds = (fs.existsSync(credsPath) && JSON.parse(fs.readFileSync(credsPath).toString())) || {};
+  const creds = (fs.existsSync(credsPath) && JSON.parse(fs.readFileSync(credsPath).toString())) || {};
   const youtube = await new Innertube();
   const wss = new WebSocket.Server({ port: 8999 });
 

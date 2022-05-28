@@ -22,8 +22,8 @@ import "./Pages"
 
 MainView {
     id: root
-    objectName: 'mainView'
-    applicationName: 'cathode-tube.walking-octopus'
+    objectName: "mainView"
+    applicationName: "cathode-tube.walking-octopus"
     automaticOrientation: true
 
     width: units.gu(120)
