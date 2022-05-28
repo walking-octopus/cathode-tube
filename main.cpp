@@ -20,30 +20,53 @@
 #include <QString>
 #include <QQuickView>
 #include <QProcess>
+#include <QObject>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication *app = new QGuiApplication(argc, (char**)argv);
     app->setApplicationName("cathode-tube.walking-octopus");
 
-    qDebug() << "Starting the internal server...";
-
+    // Initialization
     QProcess internalServer;
     internalServer.setWorkingDirectory("./yt-ws");
+    
+    // Start the internal server
+    qDebug() << "Starting the internal server...";
     internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
-    // TODO: Switch to signals for error handeling and logging
-    // TODO: Wait for process start in QML splash screen through signals
-    // FIXME: The server crashes with no network connection, because it couldn't get the session. Maybe auto restart could help...
-
-    // waitForReadyRead could be used to wait, since the server prints out a message when it's ready, but that sounds like a hack.
+ 
+    // Error handeling
     if (!internalServer.waitForStarted()) {
         qDebug() << "Error starting internal server: " << internalServer.errorString();
-        qDebug() << "Last output: " << internalServer.readAllStandardOutput();
         qDebug() << internalServer.exitCode();
-        qDebug() << internalServer.state();
 
         return 1;
     }
+    // TODO: Auto-restart the server if it crashes.
+    // FIXME: Is the exit code 0?
+    QObject::connect(&internalServer, SIGNAL(finished(int)), app, SLOT(quit()));
+
+    // Debug messages and standard output/error.
+    QObject::connect(&internalServer, &QProcess::started, []() {
+        qDebug() << "Internal server started!";
+    });
+
+    QObject::connect(&internalServer, &QProcess::readyReadStandardOutput, [&internalServer]() {
+        QString output = internalServer.readAllStandardOutput();
+        qDebug().noquote() << "Server: " << output;
+        
+        if (internalServer.readAllStandardOutput().contains("Listening on port")) {
+            qDebug() << "Internal server is ready.";
+            
+            // TODO: Send a signal or property to QML to know when the server is ready.
+        }
+    });
+
+    QObject::connect(&internalServer, &QProcess::readyReadStandardError, [&internalServer]() {
+        QString error = internalServer.readAllStandardError();
+        qDebug().noquote() << "Server error: " << error;
+    });
+    
 
     qDebug() << "Loading the QML...";
 
@@ -54,5 +77,10 @@ int main(int argc, char *argv[])
 
     return app->exec();
 
-    // TODO: Gracefully shutdown the internal server when the app is closed
+    // Explicitly shutdown the internal server when the window is destroyed
+    QObject::connect(view, &QQuickView::destroyed, [&internalServer]() {
+        qDebug() << "Shutting down the internal server...";
+        internalServer.terminate();
+        internalServer.waitForFinished();
+    });
 }

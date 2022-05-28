@@ -20,7 +20,7 @@ Install development NPM dependencies with
 $  clickable script fetch-dev
 ```
 
-The project uses bundled NodeJS, so you'd have to download for each architecture you'll need
+The project uses bundled NodeJS, so you'd have to download it for each architecture you'll build for.
 ```
 $  clickable build --libs nodejs --arch armhf;
 $  clickable build --libs nodejs --arch amd64;
