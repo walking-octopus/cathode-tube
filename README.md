@@ -16,18 +16,30 @@ Make sure you clone the project with
 `git clone https://github.com/walking-octopus/cathode-tube`.
 
 Install development NPM dependencies with
-`cd yt-ws; npm i`
+```
+$  clickable script fetch-dev
+```
 
-The project uses bundled NodeJS, so you'd have to redownload each time you build for a different architecture.
+The project uses bundled NodeJS, so you'd have to download for each architecture you'll need
+```
+$  clickable build --libs nodejs --arch armhf;
+$  clickable build --libs nodejs --arch amd64;
+```
+where `arch` is one of: `amd64`, `arm64` or `armhf`.
 
 To test the build on your workstation:
 ```
-$  clickable build --libs nodejs; clickable desktop
+$  clickable desktop
 ```
 
-To build for a production:
+To prune development dependencies:
 ```
-$  clickable script fetch; clickable build --libs nodejs --arch armhf; clickable --arch armhf
+$  clickable script fetch-production
+```
+
+To build for your phone:
+```
+$  clickable --arch armhf
 ```
 where `arch` is one of: `amd64`, `arm64` or `armhf`.
 
