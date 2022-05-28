@@ -21,16 +21,24 @@
 #include <QQuickView>
 #include <QProcess>
 #include <QObject>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication *app = new QGuiApplication(argc, (char**)argv);
     app->setApplicationName("cathode-tube.walking-octopus");
 
-    // Initialization
+    // Prepare the QML view
+    qDebug() << "Loading the QML...";
+    QQuickView *view = new QQuickView();
+    view->setSource(QUrl("qrc:/Main.qml"));
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    view->rootContext()->setContextProperty("serverReady", QVariant(false));
+
+    // QProcess Initialization
     QProcess internalServer;
     internalServer.setWorkingDirectory("./yt-ws");
-    
+
     // Start the internal server
     qDebug() << "Starting the internal server...";
     internalServer.start("./nodeJS/bin/node", QStringList() << "index.js");
@@ -51,14 +59,15 @@ int main(int argc, char *argv[])
         qDebug() << "Internal server started!";
     });
 
-    QObject::connect(&internalServer, &QProcess::readyReadStandardOutput, [&internalServer]() {
+    QObject::connect(&internalServer, &QProcess::readyReadStandardOutput, [&internalServer, &view]() {
         QString output = internalServer.readAllStandardOutput();
         qDebug().noquote() << "Server: " << output;
         
-        if (internalServer.readAllStandardOutput().contains("Listening on port")) {
+        if (output.contains("Listening")) {
             qDebug() << "Internal server is ready.";
-            
-            // TODO: Send a signal or property to QML to know when the server is ready.
+
+            // Signal to the QML that the server is ready.            
+            view->rootContext()->setContextProperty("serverReady", QVariant(true));
         }
     });
 
@@ -66,21 +75,7 @@ int main(int argc, char *argv[])
         QString error = internalServer.readAllStandardError();
         qDebug().noquote() << "Server error: " << error;
     });
-    
 
-    qDebug() << "Loading the QML...";
-
-    QQuickView *view = new QQuickView();
-    view->setSource(QUrl("qrc:/Main.qml"));
-    view->setResizeMode(QQuickView::SizeRootObjectToView);
     view->show();
-
     return app->exec();
-
-    // Explicitly shutdown the internal server when the window is destroyed
-    QObject::connect(view, &QQuickView::destroyed, [&internalServer]() {
-        qDebug() << "Shutting down the internal server...";
-        internalServer.terminate();
-        internalServer.waitForFinished();
-    });
 }

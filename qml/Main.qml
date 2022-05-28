@@ -55,19 +55,21 @@ MainView {
      }
 
 
-    Timer {
-        id: reconnect
-        interval: 12
-        onTriggered: {
-            websocket.active = false;
-            websocket.active = true;
-        }
-    }
+    // I'll uncomment the Timer when I'll add automatic server restart
+
+    // Timer {
+    //     id: reconnect
+    //     interval: 12
+    //     onTriggered: {
+    //         websocket.active = false;
+    //         websocket.active = true;
+    //     }
+    // }
 
     WebSocket {
         id: websocket
         url: "ws://localhost:8999"
-        active: true
+        active: serverReady
 
         onStatusChanged: function(status) {
             switch (status) {
@@ -77,7 +79,7 @@ MainView {
                 }
                 case WebSocket.Open: {
                     print("Open");
-                    reconnect.running = false;
+                    // reconnect.running = false;
                     break;
                 }
                 case WebSocket.Closing: {
@@ -86,7 +88,7 @@ MainView {
                 }
                 case WebSocket.Error: {
                     print("Error");
-                    reconnect.running = true;
+                    // reconnect.running = true;
                     break;
                 }
             }
