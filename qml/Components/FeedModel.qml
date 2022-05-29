@@ -72,7 +72,7 @@ Item {
                             break;
                         }
                             
-                        // TODO: Use categories trending parsing
+                        // TODO: Display categories in trending
                         case "Trending": {
                             videos = [];
                             for (const item of json.payload.now.content) {

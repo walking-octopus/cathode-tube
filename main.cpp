@@ -50,9 +50,10 @@ int main(int argc, char *argv[])
 
         return 1;
     }
-    // TODO: Auto-restart the server if it crashes.
-    // FIXME: Is the exit code 0?
+    // FIXME: Use an exit code 1.
     QObject::connect(&internalServer, SIGNAL(finished(int)), app, SLOT(quit()));
+
+    // TODO: Auto-restart the server if it crashes.
 
     // Debug messages and standard output/error.
     QObject::connect(&internalServer, &QProcess::started, []() {
@@ -76,6 +77,7 @@ int main(int argc, char *argv[])
         qDebug().noquote() << "Server error: " << error;
     });
 
+    qDebug() << "Entering the main loop...";
     view->show();
     return app->exec();
 }

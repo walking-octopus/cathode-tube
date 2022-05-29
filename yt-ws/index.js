@@ -66,7 +66,7 @@ async function start() {
     ws.on('message', async (data) => {
       const json = JSON.parse(data);
 
-      // FIXME: Different feeds require different parsing, so you may want to separate them
+      // STYLE: Different feeds require different parsing, so you may want to separate them
       switch (json.topic) {
         case 'GetFeed': {
           const feedType = json.payload;
@@ -102,10 +102,6 @@ async function start() {
 
           break;
         }
-
-        // FIXME: TypeError: App crashes after some quick scrolling
-        // `Cannot read properties of undefined (reading 'continuationItemRenderer')`
-        // This might be an upstreem issue.
 
         case 'GetContinuation': {
           if (lastFeed.getContinuation == null) {

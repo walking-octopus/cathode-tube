@@ -30,8 +30,6 @@ MainView {
     height: units.gu(75)
     anchorToKeyboard: true
 
-    // TODO: Find the way to hide the sidebar on the login page.
-    // TODO: The sidebar is too wide on phones in horizontal orientation
     AdaptivePageLayout {
         id: pStack
         anchors.fill: parent
@@ -39,6 +37,19 @@ MainView {
         function push(page, properties) {
             print(primaryPage, page)
             return pStack.addPageToNextColumn(primaryPage, page, properties);
+        }
+        
+        layouts: PageColumnsLayout {
+            when: width > units.gu(87.5);
+            PageColumn {
+                minimumWidth: preferredWidth;
+                maximumWidth: preferredWidth;
+                preferredWidth: units.gu(20) + width/7.5;
+
+                // TODO: Find the way to hide the sidebar on the login page.
+                // You can set preferredWidth to 0 to hide the sidebar, but it might be a hack
+            }
+            PageColumn {fillWidth: true;}
         }
 
         primaryPage: SidebarPage {

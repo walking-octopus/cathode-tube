@@ -28,7 +28,7 @@ Page {
     header: PageHeader {
         id: header
         flickable: scrollView.flickableItem
-        // TODO: Add a proper actvity indicator
+        // TODO: Switch to a dedicated actvity indicator
         title: youtube.loaded ? i18n.tr("Home") : i18n.tr("Loading...")
 
         leadingActionBar.actions: Action {
@@ -73,7 +73,7 @@ Page {
         id: scrollView
         anchors.fill: parent
 
-        // TODO: Add pull to refresh and activity indicators
+        // TODO: Add pull to refresh
 
         ListView {
             id: view
@@ -88,7 +88,7 @@ Page {
 
                     youtube.getContinuation();
                 }
-                // TODO: Add a proper activity indicator for continuations
+                // TODO: Add an activity indicator for continuations
             }
         }
     }
