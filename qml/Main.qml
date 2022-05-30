@@ -63,19 +63,7 @@ MainView {
             ]
         }
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
-     }
-
-
-    // I'll uncomment the Timer when I'll add automatic server restart
-
-    // Timer {
-    //     id: reconnect
-    //     interval: 12
-    //     onTriggered: {
-    //         websocket.active = false;
-    //         websocket.active = true;
-    //     }
-    // }
+    }
 
     WebSocket {
         id: websocket
