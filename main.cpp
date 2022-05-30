@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
     // Prepare the QML view
     qDebug() << "Loading the QML...";
     QQuickView *view = new QQuickView();
+    view->rootContext()->setContextProperty("serverReady", QVariant(false));
     view->setSource(QUrl("qrc:/Main.qml"));
     view->setResizeMode(QQuickView::SizeRootObjectToView);
-    view->rootContext()->setContextProperty("serverReady", QVariant(false));
 
     // QProcess Initialization
     QProcess internalServer;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(&internalServer, &QProcess::readyReadStandardOutput, [&internalServer, &view]() {
-        QString output = internalServer.readAllStandardOutput();
+        QString output = internalServer.readAllStandardOutput().trimmed();
         qDebug().noquote() << "Server: " << output;
         
         if (output.contains("Listening")) {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     });
 
     QObject::connect(&internalServer, &QProcess::readyReadStandardError, [&internalServer]() {
-        QString error = internalServer.readAllStandardError();
+        QString error = internalServer.readAllStandardError().trimmed();
         qDebug().noquote() << "Server error: " << error;
     });
 
