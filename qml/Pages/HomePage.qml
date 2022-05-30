@@ -135,7 +135,7 @@ Page {
                         anchors {
                             right: parent.right
                             bottom: parent.bottom
-                            rightMargin: units.gu(1)
+                            rightMargin: units.gu(0.85)
                             bottomMargin: units.gu(0.5)
                         }
 
@@ -156,7 +156,7 @@ Page {
                             z: -1
 
                             color: "black"
-                            opacity: 0.65
+                            opacity: 0.58
                             radius: "small"
                         }
                     }
