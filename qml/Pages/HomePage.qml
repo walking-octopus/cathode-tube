@@ -18,7 +18,7 @@
 import QtQuick 2.9
 import Ubuntu.Components 1.3
 //import QtQuick.Controls 2.2
-//import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.3
 //import Qt.labs.settings 1.0
 import "../Components"
 
@@ -75,12 +75,23 @@ Page {
 
         // TODO: Add pull to refresh
 
-        ListView {
+        GridView {
             id: view
-            anchors.fill: parent
+            anchors {
+                fill: parent
+                topMargin: spacing
+                bottomMargin: spacing
+                leftMargin: spacing
+                rightMargin: spacing
+            }
 
             model: youtube.model
             delegate: videoDelegate
+
+            clip: true
+            cellWidth: units.gu(15*2) // To get the 16:9 aspect ratio, the width has to be 1 unit smaller. Why?
+            cellHeight: units.gu(12*2)
+            property double spacing: units.gu(2)
 
             onAtYEndChanged: {
                 if (view.atYEnd && youtube.model.count > 0) {
@@ -96,71 +107,69 @@ Page {
     Component {
         id: videoDelegate
 
-        ListItem {
-            height: units.gu(10.5)
-            onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
-            
-            ListItemLayout {
-                id: layout
-                anchors.centerIn: parent
+        ColumnLayout {
+            Image {
+                id: image
+                source: thumbnail
                 
-                title.text: videoTitle
-                subtitle.text: channel.name
-                summary.text: `${views} | ${published}`
-                summary.visible: (views != "N/A") ? true : false
+                Layout.maximumWidth: units.gu(15*2) - view.spacing
+                Layout.maximumHeight: units.gu(9*2) - view.spacing
 
-                Image {
-                    id: image
-                    source: thumbnail
-                    width: units.gu(13.6) // 16:9
-                    height: units.gu(8)
-                    SlotsLayout.position: SlotsLayout.Leading
+                // anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
 
-                    opacity: 0
-                    states: State {
-                        name: "loaded"; when: image.status == Image.Ready
-                        PropertyChanges { target: image; opacity: 1}
-                    }
-                    transitions: Transition {
-                        SpringAnimation {
-                            easing.type: Easing.InSine
-                            spring: 5
-                            epsilon: 0.3
-                            damping: 0.7
-                            properties: "opacity"
-                        }
-                    }
-
-                    Label {
-                        anchors {
-                            right: parent.right
-                            bottom: parent.bottom
-                            rightMargin: units.gu(0.85)
-                            bottomMargin: units.gu(0.5)
-                        }
-
-                        text: duration ? duration.simple_text : ""
-                        visible: !!duration
-                        color: "white"
-                        textSize: Label.Small
-                        font.weight: Font.DemiBold
-                        
-                        UbuntuShape {
-                            anchors {
-                                fill: parent
-                                leftMargin: units.gu(-0.45)
-                                rightMargin: units.gu(-0.45)
-                                topMargin: units.gu(-0.1)
-                                bottomMargin: units.gu(-0.1)
-                            }
-                            z: -1
-
-                            color: "black"
-                            opacity: 0.58
-                            radius: "small"
-                        }
+                opacity: 0
+                states: State {
+                    name: "loaded"; when: image.status == Image.Ready
+                    PropertyChanges { target: image; opacity: 1}
+                }
+                transitions: Transition {
+                    SpringAnimation {
+                        easing.type: Easing.InSine
+                        spring: 5
+                        epsilon: 0.3
+                        damping: 0.7
+                        properties: "opacity"
                     }
                 }
+
+                Label {
+                    anchors {
+                        right: parent.right
+                        bottom: parent.bottom
+                        rightMargin: units.gu(0.85)
+                        bottomMargin: units.gu(0.5)
+                    }
+
+                    text: duration ? duration.simple_text : ""
+                    visible: !!duration
+                    color: "white"
+                    textSize: Label.Small
+                    font.weight: Font.DemiBold
+                    
+                    UbuntuShape {
+                        anchors {
+                            fill: parent
+                            leftMargin: units.gu(-0.45)
+                            rightMargin: units.gu(-0.45)
+                            topMargin: units.gu(-0.1)
+                            bottomMargin: units.gu(-0.1)
+                        }
+                        z: -1
+
+                        color: "black"
+                        opacity: 0.58
+                        radius: "small"
+                    }
+                }
+            }
+
+            Label {
+                text: `${views} | ${published}`
+            }
+
+            Label {
+                text: channel.name
             }
         }
     }
