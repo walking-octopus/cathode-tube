@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-30 11:40+0000\n"
+"POT-Creation-Date: 2022-05-31 11:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:60 ../qml/Pages/HomePage.qml:32 ../qml/Pages/HomePage.qml:50
+#: ../qml/Main.qml:59 ../qml/Pages/HomePage.qml:32 ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
@@ -29,15 +29,19 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:43
+#: ../qml/Pages/HomePage.qml:44
 msgid "Reload"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:56
+#: ../qml/Pages/HomePage.qml:49 ../qml/Pages/Search.qml:27
+msgid "Search"
+msgstr ""
+
+#: ../qml/Pages/HomePage.qml:63
 msgid "Subscriptions"
 msgstr ""
 
-#: ../qml/Pages/HomePage.qml:60
+#: ../qml/Pages/HomePage.qml:67
 msgid "Trending"
 msgstr ""
 
@@ -51,6 +55,14 @@ msgstr ""
 
 #: ../qml/Pages/LoginPage.qml:43
 msgid "https://github.com/LuanRT/YouTube.js"
+msgstr ""
+
+#: ../qml/Pages/Search.qml:31 ../qml/Pages/SearchResults.qml:33
+msgid "Back"
+msgstr ""
+
+#: ../qml/Pages/Search.qml:48
+msgid "Search on YouTube..."
 msgstr ""
 
 #: ../qml/Pages/SidebarPage.qml:29 cathode-tube.desktop.in.h:1

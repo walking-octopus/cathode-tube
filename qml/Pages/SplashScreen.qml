@@ -21,8 +21,6 @@ import Ubuntu.Components 1.3
 Page {
     header: PageHeader {
         id: header
-        // FIXME: Using null to disable the back button might be a like a hack
-        leadingActionBar.actions: null
     }
 
     Rectangle {

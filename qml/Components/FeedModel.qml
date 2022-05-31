@@ -99,7 +99,7 @@ Item {
                             "published": video.metadata.published,
                             "views": video.metadata.short_view_count_text.simple_text,
                             "duration": video.metadata.duration,
-                            "id": video.id
+                            "id": video.id,
                         });
                     }
 

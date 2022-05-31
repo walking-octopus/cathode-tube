@@ -35,7 +35,6 @@ MainView {
         anchors.fill: parent
         
         function push(page, properties) {
-            print(primaryPage, page)
             return pStack.addPageToNextColumn(primaryPage, page, properties);
         }
         

@@ -108,7 +108,7 @@ async function start() {
             ws.send(JSON.stringify(
               newMessage('error', new Error('No continuation or feed').message),
             ));
-            return;
+            break;
           }
 
           let continuation = await lastFeed.getContinuation();
@@ -117,6 +117,32 @@ async function start() {
             newMessage('continuationEvent', continuation),
           ));
           lastFeed = continuation;
+
+          break;
+        }
+
+        case 'GetSearchSuggestions': {
+          if (json.payload == "") {
+            break;
+          }
+
+          let suggestions = await youtube.getSearchSuggestions(json.payload)
+          ws.send(JSON.stringify(
+            newMessage('searchSuggestionsEvent', suggestions),
+          ));
+
+          break;
+        }
+
+        case 'GetSearchResults': {
+          if (json.payload == "") {
+            break;
+          }
+
+          let results = await youtube.search(json.payload)
+          ws.send(JSON.stringify(
+            newMessage('searchResultsEvent', results),
+          ));
 
           break;
         }
