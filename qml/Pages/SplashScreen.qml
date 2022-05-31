@@ -21,6 +21,7 @@ import Ubuntu.Components 1.3
 Page {
     header: PageHeader {
         id: header
+        leadingActionBar.actions: null
     }
 
     Rectangle {
