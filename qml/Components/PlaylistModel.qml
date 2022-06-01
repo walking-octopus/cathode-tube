@@ -21,10 +21,22 @@ import QtWebSockets 1.1
 Item {
     id: youtube
     property bool loaded: false
-    property var model: historyModel
+    property var model: playlistModel
+    property string playlist
+
+    property var playlistInfo
+    Component.onCompleted: {
+        playlistInfo = {
+            title: "",
+            description: "",
+            total_items: "",
+            last_updated: "",
+            views: ""
+        }
+    }
 
     ListModel {
-        id: historyModel
+        id: playlistModel
     }
 
     WebSocket {
@@ -35,29 +47,34 @@ Item {
         onStatusChanged: function(status) {
             if (status == WebSocket.Open) {
                 loaded = true;
-                youtube.getHistory();
+                youtube.getPlaylist(playlist);
             }
         }
         onTextMessageReceived: function(message) {
             let json = JSON.parse(message);
     
             switch (json.topic) {
-                case "historyEvent":
-                    historyModel.clear();
+                case "playlistEvent": {
+                    playlistModel.clear();
 
-                case "continuationEvent": {
-                    for (const item of json.payload.items) {
-                        // TODO: Display categories in history
-                        for (const video of item.videos) {
-                            historyModel.append({
-                                "videoTitle": video.title,
-                                "channel": video.channel,
-                                "thumbnail": video.metadata.thumbnail.url,
-                                "published": video.metadata.published,
-                                "views": video.metadata.view_count,
-                                "id": video.id
-                            });
-                        }
+                    for (const video of json.payload.items) {
+                        playlistModel.append({
+                            "videoTitle": video.title,
+                            "channel": video.channel,
+                            "thumbnail": video.thumbnails[0].url,
+                            "duration": video.duration,
+                            "id": video.id,
+                            "views": "N/A",
+                            "published": "N/A"
+                        });
+                    }
+
+                    playlistInfo = {
+                        title: json.payload.title,
+                        description: json.payload.description,
+                        total_items: json.payload.total_items,
+                        last_updated: json.payload.last_updated,
+                        views: json.payload.views
                     }
 
                     loaded = true;
@@ -72,25 +89,12 @@ Item {
         }
     }
 
-    function getHistory() {
+    function getPlaylist(id) {
         if (!youtube.loaded) {
             return;
         }
         loaded = false;
 
-        websocket.sendTextMessage('{"topic": "GetHistory", "payload": ""}');
-    }
-
-    function getContinuation() {
-        if (!youtube.loaded) {
-            return;
-        }
-        loaded = false;
-
-        websocket.sendTextMessage(
-            JSON.stringify({
-                topic: "GetContinuation"
-            })
-        );
+        websocket.sendTextMessage(`{"topic": "GetPlaylist", "payload": "${id}"}`);
     }
 }

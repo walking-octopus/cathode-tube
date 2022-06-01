@@ -20,25 +20,24 @@ import Ubuntu.Components 1.3
 import "../Components"
 
 Page {
-    id: searchResults
-    property string query
+    id: playlistPage
+
+    property string title
+    property string playlist_id
 
     header: PageHeader {
         id: header
+        title: youtube.loaded ? youtube.playlistInfo.title : i18n.tr("Loading...")
+        subtitle: youtube.loaded ? `${youtube.playlistInfo.total_items} | ${youtube.playlistInfo.views}` : i18n.tr("Loading...")
+
         flickable: scrollView.flickableItem
-        title: i18n.tr(`Results for «${query}»`)
 
         leadingActionBar.actions: Action {
-            iconName: "back"
-            text: i18n.tr("Back")
-            onTriggered: {
-                // FIXME: The sidebar flickers for a moment when switching pages.
-                pStack.removePages(searchResults);
-                pStack.push(Qt.resolvedUrl("./HomePage.qml"));
-            }
+            iconName: "navigation-menu"
+            text: i18n.tr("Menu")
+            onTriggered: pStack.removePages(historyPage)
+            visible: !primaryPage.visible
         }
-
-        // TODO: Allow filtering by content types
     }
 
     ScrollView {
@@ -49,18 +48,36 @@ Page {
             id: view
             anchors.fill: parent            
 
-            model: youtube.results
+            model: youtube.model
             delegate: videoDelegate
+
+            // onAtYEndChanged: {
+            //     if (view.atYEnd && youtube.model.count > 0) {
+            //         print("Loading tail videos...");
+
+            //         youtube.getContinuation();
+            //     }
+            //     // TODO: Add an activity indicator for continuations
+            // }
         }
 
     }
 
     VideoDelegate {
         id: videoDelegate
+
+        // TODO: Allow item removal/reordering
+        // listItem.leadingActions: ListItemActions {
+        //     actions: [
+        //         Action {
+        //             iconName: "delete"
+        //         }
+        //     ]
+        // }
     }
 
-    SearchModel {
+    PlaylistModel {
         id: youtube
-        onReady: youtube.getSearchResults(query)
+        playlist: playlist_id
     }
 }

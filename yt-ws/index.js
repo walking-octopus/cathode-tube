@@ -104,11 +104,29 @@ async function start() {
         }
 
         case 'GetHistory': {
-          let history = await youtube.getHistory();
+          const history = await youtube.getHistory();
           ws.send(JSON.stringify(
             newMessage('historyEvent', history),
           ));
           lastFeed = history;
+
+          break;
+        }
+        
+        case 'GetPlaylist': {
+          let playlist = await youtube.getPlaylist(json.payload);
+
+          // FIXME: This is a bit of a hack, but I'll change it later
+          for (const video of playlist.items) {
+            video.channel = {
+              name: video.author,
+            };
+          }
+          
+          ws.send(JSON.stringify(
+            newMessage('playlistEvent', playlist),
+          ));
+          // lastFeed = playlist;
 
           break;
         }

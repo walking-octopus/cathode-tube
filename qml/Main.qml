@@ -45,8 +45,8 @@ MainView {
                 maximumWidth: preferredWidth;
                 preferredWidth: units.gu(20) + width/7.5;
 
-                // TODO: Find the way to hide the sidebar on the login page.
-                // You can set preferredWidth to 0 to hide the sidebar, but it might be a hack
+                // TODO: Hide the sidebar on the login page or video player.
+                // You can set preferredWidth to 0 to hide the sidebar, but it might be a hack.
             }
             PageColumn {fillWidth: true;}
         }
@@ -63,7 +63,18 @@ MainView {
                     iconName: "history"
                     text: i18n.tr("History")
                     onTriggered: pStack.push(Qt.resolvedUrl("./Pages/History.qml"))
+                },
+                Action {
+                    iconName: "voicemail"
+                    text: i18n.tr("Watch later")
+                    onTriggered: pStack.push(
+                        Qt.resolvedUrl("./Pages/Playlist.qml"),
+                        {
+                            playlist_id: "WL"
+                        }
+                    )
                 }
+                // TODO: Add the notification tab
             ]
         }
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
