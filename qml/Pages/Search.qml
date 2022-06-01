@@ -41,6 +41,8 @@ Page {
             anchors.margins: 10
             width: Math.min(parent.width, units.gu(36))
 
+            inputMethodHints: Qt.ImhNoPredictiveText
+
             primaryItem: Icon {
                 width: units.gu(2); height: width
                 name: "find"
@@ -96,6 +98,7 @@ Page {
     }
 
     Component.onCompleted: {
+        // FIXME: The focus quickly shifts away from the search
         if (searchField.text == "") {
             searchField.forceActiveFocus()
         } else {

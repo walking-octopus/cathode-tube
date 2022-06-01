@@ -28,14 +28,16 @@ Page {
     header: PageHeader {
         id: header
         title: youtube.loaded ? youtube.playlistInfo.title : i18n.tr("Loading...")
-        subtitle: youtube.loaded ? `${youtube.playlistInfo.total_items} | ${youtube.playlistInfo.views}` : i18n.tr("Loading...")
+        subtitle: youtube.loaded ? `${youtube.playlistInfo.total_items} ${i18n.tr("items")} | ${youtube.playlistInfo.views}` : i18n.tr("Loading...")
 
         flickable: scrollView.flickableItem
 
         leadingActionBar.actions: Action {
             iconName: "navigation-menu"
             text: i18n.tr("Menu")
-            onTriggered: pStack.removePages(historyPage)
+            onTriggered: {
+                pStack.removePages(playlistPage);
+            }
             visible: !primaryPage.visible
         }
     }
@@ -50,23 +52,14 @@ Page {
 
             model: youtube.model
             delegate: videoDelegate
-
-            // onAtYEndChanged: {
-            //     if (view.atYEnd && youtube.model.count > 0) {
-            //         print("Loading tail videos...");
-
-            //         youtube.getContinuation();
-            //     }
-            //     // TODO: Add an activity indicator for continuations
-            // }
         }
-
     }
 
     VideoDelegate {
         id: videoDelegate
 
         // TODO: Allow item removal/reordering
+
         // listItem.leadingActions: ListItemActions {
         //     actions: [
         //         Action {

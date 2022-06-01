@@ -127,6 +127,7 @@ async function start() {
             newMessage('playlistEvent', playlist),
           ));
           // lastFeed = playlist;
+          // FIXME: Notify the upstreem that the playlists can't be continued
 
           break;
         }
@@ -146,6 +147,7 @@ async function start() {
           ));
           lastFeed = continuation;
 
+          // FIXME: No new commands are processed after break.
           break;
         }
 

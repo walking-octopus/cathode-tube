@@ -95,6 +95,11 @@ Item {
         }
         loaded = false;
 
-        websocket.sendTextMessage(`{"topic": "GetPlaylist", "payload": "${id}"}`);
+        websocket.sendTextMessage(
+            JSON.stringify({
+                topic: "GetPlaylist",
+                payload: id,
+            }),
+        );
     }
 }

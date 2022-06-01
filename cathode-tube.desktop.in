@@ -1,5 +1,6 @@
 [Desktop Entry]
 _Name=Cathode
+Comment=A native YouTube client
 Exec=cathode-tube %U
 Icon=assets/logo.png
 Terminal=false
