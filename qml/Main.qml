@@ -58,6 +58,11 @@ MainView {
                     iconName: "go-home"
                     text: i18n.tr("Home")
                     onTriggered: pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"))
+                },
+                Action {
+                    iconName: "history"
+                    text: i18n.tr("History")
+                    onTriggered: pStack.push(Qt.resolvedUrl("./Pages/History.qml"))
                 }
             ]
         }
@@ -77,7 +82,6 @@ MainView {
                 }
                 case WebSocket.Open: {
                     print("Open");
-                    // reconnect.running = false;
                     break;
                 }
                 case WebSocket.Closing: {
@@ -86,7 +90,6 @@ MainView {
                 }
                 case WebSocket.Error: {
                     print("Error");
-                    // reconnect.running = true;
                     break;
                 }
             }

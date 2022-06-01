@@ -103,6 +103,16 @@ async function start() {
           break;
         }
 
+        case 'GetHistory': {
+          let history = await youtube.getHistory();
+          ws.send(JSON.stringify(
+            newMessage('historyEvent', history),
+          ));
+          lastFeed = history;
+
+          break;
+        }
+
         case 'GetContinuation': {
           if (lastFeed.getContinuation == null) {
             ws.send(JSON.stringify(
@@ -139,7 +149,7 @@ async function start() {
             break;
           }
 
-          let results = await youtube.search(json.payload)
+          let results = await youtube.search(json.payload);
           ws.send(JSON.stringify(
             newMessage('searchResultsEvent', results),
           ));

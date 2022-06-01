@@ -49,7 +49,9 @@ Item {
                 }
                 // STYLE: This use of fall-through doesn't look elegent
 
-                case "feedEvent": videoModel.clear()
+                case "feedEvent":
+                    videoModel.clear();
+
                 case "continuationEvent": {
                     let feedType = json.payload.feedType;
                     let videos;

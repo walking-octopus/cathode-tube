@@ -20,22 +20,18 @@ import Ubuntu.Components 1.3
 import "../Components"
 
 Page {
-    id: searchResults
-    property string query
+    id: historyPage
 
     header: PageHeader {
         id: header
+        title: youtube.loaded ? i18n.tr("History") : i18n.tr("Loading...")
         flickable: scrollView.flickableItem
-        title: i18n.tr(`Results for «${query}»`)
 
         leadingActionBar.actions: Action {
-            iconName: "back"
-            text: i18n.tr("Back")
-            onTriggered: {
-                // FIXME: The sidebar flickers for a moment
-                pStack.removePages(searchResults);
-                pStack.push(Qt.resolvedUrl("./HomePage.qml"));
-            }
+            iconName: "navigation-menu"
+            text: i18n.tr("Menu")
+            onTriggered: pStack.removePages(historyPage)
+            visible: !primaryPage.visible
         }
     }
 
@@ -47,8 +43,17 @@ Page {
             id: view
             anchors.fill: parent            
 
-            model: youtube.results
+            model: youtube.model
             delegate: videoDelegate
+
+            onAtYEndChanged: {
+                if (view.atYEnd && youtube.model.count > 0) {
+                    print("Loading tail videos...");
+
+                    youtube.getContinuation();
+                }
+                // TODO: Add an activity indicator for continuations
+            }
         }
 
     }
@@ -57,8 +62,7 @@ Page {
         id: videoDelegate
     }
 
-    SearchModel {
+    HistoryModel {
         id: youtube
-        onReady: youtube.getSearchResults(query)
     }
 }
