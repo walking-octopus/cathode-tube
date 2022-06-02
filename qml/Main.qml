@@ -64,6 +64,7 @@ MainView {
                     text: i18n.tr("History")
                     onTriggered: pStack.push(Qt.resolvedUrl("./Pages/History.qml"))
                 },
+                // TODO: Playlist menu can't be added until upstream does it
                 Action {
                     iconName: "voicemail"
                     text: i18n.tr("Watch later")
@@ -71,6 +72,16 @@ MainView {
                         Qt.resolvedUrl("./Pages/Playlist.qml"),
                         {
                             playlist_id: "WL"
+                        }
+                    )
+                },
+                Action {
+                    iconName: "thumb-up"
+                    text: i18n.tr("Liked videos")
+                    onTriggered: pStack.push(
+                        Qt.resolvedUrl("./Pages/Playlist.qml"),
+                        {
+                            playlist_id: "LL"
                         }
                     )
                 }

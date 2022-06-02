@@ -49,6 +49,8 @@ Page {
             }
             placeholderText: i18n.tr("Search on YouTube...")
         }
+        
+        // TODO: Add search filters
     }
 
     ScrollView {
