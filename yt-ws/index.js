@@ -1,6 +1,6 @@
-const WebSocket = require('ws');
-const fs = require('fs');
-const Innertube = require('youtubei.js');
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { WebSocketServer } from 'ws';
+import Innertube from 'youtubei.js';
 
 const {env} = process;
 
@@ -8,10 +8,7 @@ const homeDir = env.HOME;
 const xdgConfig = env.XDG_CONFIG_HOME || (homeDir ? `${homeDir}/.config` : undefined);
 
 const appPath = `${xdgConfig}/cathode-tube.walking-octopus`;
-// FIXME: This lacks some error handling
-if (!fs.existsSync(appPath)){
-  fs.mkdirSync(appPath, { recursive: true });
-}
+!existsSync(appPath) && mkdirSync(appPath);
 
 function newMessage(topic, payload) {
   const message = { topic };
@@ -22,10 +19,10 @@ function newMessage(topic, payload) {
 
 async function start() {
   const credsPath = `${appPath}/yt_oauth_creds.json`;
-  const creds = (fs.existsSync(credsPath) && JSON.parse(fs.readFileSync(credsPath).toString())) || {};
+  const creds = (existsSync(credsPath) && JSON.parse(readFileSync(credsPath).toString())) || {};
   const youtube = await new Innertube();
 
-  const wss = new WebSocket.Server({ port: 8999 });
+  const wss = new WebSocketServer({ port: 8999 });
   console.log('Listening on port 8999...');
 
   wss.on('connection', async (ws) => {
@@ -47,7 +44,7 @@ async function start() {
             break;
           }
           case 'SUCCESS': {
-            fs.writeFileSync(credsPath, JSON.stringify(data.credentials));
+            writeFileSync(credsPath, JSON.stringify(data.credentials));
             console.log('Successfully signed-in, enjoy!');
             break;
           }
@@ -56,7 +53,7 @@ async function start() {
       });
 
       youtube.ev.on('update-credentials', (data) => {
-        fs.writeFileSync(credsPath, JSON.stringify(data.credentials));
+        writeFileSync(credsPath, JSON.stringify(data.credentials));
         console.log('Credentials updated!', data);
       });
 
@@ -122,7 +119,6 @@ async function start() {
         case 'GetPlaylist': {
           let playlist = await youtube.getPlaylist(json.payload);
 
-          // FIXME: This is a bit of a hack, but I'll change it later
           for (const video of playlist.items) {
             video.channel = {
               name: video.author,
@@ -133,7 +129,7 @@ async function start() {
             newMessage('playlistEvent', playlist),
           ));
           // lastFeed = playlist;
-          // FIXME: Notify the upstreem that the playlists can't be continued
+          // TODO: Notify the upstreem that the playlists can't be continued
 
           break;
         }
