@@ -22,7 +22,7 @@ Component {
     id: videoDelegate
 
     ListItem {
-        height: units.gu(12)
+        height: units.gu(13)
         onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
 
         ListItemLayout {
@@ -31,6 +31,8 @@ Component {
 
             // TODO: More text wrapping for titles is needed
             title.text: videoTitle
+            title.maximumLineCount: 2
+            title.wrapMode: Text.WordWrap
             subtitle.text: channel.name
             summary.text: `${views} | ${published}`
             summary.visible: (views != "N/A") ? true : false
@@ -38,8 +40,9 @@ Component {
             Image {
                 id: image
                 source: thumbnail
-                width: units.gu(15.64) // 16:9
-                height: units.gu(9.2)
+                width: units.gu(16*1.12) // 16:9
+                height: units.gu(9*1.12)
+                // fillMode: Image.PreserveAspectCrop
                 SlotsLayout.position: SlotsLayout.Leading
 
                 opacity: 0
