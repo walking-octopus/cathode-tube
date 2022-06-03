@@ -1,8 +1,17 @@
 const WebSocket = require('ws');
 const fs = require('fs');
 const Innertube = require('youtubei.js');
-const makeDir = require('make-dir');
-const xdg = require('@folder/xdg');
+
+const {env} = process;
+
+const homeDir = env.HOME;
+const xdgConfig = env.XDG_CONFIG_HOME || (homeDir ? `${homeDir}/.config` : undefined);
+
+const appPath = `${xdgConfig}/cathode-tube.walking-octopus`;
+// FIXME: This lacks some error handling
+if (!fs.existsSync(appPath)){
+  fs.mkdirSync(appPath, { recursive: true });
+}
 
 function newMessage(topic, payload) {
   const message = { topic };
@@ -12,14 +21,11 @@ function newMessage(topic, payload) {
 }
 
 async function start() {
-  const dirs = xdg();
-  const path = await makeDir(`${dirs.config}/cathode-tube.walking-octopus/`);
-  const credsPath = `${path}/yt_oauth_creds.json`;
-
+  const credsPath = `${appPath}/yt_oauth_creds.json`;
   const creds = (fs.existsSync(credsPath) && JSON.parse(fs.readFileSync(credsPath).toString())) || {};
   const youtube = await new Innertube();
-  const wss = new WebSocket.Server({ port: 8999 });
 
+  const wss = new WebSocket.Server({ port: 8999 });
   console.log('Listening on port 8999...');
 
   wss.on('connection', async (ws) => {

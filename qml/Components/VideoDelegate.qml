@@ -29,7 +29,6 @@ Component {
             id: layout
             anchors.centerIn: parent
 
-            // TODO: More text wrapping for titles is needed
             title.text: videoTitle
             title.maximumLineCount: 2
             title.wrapMode: Text.WordWrap
@@ -40,9 +39,11 @@ Component {
             Image {
                 id: image
                 source: thumbnail
-                width: units.gu(16*1.12) // 16:9
+                width: units.gu(16*1.12)
                 height: units.gu(9*1.12)
-                // fillMode: Image.PreserveAspectCrop
+                sourceSize.width: 336
+                sourceSize.height: 188
+                fillMode: Image.PreserveAspectFit
                 SlotsLayout.position: SlotsLayout.Leading
 
                 opacity: 0

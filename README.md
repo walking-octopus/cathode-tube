@@ -6,6 +6,7 @@ A native YouTube client for UT
 ### Dependencies
 - Docker
 - Android tools (for adb)
+- NodeJS
 - Python3 / pip3
 - Clickable (get it from [here](https://clickable-ut.dev/en/latest/index.html))
 
