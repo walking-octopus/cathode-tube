@@ -15,10 +15,12 @@
  */
 
 
-import QtQuick 2.9
+import QtQuick 2.12
+import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
 import QtWebSockets 1.1
 import "./Pages"
+import "./Components"
 
 MainView {
     id: root
@@ -29,6 +31,99 @@ MainView {
     width: units.gu(120)
     height: units.gu(75)
     anchorToKeyboard: true
+
+    Rectangle {
+        width: parent.width - sidebar.preferredWidth
+        height: units.gu(8)
+        anchors {
+            bottom: parent.bottom
+            left: parent.left // FIXME: I couldn't anchor it to the sidebar
+            right: parent.right
+        }
+        z: 100
+
+        color: "lightgrey"
+
+        
+        RowLayout {
+            anchors {
+                fill: parent
+                leftMargin: units.gu(1)
+                rightMargin: units.gu(1)
+            }
+            spacing: units.gu(1)
+            // padding: units.gu(1)
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: bottomEdge.commit()
+            }
+
+            Rectangle {
+                SlotsLayout.position: SlotsLayout.Leading
+                color: "royalblue"
+                width: units.gu(10)
+                height: units.gu(6)
+            }
+
+            Column {
+                Label {
+                    text: "Video title"
+                }
+                Label {
+                    text: "Channel"
+                }
+            }
+            
+            Item {
+                Layout.fillWidth: true
+            }
+
+            Icon {
+                name: "media-playback-pause"
+                width: units.gu(3); height: units.gu(3)
+
+                TapHandler {
+                    onTapped: print("Play")
+                }
+            }
+
+            Icon {
+                name: "close"
+                width: units.gu(3); height: units.gu(3)
+
+                TapHandler {
+                    onTapped: print("Close")
+                }
+            }
+        }
+    }
+
+    BottomEdge {
+        id: bottomEdge
+        height: parent.height - units.gu(20)
+        preloadContent: true
+        anchors.left: parent.left
+        anchors.right: parent.right
+        // FIXME: The hint stops being hidden after closing it
+        hint.status: "Hidden"
+        visible: false
+        contentComponent: Page {
+            width: bottomEdge.width
+            height: bottomEdge.height
+
+            header: PageHeader {
+                id: header
+                title: "Player"
+            }
+
+            Rectangle {
+                width: parent.width
+                height: parent.height
+                color: UbuntuColors.green
+            }
+        }
+    }
 
     AdaptivePageLayout {
         id: pStack
@@ -41,6 +136,7 @@ MainView {
         layouts: PageColumnsLayout {
             when: width > units.gu(87.5);
             PageColumn {
+                id: sidebar
                 minimumWidth: preferredWidth;
                 maximumWidth: preferredWidth;
                 preferredWidth: units.gu(20) + width/7.5;
