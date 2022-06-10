@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { WebSocketServer } from 'ws';
 import Innertube from 'youtubei.js';
 
-const {env} = process;
+const { env } = process;
 
 const homeDir = env.HOME;
 const xdgConfig = env.XDG_CONFIG_HOME || (homeDir ? `${homeDir}/.config` : undefined);
@@ -139,6 +139,7 @@ async function start() {
             ws.send(JSON.stringify(
               newMessage('error', new Error('No continuation or feed').message),
             ));
+            // FIXME: No new commands are processed after break.
             break;
           }
 
@@ -149,7 +150,6 @@ async function start() {
           ));
           lastFeed = continuation;
 
-          // FIXME: No new commands are processed after break.
           break;
         }
 

@@ -19,8 +19,6 @@ import QtQuick 2.9
 import Ubuntu.Components 1.3
 
 Component {
-    id: videoDelegate
-
     ListItem {
         height: units.gu(13)
         onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
@@ -35,6 +33,8 @@ Component {
             subtitle.text: channel.name
             summary.text: `${views} | ${published}`
             summary.visible: (views != "N/A") ? true : false
+
+            // TODO: Add leadingActions alias for watch later, downloads, and playlist managment
 
             Image {
                 id: image

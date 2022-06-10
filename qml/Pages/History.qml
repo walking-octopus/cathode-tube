@@ -44,7 +44,7 @@ Page {
             anchors.fill: parent            
 
             model: youtube.model
-            delegate: videoDelegate
+            delegate: VideoDelegate {}
 
             onAtYEndChanged: {
                 if (view.atYEnd && youtube.model.count > 0) {
@@ -56,10 +56,6 @@ Page {
             }
         }
 
-    }
-
-    VideoDelegate {
-        id: videoDelegate
     }
 
     HistoryModel {

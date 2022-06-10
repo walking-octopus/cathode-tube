@@ -65,7 +65,7 @@ Item {
                         case "Subscriptions": {
                             videos = [];
                             for (const item of json.payload.items) {
-                                print(item.date);
+                                // print(item.date);
 
                                 for (const video of item.videos) {
                                     videos.push(video);
@@ -78,7 +78,7 @@ Item {
                         case "Trending": {
                             videos = [];
                             for (const item of json.payload.now.content) {
-                                print(item.title);
+                                // print(item.title);
 
                                 for (let video of item.videos) {
                                     videos.push(video);

@@ -51,22 +51,18 @@ Page {
             anchors.fill: parent            
 
             model: youtube.model
-            delegate: videoDelegate
+            delegate: VideoDelegate {        
+                // TODO: Allow item removal/reordering
+        
+                // listItem.leadingActions: ListItemActions {
+                //     actions: [
+                //         Action {
+                //             iconName: "delete"
+                //         }
+                //     ]
+                // }
+            }
         }
-    }
-
-    VideoDelegate {
-        id: videoDelegate
-
-        // TODO: Allow item removal/reordering
-
-        // listItem.leadingActions: ListItemActions {
-        //     actions: [
-        //         Action {
-        //             iconName: "delete"
-        //         }
-        //     ]
-        // }
     }
 
     PlaylistModel {

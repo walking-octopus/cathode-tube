@@ -5,11 +5,13 @@
         <file>Pages/SplashScreen.qml</file>
         <file>Pages/LoginPage.qml</file>
         <file>Pages/SidebarPage.qml</file>
+        <file>Pages/VideoDetails.qml</file>
         <file>Pages/Search.qml</file>
         <file>Pages/SearchResults.qml</file>
         <file>Pages/History.qml</file>
         <file>Pages/Playlist.qml</file>
         <file>Components/VideoDelegate.qml</file>
+        <file>Components/MiniPlayer.qml</file>
         <file>Components/FeedModel.qml</file>
         <file>Components/SearchModel.qml</file>
         <file>Components/HistoryModel.qml</file>

@@ -50,13 +50,10 @@ Page {
             anchors.fill: parent            
 
             model: youtube.results
-            delegate: videoDelegate
+            delegate: VideoDelegate {}
+
+            // Upstream bug prevents getting search continuations
         }
-
-    }
-
-    VideoDelegate {
-        id: videoDelegate
     }
 
     SearchModel {
