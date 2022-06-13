@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-10 23:00+0000\n"
+"POT-Creation-Date: 2022-06-13 11:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:76 ../qml/Pages/HomePage.qml:32 ../qml/Pages/HomePage.qml:57
+#: ../qml/Main.qml:66
+msgid "~Download~ or watch this video"
+msgstr ""
+
+#: ../qml/Main.qml:69
+msgid "Quality"
+msgstr ""
+
+#: ../qml/Main.qml:126 ../qml/Pages/HomePage.qml:32
+#: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:81 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:131 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:87
+#: ../qml/Main.qml:137
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:97
+#: ../qml/Main.qml:147
 msgid "Liked videos"
 msgstr ""
 
@@ -85,4 +94,8 @@ msgstr ""
 
 #: ../qml/Pages/SidebarPage.qml:29 cathode-tube.desktop.in.h:1
 msgid "Cathode"
+msgstr ""
+
+#: ../qml/Pages/VideoDetails.qml:20
+msgid "Placeholder"
 msgstr ""

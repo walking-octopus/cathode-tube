@@ -16,8 +16,8 @@
 
 
 import QtQuick 2.12
-import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
 import QtWebSockets 1.1
 import "./Pages"
 import "./Components"
@@ -32,19 +32,64 @@ MainView {
     height: units.gu(75)
     anchorToKeyboard: true
 
-    MiniPlayer {}
+    MiniPlayer {
+        // onShowDetails: PopupUtils.open(selectDialog)
+        onShowDetails: bottomEdge.commit()
+    }
 
     BottomEdge {
         id: bottomEdge
-        height: parent.height - contentComponent.header.height
+
+        // height: parent.height - contentComponent.header.height
         preloadContent: true
         anchors.left: parent.left
         anchors.right: parent.right
         // FIXME: The hint stops being hidden after closing it
         hint.status: "Hidden"
-        visible: false
-        contentComponent: VideoDetails {}
+        contentComponent: VideoDetails {
+            id: videoPage
+        }
     }
+
+    Component {
+        id: selectDialog
+
+        Dialog {
+            id: dialogue
+            title: video_title
+            text: i18n.tr("~Download~ or watch this video")
+
+            OptionSelector {
+                text: i18n.tr("Quality")
+                model: [
+                    '1080p',
+                    '720p',
+                    '480p',
+                    '360p',
+                    '240p',
+                    '140p'
+                ]
+            }
+            Button {
+                text: "Play"
+                color: theme.palette.normal.positive
+                onClicked: {
+                    videoPage.video_id = video_id;
+                    bottomEdge.commit();
+                    PopupUtils.close(dialogue);
+                }
+            }
+            // Button {
+            //     text: "Download"
+            //     color: UbuntuColors.orange
+            //     onClicked: PopupUtils.close(dialogue)
+            // }
+            Button {
+                text: "Cancel"
+                onClicked: PopupUtils.close(dialogue)
+            }
+        }
+   }
 
     AdaptivePageLayout {
         id: pStack

@@ -24,7 +24,7 @@ Page {
         leadingActionBar.actions: null
     }
 
-    Rectangle {
+    Item {
         id: splashScreen
         anchors.fill: parent
 

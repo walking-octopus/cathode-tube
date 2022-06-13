@@ -17,8 +17,12 @@
 import QtQuick 2.12
 import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
+// import QtGraphicalEffects 1.0
+import Ubuntu.Components.Popups 1.3
 
 Rectangle {
+    signal showDetails()
+
     width: parent.width - sidebar.preferredWidth
     height: units.gu(8)
     anchors {
@@ -28,7 +32,7 @@ Rectangle {
     }
     z: 25
 
-    color: theme.palette.normal.base
+    color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "#EAE9E7" : "#444444"
     // visible: false
     
     RowLayout {
@@ -38,10 +42,14 @@ Rectangle {
             rightMargin: units.gu(2)
         }
         spacing: units.gu(1)
-
+        
         MouseArea {
-            anchors.fill: parent
-            onClicked: bottomEdge.commit()
+            anchors.fill: parent // FIXME: Anchors don't work with layouts
+            onClicked: showDetails()
+        }
+
+        TapHandler {
+            onTapped: print("Play")
         }
 
         Rectangle {

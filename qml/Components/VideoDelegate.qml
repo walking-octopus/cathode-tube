@@ -17,11 +17,19 @@
 
 import QtQuick 2.9
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
+
 
 Component {
     ListItem {
         height: units.gu(13)
-        onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
+        // onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
+        
+        // FIXME: It doesn't communicate these properties
+        onClicked: PopupUtils.open(selectDialog, null, {
+            'video_id': id,
+            'video_title': videoTitle
+        })
 
         ListItemLayout {
             id: layout
