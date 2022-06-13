@@ -15,7 +15,6 @@
  */
 
 import QtQuick 2.12
-import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
 // import QtGraphicalEffects 1.0
 import Ubuntu.Components.Popups 1.3
@@ -56,8 +55,7 @@ Rectangle {
     }
 
     color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "white" : "#3B3B3B" // Dark color might look too gray
-    visible: !!video_id
-    // TODO: Add a visibility transition
+    visible: !!video_id // TODO: Add a visibility transition
     
     MouseArea {
         anchors.fill: layout
@@ -95,7 +93,13 @@ Rectangle {
             SlotsLayout.position: SlotsLayout.Trailing
 
             TapHandler {
-                onTapped: print("Close") // TODO: Add a functional stop button
+                onTapped: {
+                    playingVideo.video_id = '';
+                    playingVideo.video_title = '';
+                    playingVideo.channel_name = '';
+                    playingVideo.thumbnail_url = '';
+                    playingVideo.quality = '';
+                }
             }
         }
     }

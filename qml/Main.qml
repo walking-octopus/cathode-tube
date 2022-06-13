@@ -17,7 +17,6 @@
 
 import QtQuick 2.12
 import Ubuntu.Components 1.3
-import Ubuntu.Components.Popups 1.3
 import QtWebSockets 1.1
 import "./Pages"
 import "./Components"
@@ -27,17 +26,28 @@ MainView {
     objectName: "mainView"
     applicationName: "cathode-tube.walking-octopus"
     automaticOrientation: true
+    anchorToKeyboard: true
 
     width: units.gu(120)
     height: units.gu(75)
-    anchorToKeyboard: true
+
+    Item {
+        id: playingVideo
+
+        property string video_id
+        property string video_title
+        property string channel_name
+        property string thumbnail_url
+        property string quality
+    }
 
     MiniPlayer {
         id: miniPlayer
-        video_id: ''
-        video_title: ''
-        channel_name: ''
-        thumbnail_url: ''
+
+        video_id: playingVideo.video_id
+        video_title: playingVideo.video_title
+        channel_name: playingVideo.channel_name
+        thumbnail_url: playingVideo.thumbnail_url
 
         onShowDetails: bottomEdge.commit()
     }
@@ -55,66 +65,17 @@ MainView {
         contentComponent: VideoDetails {
             id: videoPage
             
-            // Since I can't modify these propetries directly, I get them from miniPlayer
-            video_title: miniPlayer.video_title
-            video_id: miniPlayer.video_id
-            channel_name: miniPlayer.channel_name
-            thumbnail_url: miniPlayer.thumbnail_url
+            video_title: playingVideo.video_title
+            video_id: playingVideo.video_id
+            channel_name: playingVideo.channel_name
+            thumbnail_url: playingVideo.thumbnail_url
+            quality: playingVideo.quality
         }
     }
 
-    Component {
+    PreplayDialog {
         id: preplayDialog
-        
-        Dialog {
-            id: dialog
-            property string video_title: ''
-            property string video_id: ''
-            property string channel_name: ''
-            property string thumbnail_url: ''
-
-            title: video_title
-            text: i18n.tr("~Download~ or watch this video")
-
-            // TODO: Communicate the selected quality to the VideoDetails
-            OptionSelector {
-                text: i18n.tr("Quality")
-                model: [
-                    '1080p',
-                    '720p',
-                    '480p',
-                    '360p',
-                    '240p',
-                    '140p'
-                ]
-            }
-            Button {
-                text: i18n.tr("Play")
-                color: theme.palette.normal.positive
-
-                onClicked: {
-                    miniPlayer.video_id = video_id;
-                    miniPlayer.video_title = video_title;
-                    miniPlayer.channel_name = channel_name;
-                    miniPlayer.thumbnail_url = thumbnail_url;
-
-                    bottomEdge.commit();
-                    PopupUtils.close(dialog);
-                }
-            }
-            // Button {
-            //     text: "Download"
-
-            //     color: UbuntuColors.orange
-            //     onClicked: PopupUtils.close(dialog)
-            // }
-
-            Button {
-                text: i18n.tr("Cancel")
-                onClicked: PopupUtils.close(dialog)
-            }
-        }
-   }
+    }
 
     AdaptivePageLayout {
         id: pStack

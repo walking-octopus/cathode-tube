@@ -11,6 +11,7 @@
         <file>Pages/History.qml</file>
         <file>Pages/Playlist.qml</file>
         <file>Components/VideoDelegate.qml</file>
+        <file>Components/PreplayDialog.qml</file>
         <file>Components/MiniPlayer.qml</file>
         <file>Components/FeedModel.qml</file>
         <file>Components/SearchModel.qml</file>

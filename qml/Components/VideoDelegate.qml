@@ -23,9 +23,7 @@ import Ubuntu.Components.Popups 1.3
 Component {
     ListItem {
         height: units.gu(13)
-        // onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
         
-        // FIXME: It doesn't communicate these properties
         onClicked: PopupUtils.open(preplayDialog, null, {
             'video_id': id,
             'video_title': videoTitle,
