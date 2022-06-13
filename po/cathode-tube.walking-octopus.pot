@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-13 14:27+0000\n"
+"POT-Creation-Date: 2022-06-13 15:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,36 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:71
+#: ../qml/Main.qml:77
 msgid "~Download~ or watch this video"
 msgstr ""
 
-#: ../qml/Main.qml:74
+#: ../qml/Main.qml:80
 msgid "Quality"
 msgstr ""
 
-#: ../qml/Main.qml:137 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:91
+msgid "Play"
+msgstr ""
+
+#: ../qml/Main.qml:112
+msgid "Cancel"
+msgstr ""
+
+#: ../qml/Main.qml:145 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:142 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:150 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:148
+#: ../qml/Main.qml:156
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:158
+#: ../qml/Main.qml:166
 msgid "Liked videos"
 msgstr ""
 

@@ -2,8 +2,10 @@ import QtQuick 2.12
 import Ubuntu.Components 1.3
 
 Page {
-    property string video_id: ''
+    property string video_id
     property string video_title: i18n.tr('No media')
+    property string channel_name
+    property string thumbnail_url
 
     width: bottomEdge.width
     height: bottomEdge.height
@@ -20,7 +22,7 @@ Page {
             right: parent.right
             bottom: parent.bottom
         }
-        text: video_id
+        text: `${video_id}`
         font.pixelSize: units.gu(3)
 
         verticalAlignment: Label.AlignVCenter

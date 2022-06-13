@@ -36,6 +36,8 @@ MainView {
         id: miniPlayer
         video_id: ''
         video_title: ''
+        channel_name: ''
+        thumbnail_url: ''
 
         onShowDetails: bottomEdge.commit()
     }
@@ -56,20 +58,25 @@ MainView {
             // Since I can't modify these propetries directly, I get them from miniPlayer
             video_title: miniPlayer.video_title
             video_id: miniPlayer.video_id
+            channel_name: miniPlayer.channel_name
+            thumbnail_url: miniPlayer.thumbnail_url
         }
     }
 
     Component {
-        id: selectDialog
+        id: preplayDialog
         
         Dialog {
-            id: dialogue
+            id: dialog
             property string video_title: ''
             property string video_id: ''
+            property string channel_name: ''
+            property string thumbnail_url: ''
 
             title: video_title
             text: i18n.tr("~Download~ or watch this video")
 
+            // TODO: Communicate the selected quality to the VideoDetails
             OptionSelector {
                 text: i18n.tr("Quality")
                 model: [
@@ -82,27 +89,29 @@ MainView {
                 ]
             }
             Button {
-                text: "Play"
+                text: i18n.tr("Play")
                 color: theme.palette.normal.positive
 
                 onClicked: {
                     miniPlayer.video_id = video_id;
                     miniPlayer.video_title = video_title;
+                    miniPlayer.channel_name = channel_name;
+                    miniPlayer.thumbnail_url = thumbnail_url;
 
                     bottomEdge.commit();
-                    PopupUtils.close(dialogue);
+                    PopupUtils.close(dialog);
                 }
             }
             // Button {
             //     text: "Download"
 
             //     color: UbuntuColors.orange
-            //     onClicked: PopupUtils.close(dialogue)
+            //     onClicked: PopupUtils.close(dialog)
             // }
 
             Button {
-                text: "Cancel"
-                onClicked: PopupUtils.close(dialogue)
+                text: i18n.tr("Cancel")
+                onClicked: PopupUtils.close(dialog)
             }
         }
    }

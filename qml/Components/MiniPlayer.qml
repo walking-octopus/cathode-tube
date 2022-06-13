@@ -26,10 +26,11 @@ Rectangle {
 
     property string video_id
     property string video_title
+    property string channel_name
+    property string thumbnail_url
 
     signal showDetails()
 
-    // TODO: Add margin
     width: parent.width
     height: units.gu(8)
     anchors {
@@ -40,6 +41,7 @@ Rectangle {
     }
     z: 25
 
+    // FIXME: The shadow is not in grid units
     layer.enabled: true
     layer.effect: DropShadow{
         anchors.fill: bgRectangle
@@ -53,46 +55,34 @@ Rectangle {
         color: "#80000000"
     }
 
-    color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "white" : "#3B3B3B"
-    // visible: !!video_id
+    color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "white" : "#3B3B3B" // Dark color might look too gray
+    visible: !!video_id
+    // TODO: Add a visibility transition
     
-    // TODO: Use slot layout
-    RowLayout {
-        anchors {
-            fill: parent
-            leftMargin: units.gu(2)
-            rightMargin: units.gu(2)
-        }
-        spacing: units.gu(1)
-        
-        MouseArea {
-            // FIXME: Anchors don't work with layouts which breaks it when toggling visibility
-            anchors.fill: parent
-            onClicked: showDetails()
-        }
+    MouseArea {
+        anchors.fill: layout
+        onClicked: showDetails()
+    }
 
-        Rectangle {
-            color: "royalblue"
+    // Using ListItemLayout feels like a hack, but seems to work fine
+    ListItemLayout {
+        id: layout
+        
+        Image {
+            source: thumbnail_url
+
             width: units.gu(10)
             height: units.gu(6)
+            SlotsLayout.position: SlotsLayout.Leading
         }
 
-        Column {
-            Label {
-                text: video_title
-            }
-            Label {
-                text: "Channel"
-            }
-        }
-        
-        Item {
-            Layout.fillWidth: true
-        }
+        title.text: video_title
+        subtitle.text: channel_name
 
         Icon {
             name: "media-playback-pause"
             width: units.gu(3); height: units.gu(3)
+            SlotsLayout.position: SlotsLayout.Trailing
 
             TapHandler {
                 onTapped: print("Play")
@@ -102,9 +92,10 @@ Rectangle {
         Icon {
             name: "close"
             width: units.gu(3); height: units.gu(3)
+            SlotsLayout.position: SlotsLayout.Trailing
 
             TapHandler {
-                onTapped: print("Close")
+                onTapped: print("Close") // TODO: Add a functional stop button
             }
         }
     }

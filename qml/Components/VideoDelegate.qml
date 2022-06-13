@@ -26,9 +26,11 @@ Component {
         // onClicked: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${id}`)
         
         // FIXME: It doesn't communicate these properties
-        onClicked: PopupUtils.open(selectDialog, null, {
+        onClicked: PopupUtils.open(preplayDialog, null, {
             'video_id': id,
-            'video_title': videoTitle
+            'video_title': videoTitle,
+            'channel_name': channel.name,
+            'thumbnail_url': thumbnail
         })
 
         ListItemLayout {
@@ -39,7 +41,7 @@ Component {
             title.maximumLineCount: 2
             title.wrapMode: Text.WordWrap
             subtitle.text: channel.name
-            summary.text: `${views} | ${published}`
+            summary.text: [views, published].join(' | ')
             summary.visible: (views != "N/A") ? true : false
 
             // TODO: Add leadingActions alias for watch later, downloads, and playlist managment
