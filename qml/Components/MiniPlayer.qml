@@ -19,22 +19,44 @@ import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
 // import QtGraphicalEffects 1.0
 import Ubuntu.Components.Popups 1.3
+import QtGraphicalEffects 1.12
 
 Rectangle {
+    id: bgRectangle
+
+    property string video_id
+    property string video_title
+
     signal showDetails()
 
-    width: parent.width - sidebar.preferredWidth
+    // TODO: Add margin
+    width: parent.width
     height: units.gu(8)
     anchors {
         bottom: parent.bottom
         left: parent.left // FIXME: I couldn't anchor it to the sidebar
         right: parent.right
+        margins: units.gu(1.5)
     }
     z: 25
 
-    color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "#EAE9E7" : "#444444"
-    // visible: false
+    layer.enabled: true
+    layer.effect: DropShadow{
+        anchors.fill: bgRectangle
+        visible: bgRectangle.visible
+
+        source: bgRectangle
+
+        horizontalOffset: 3
+        verticalOffset: 3
+        radius: 8.0
+        color: "#80000000"
+    }
+
+    color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "white" : "#3B3B3B"
+    // visible: !!video_id
     
+    // TODO: Use slot layout
     RowLayout {
         anchors {
             fill: parent
@@ -44,16 +66,12 @@ Rectangle {
         spacing: units.gu(1)
         
         MouseArea {
-            anchors.fill: parent // FIXME: Anchors don't work with layouts
+            // FIXME: Anchors don't work with layouts which breaks it when toggling visibility
+            anchors.fill: parent
             onClicked: showDetails()
         }
 
-        TapHandler {
-            onTapped: print("Play")
-        }
-
         Rectangle {
-            SlotsLayout.position: SlotsLayout.Leading
             color: "royalblue"
             width: units.gu(10)
             height: units.gu(6)
@@ -61,7 +79,7 @@ Rectangle {
 
         Column {
             Label {
-                text: "Video title"
+                text: video_title
             }
             Label {
                 text: "Channel"

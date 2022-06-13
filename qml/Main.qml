@@ -33,29 +33,40 @@ MainView {
     anchorToKeyboard: true
 
     MiniPlayer {
-        // onShowDetails: PopupUtils.open(selectDialog)
+        id: miniPlayer
+        video_id: ''
+        video_title: ''
+
         onShowDetails: bottomEdge.commit()
     }
 
     BottomEdge {
         id: bottomEdge
+        anchors {
+            left: parent.left
+            right: parent.right
+        }
 
-        // height: parent.height - contentComponent.header.height
+        hint.status: "Hidden" // FIXME: The hint stops being hidden after closing it
         preloadContent: true
-        anchors.left: parent.left
-        anchors.right: parent.right
-        // FIXME: The hint stops being hidden after closing it
-        hint.status: "Hidden"
+
         contentComponent: VideoDetails {
             id: videoPage
+            
+            // Since I can't modify these propetries directly, I get them from miniPlayer
+            video_title: miniPlayer.video_title
+            video_id: miniPlayer.video_id
         }
     }
 
     Component {
         id: selectDialog
-
+        
         Dialog {
             id: dialogue
+            property string video_title: ''
+            property string video_id: ''
+
             title: video_title
             text: i18n.tr("~Download~ or watch this video")
 
@@ -73,17 +84,22 @@ MainView {
             Button {
                 text: "Play"
                 color: theme.palette.normal.positive
+
                 onClicked: {
-                    videoPage.video_id = video_id;
+                    miniPlayer.video_id = video_id;
+                    miniPlayer.video_title = video_title;
+
                     bottomEdge.commit();
                     PopupUtils.close(dialogue);
                 }
             }
             // Button {
             //     text: "Download"
+
             //     color: UbuntuColors.orange
             //     onClicked: PopupUtils.close(dialogue)
             // }
+
             Button {
                 text: "Cancel"
                 onClicked: PopupUtils.close(dialogue)

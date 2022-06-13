@@ -2,14 +2,15 @@ import QtQuick 2.12
 import Ubuntu.Components 1.3
 
 Page {
-    property string video_id
+    property string video_id: ''
+    property string video_title: i18n.tr('No media')
 
     width: bottomEdge.width
     height: bottomEdge.height
 
     header: PageHeader {
         id: header
-        title: "Player"
+        title: video_title
     }
 
     Label {
@@ -19,7 +20,7 @@ Page {
             right: parent.right
             bottom: parent.bottom
         }
-        text: i18n.tr('Placeholder')
+        text: video_id
         font.pixelSize: units.gu(3)
 
         verticalAlignment: Label.AlignVCenter
