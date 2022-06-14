@@ -1,5 +1,17 @@
 {
-    "files.associations": {
-        "*.yaml": "home-assistant"
+    "spellright.language": [
+        "en-US-9-0."
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
+        "javascript",
+        "qml"
+    ],
+    "spellright.parserByClass": {
+        "qml": {
+            "parser": "code"
+        }
     }
 }

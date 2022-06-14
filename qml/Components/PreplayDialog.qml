@@ -46,11 +46,11 @@ Component {
                 Layout.fillWidth: true
 
                 onClicked: {
-                    playingVideo.video_id = video_id;
                     playingVideo.video_title = video_title;
                     playingVideo.channel_name = channel_name;
                     playingVideo.thumbnail_url = thumbnail_url;
                     playingVideo.quality = qualitySelector.model[qualitySelector.selectedIndex];
+                    playingVideo.video_id = video_id;
 
                     bottomEdge.commit();
                     PopupUtils.close(dialog);

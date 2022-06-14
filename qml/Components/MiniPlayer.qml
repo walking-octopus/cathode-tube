@@ -48,9 +48,9 @@ Rectangle {
 
         source: bgRectangle
 
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8.0
+        horizontalOffset: units.gu(0.38)
+        verticalOffset: units.gu(0.38)
+        radius: units.gu(1)
         color: "#80000000"
     }
 

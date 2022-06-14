@@ -115,16 +115,16 @@ async function start() {
 
           break;
         }
-        
+
         case 'GetPlaylist': {
-          let playlist = await youtube.getPlaylist(json.payload);
+          const playlist = await youtube.getPlaylist(json.payload);
 
           for (const video of playlist.items) {
             video.channel = {
               name: video.author,
             };
           }
-          
+
           ws.send(JSON.stringify(
             newMessage('playlistEvent', playlist),
           ));
@@ -139,7 +139,7 @@ async function start() {
             ws.send(JSON.stringify(
               newMessage('error', new Error('No continuation or feed').message),
             ));
-            // FIXME: No new commands are processed after break.
+            // FIXME: No new commands are processed after `break`. Maybe `continue` would help.
             break;
           }
 
@@ -154,11 +154,11 @@ async function start() {
         }
 
         case 'GetSearchSuggestions': {
-          if (json.payload == "") {
+          if (json.payload === '') {
             break;
           }
 
-          let suggestions = await youtube.getSearchSuggestions(json.payload)
+          const suggestions = await youtube.getSearchSuggestions(json.payload);
           ws.send(JSON.stringify(
             newMessage('searchSuggestionsEvent', suggestions),
           ));
@@ -167,13 +167,43 @@ async function start() {
         }
 
         case 'GetSearchResults': {
-          if (json.payload == "") {
+          if (json.payload === '') {
             break;
           }
 
-          let results = await youtube.search(json.payload);
+          const results = await youtube.search(json.payload);
           ws.send(JSON.stringify(
             newMessage('searchResultsEvent', results),
+          ));
+
+          break;
+        }
+
+        case 'GetStreamingData': {
+          if (json.payload.id === '') {
+            break;
+          }
+
+          const qualityData = await youtube.getStreamingData(json.payload.id, {
+            quality: json.payload.quality,
+          });
+
+          ws.send(JSON.stringify(
+            newMessage('streamingDataEvent', qualityData),
+          ));
+
+          break;
+        }
+
+        case 'GetVideoDetails': {
+          if (json.payload.id === '') {
+            break;
+          }
+          console.log(json);
+
+          const videoDetail = await youtube.getDetails(json.payload.id);
+          ws.send(JSON.stringify(
+            newMessage('videoDetailsEvent', videoDetail),
           ));
 
           break;

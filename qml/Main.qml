@@ -65,8 +65,8 @@ MainView {
         contentComponent: VideoDetails {
             id: videoPage
             
-            video_title: playingVideo.video_title
             video_id: playingVideo.video_id
+            video_title: playingVideo.video_title
             channel_name: playingVideo.channel_name
             thumbnail_url: playingVideo.thumbnail_url
             quality: playingVideo.quality

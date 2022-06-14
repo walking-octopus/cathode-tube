@@ -17,8 +17,11 @@
 
 import QtQuick 2.12
 import Ubuntu.Components 1.3
+import QtWebSockets 1.1
 
 Page {
+    id: videoDetails
+
     property string video_id
     property string video_title
     property string channel_name
@@ -34,6 +37,7 @@ Page {
     }
 
     Label {
+        id: label
         anchors {
             top: header.bottom
             left: parent.left
@@ -49,5 +53,71 @@ Page {
 
         verticalAlignment: Label.AlignVCenter
         horizontalAlignment: Label.AlignHCenter
+    }
+
+    Connections {
+        target: videoDetails
+
+        onVideo_idChanged: {
+            websocket.sendTextMessage(
+                JSON.stringify({
+                    topic: "GetStreamingData",
+                    payload: {
+                        id: video_id,
+                        quality: quality,
+                    },
+                }),
+            );
+            websocket.sendTextMessage(
+                JSON.stringify({
+                    topic: "GetVideoDetails",
+                    payload: {
+                        id: video_id,
+                    },
+                }),
+            );
+        }
+    }
+
+    WebSocket {
+        id: websocket
+        url: "ws://localhost:8999"
+        active: serverReady // FIXME: Activate the server 100ms after the main one
+
+        onStatusChanged: function(status) {
+            switch (status) {
+                case WebSocket.Connecting: {
+                    print("Player WS connecting...");
+                    break;
+                }
+                case WebSocket.Open: {
+                    print("Player WS open");
+                    break;
+                }
+                case WebSocket.Closing: {
+                    print("Player WS closed");
+                    break;
+                }
+                case WebSocket.Error: {
+                    print("Player WS error");
+                    break;
+                }
+            }
+        }
+
+        onTextMessageReceived: function(message) {
+            let json = JSON.parse(message);
+
+            switch (json.topic) {
+                case "streamingDataEvent": {
+                    print(json.payload.selected_format.url);
+                    break;
+                }
+                case "videoDetailsEvent": {
+                    print(JSON.stringify(json.payload));
+                    break;
+                }
+            }
+        }
     }
 }
