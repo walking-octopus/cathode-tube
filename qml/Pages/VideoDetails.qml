@@ -18,9 +18,12 @@
 import QtQuick 2.12
 import Ubuntu.Components 1.3
 import QtWebSockets 1.1
+import QtWebEngine 1.10
 
 Page {
     id: videoDetails
+
+    property bool main_ws_ready: false
 
     property string video_id
     property string video_title
@@ -28,37 +31,40 @@ Page {
     property string thumbnail_url
     property string quality
 
+    property string video_source
+
     width: bottomEdge.width
     height: bottomEdge.height
 
+    flickable: null
     header: PageHeader {
         id: header
         title: video_title
     }
 
-    Label {
-        id: label
+    WebEngineView {
+        id: webview
         anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
+            fill: parent
+            topMargin: header.height
         }
-        text: !!video_id ? `Playing ${video_id} at ${quality}...` : i18n.tr('No media')
-        font.pixelSize: units.gu(3)
+        // TODO: Handle fullscreen request
 
-        TapHandler {
-            onTapped: Qt.openUrlExternally(`https://www.youtube.com/watch?v=${video_id}`)
-        }
-
-        verticalAlignment: Label.AlignVCenter
-        horizontalAlignment: Label.AlignHCenter
+        zoomFactor: units.gu(1) / 8
+        url: video_source
     }
 
     Connections {
         target: videoDetails
 
         onVideo_idChanged: {
+            if (video_id == "") {
+                print("Closing the video...")
+                webview.url = "about:black";
+                return;
+            }
+
+            print("Fetching the info..")
             websocket.sendTextMessage(
                 JSON.stringify({
                     topic: "GetStreamingData",
@@ -79,10 +85,16 @@ Page {
         }
     }
 
+    // FIXME: Since the first websocket to connect has to always be the main one, I need add a small delay.
+    Timer {
+        interval: 100
+        running: main_ws_ready
+        onTriggered: websocket.active = true
+    }
+
     WebSocket {
         id: websocket
         url: "ws://localhost:8999"
-        active: serverReady // FIXME: Activate the server 100ms after the main one
 
         onStatusChanged: function(status) {
             switch (status) {
@@ -110,12 +122,16 @@ Page {
 
             switch (json.topic) {
                 case "streamingDataEvent": {
-                    print(json.payload.selected_format.url);
+                    video_source = json.payload.selected_format.url;
+                    print(video_source);
                     break;
                 }
                 case "videoDetailsEvent": {
                     print(JSON.stringify(json.payload));
                     break;
+                }
+                case "error": {
+                    print(json.payload)
                 }
             }
         }

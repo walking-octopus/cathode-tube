@@ -39,7 +39,7 @@ Component {
             title.maximumLineCount: 2
             title.wrapMode: Text.WordWrap
             subtitle.text: channel.name
-            summary.text: [views, published].join(' | ')
+            summary.text: [views, published].filter(element => Boolean(element)).join(' | ')
             summary.visible: (views != "N/A") ? true : false
 
             // TODO: Add leadingActions alias for watch later, downloads, and playlist managment

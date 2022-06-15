@@ -184,13 +184,20 @@ async function start() {
             break;
           }
 
-          const qualityData = await youtube.getStreamingData(json.payload.id, {
-            quality: json.payload.quality,
-          });
+          try {
+            const qualityData = await youtube.getStreamingData(json.payload.id, {
+              quality: json.payload.quality,
+            });
 
-          ws.send(JSON.stringify(
-            newMessage('streamingDataEvent', qualityData),
-          ));
+            ws.send(JSON.stringify(
+              newMessage('streamingDataEvent', qualityData),
+            ));
+          }
+          catch {
+            ws.send(JSON.stringify(
+              newMessage('error', new Error("Can't fetch video stream").message),
+            ));
+          }
 
           break;
         }

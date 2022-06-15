@@ -53,7 +53,7 @@ Item {
                                 "videoTitle": video.title,
                                 "channel": video.channel,
                                 "thumbnail": video.metadata.thumbnail.url,
-                                "published": video.metadata.published,
+                                // "published": video.metadata.published,
                                 "views": video.metadata.view_count,
                                 "id": video.id
                             });
@@ -78,7 +78,7 @@ Item {
         }
         loaded = false;
 
-        websocket.sendTextMessage('{"topic": "GetHistory", "payload": ""}');
+        websocket.sendTextMessage('{"topic": "GetHistory"}');
     }
 
     function getContinuation() {

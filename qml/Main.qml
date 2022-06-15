@@ -64,7 +64,8 @@ MainView {
 
         contentComponent: VideoDetails {
             id: videoPage
-            
+
+            main_ws_ready: websocket.active
             video_id: playingVideo.video_id
             video_title: playingVideo.video_title
             channel_name: playingVideo.channel_name
