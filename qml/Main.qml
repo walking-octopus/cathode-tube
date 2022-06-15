@@ -60,7 +60,7 @@ MainView {
         }
 
         hint.status: "Hidden" // FIXME: The hint stops being hidden after closing it
-        preloadContent: true
+        preloadContent: true // FIXME: Do not preload the VideoDetails
 
         contentComponent: VideoDetails {
             id: videoPage

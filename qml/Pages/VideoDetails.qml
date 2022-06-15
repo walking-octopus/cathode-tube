@@ -16,6 +16,7 @@
 
 
 import QtQuick 2.12
+import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
 import QtWebSockets 1.1
 import QtWebEngine 1.10
@@ -27,6 +28,7 @@ Page {
 
     property string video_id
     property string video_title
+    property string description
     property string channel_name
     property string thumbnail_url
     property string quality
@@ -42,16 +44,66 @@ Page {
         title: video_title
     }
 
-    WebEngineView {
-        id: webview
+    // GridLayout {
+        // columns: root.width > units.gu(70) ? 2 : 1
+    ColumnLayout {
+        // id: layout
         anchors {
-            fill: parent
             topMargin: header.height
+            fill: parent
         }
-        // TODO: Handle fullscreen request
+        
+        Item {
+            Layout.fillWidth: true
+            Layout.preferredHeight: width / 16.0 * 9.0
+            Layout.maximumHeight: root.height
+            
+            WebEngineView {
+                id: webview
+                anchors.fill: parent
 
-        zoomFactor: units.gu(1) / 8
-        url: video_source
+                // TODO: Handle fullscreen request
+        
+                zoomFactor: units.gu(1) / 8
+                url: !!video_source ? video_source : "about:blank"
+            }
+        }
+
+        // FIXME: Use a scroll view
+
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.margins: units.gu(3)
+
+            Rectangle {
+                color: "red"
+
+                height: units.gu(6); width: height
+            }
+
+            ColumnLayout {
+                Label {
+                    text: channel_name
+                }
+
+                Button {
+                    text: "Subscribe"
+                    color: UbuntuColors.red
+                }
+            }
+        }
+        
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            
+            Label {
+                text: description
+                wrapMode: "WordWrap"
+                anchors.fill: parent
+                anchors.margins: units.gu(2)
+            }
+        }
     }
 
     Connections {
@@ -60,8 +112,7 @@ Page {
         onVideo_idChanged: {
             if (video_id == "") {
                 print("Closing the video...")
-                webview.url = "about:black";
-                return;
+                video_source = "";
             }
 
             print("Fetching the info..")
@@ -85,7 +136,7 @@ Page {
         }
     }
 
-    // FIXME: Since the first websocket to connect has to always be the main one, I need add a small delay.
+    // FIXME: Since the first websocket to connect has to always be the main one, I need add a small delay. This won't be nessesery without preload
     Timer {
         interval: 100
         running: main_ws_ready
@@ -128,6 +179,7 @@ Page {
                 }
                 case "videoDetailsEvent": {
                     print(JSON.stringify(json.payload));
+                    description = json.payload.description;
                     break;
                 }
                 case "error": {

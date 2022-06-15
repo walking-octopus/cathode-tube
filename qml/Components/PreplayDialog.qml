@@ -51,7 +51,7 @@ Component {
                     playingVideo.thumbnail_url = thumbnail_url;
                     playingVideo.quality = qualitySelector.model[qualitySelector.selectedIndex];
                     playingVideo.video_id = video_id;
-
+                    
                     bottomEdge.commit();
                     PopupUtils.close(dialog);
                 }
