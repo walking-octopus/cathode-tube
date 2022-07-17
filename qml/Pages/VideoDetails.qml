@@ -74,6 +74,7 @@ Page {
                          }
                          request.accept()
                  }
+               }
         
                 zoomFactor: units.gu(1) / 8
                 url: !!video_source ? video_source : "about:blank"
