@@ -63,6 +63,17 @@ Page {
                 anchors.fill: parent
 
                 // TODO: Handle fullscreen request
+                settings.fullScreenSupportEnabled:true
+
+                onFullScreenRequested: {
+                         if(request.toggleOn) {
+                                 window.showFullScreen()
+                         }
+                         else {
+                                 window.showNormal()
+                         }
+                         request.accept()
+                 }
         
                 zoomFactor: units.gu(1) / 8
                 url: !!video_source ? video_source : "about:blank"
