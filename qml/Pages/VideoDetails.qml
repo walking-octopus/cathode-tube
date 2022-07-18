@@ -62,19 +62,18 @@ Page {
                 id: webview
                 anchors.fill: parent
 
-                // TODO: Handle fullscreen request
+                // FIXME: The layout is still out of frame and the webview is upscaled,
                 settings.fullScreenSupportEnabled:true
 
                 onFullScreenRequested: {
-                         if(request.toggleOn) {
-                                 window.showFullScreen()
-                         }
-                         else {
-                                 window.showNormal()
-                         }
-                         request.accept()
-                 }
-               }
+                    if(request.toggleOn) {
+                        window.showFullScreen();
+                    } else {
+                        window.showNormal();
+                    }
+
+                    request.accept()
+                }
         
                 zoomFactor: units.gu(1) / 8
                 url: !!video_source ? video_source : "about:blank"
