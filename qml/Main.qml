@@ -63,9 +63,12 @@ MainView {
 
         // Delay loading bottom edge until after the main WS is open
         // to save on startup time
+
+        // FIXME: Why even load it if nothing's playing?
+
         preloadContent: false
         Timer {
-            interval: 5
+            interval: 8
             running: websocket.status == WebSocket.Open
             onTriggered: bottomEdge.preloadContent = true
         }

@@ -23,14 +23,17 @@ import QtWebEngine 1.10
 
 Page {
     id: videoDetails
+
+    // These should be grouped into something like a turple, since you need both to stream a video
     property string video_id
-    property string video_title
-    property string description
-    property string channel_name
-    property string thumbnail_url
     property string quality
 
+    property string video_title
+    property string channel_name
+    property string thumbnail_url
+
     property string video_source
+    property var videoData
 
     width: bottomEdge.width
     height: bottomEdge.height
@@ -42,34 +45,36 @@ Page {
     }
 
     GridLayout {
-        columns: root.width > units.gu(70) ? 2 : 1
-    //ColumnLayout {
+        id: layout
+        columns: root.width > units.gu(100) && !videoPlayer.isFullScreen ? 2 : 1
+
+        // FIXME: Setting the columns to 1 is a temporary hack for full screen.
+
         anchors {
-            topMargin: header.height
+            topMargin: header.height // FIXME: The player is partialy covered in full-screen mode.
             fill: parent
         }
         
         Item {
             Layout.fillWidth: true
             Layout.preferredHeight: width / 16.0 * 9.0
-            Layout.maximumHeight: root.height
             
             WebEngineView {
-                id: webview
+                id: videoPlayer
                 anchors.fill: parent
 
                 // FIXME: The layout is still out of frame and the webview is upscaled, which leads to a lower resolution.
 
-                settings.fullScreenSupportEnabled:true
+                settings.fullScreenSupportEnabled: true
 
                 onFullScreenRequested: {
-                    if(request.toggleOn) {
+                    if (request.toggleOn) {
                         window.showFullScreen();
                     } else {
                         window.showNormal();
                     }
 
-                    request.accept()
+                    request.accept();
                 }
         
                 zoomFactor: units.gu(1) / 8
@@ -77,39 +82,56 @@ Page {
             }
         }
 
-        // FIXME: Use a scroll view
+        // FIXME: Use a scroll view.
+        // Also, somehow you can scroll the feed, even when it's covered by the video player
 
-        RowLayout {
-            Layout.fillWidth: true
-            Layout.margins: units.gu(3)
+        ColumnLayout {
+            Layout.maximumWidth: layout.columns > 1 ? parent.width / 2.3 : parent.width
+            Layout.margins: units.gu(1.5)
 
-            Rectangle {
-                color: "red"
+            RowLayout {
+                Layout.fillWidth: true
 
-                height: units.gu(6); width: height
-            }
+                Rectangle {
+                    color: UbuntuColors.orange
 
-            ColumnLayout {
+                    height: channelLayout.height / 1.1; width: height;
+                    Layout.rightMargin: units.gu(0.5)
+                }
+
+                ColumnLayout {
+                    id: channelLayout
+                    Layout.maximumWidth: parent.width / 2.5
+
+                    Label {
+                        text: channel_name
+
+                        elide: Text.ElideRight
+                        Layout.fillWidth: true
+                    }
+
+                    Button {
+                        text: !videoData.metadata.is_subscribed ? `Subscribe (${videoData.metadata.subscriber_count.split(" ")[0]})` : "Subscribed"
+                        color: !videoData.metadata.is_subscribed ? UbuntuColors.red : UbuntuColors.warmGrey
+                    }
+                }
+
+                Item { Layout.fillWidth: true }
+
                 Label {
-                    text: channel_name
-                }
-
-                Button {
-                    text: "Subscribe"
-                    color: UbuntuColors.red
+                    text: !!videoData ? videoData.metadata.likes.short_count_text : ""
                 }
             }
-        }
-        
-        Item {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            
-            Label {
-                text: description
-                wrapMode: "WordWrap"
-                anchors.fill: parent
-                anchors.margins: units.gu(2)
+
+            Text {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.topMargin: units.gu(1)
+
+                text: !!videoData ? videoData.description : ""
+
+                wrapMode: Text.WordWrap
+                color: theme.palette.normal.baseText
             }
         }
     }
@@ -121,6 +143,7 @@ Page {
             if (video_id == "") {
                 print("Closing the video...")
                 video_source = "";
+                videoData = undefined;
             }
 
             print("Fetching the info..")
@@ -180,8 +203,7 @@ Page {
                     break;
                 }
                 case "videoDetailsEvent": {
-                    //print(JSON.stringify(json.payload));
-                    description = json.payload.description;
+                    videoData = json.payload;
                     break;
                 }
                 case "error": {

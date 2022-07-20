@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 10:29+0000\n"
+"POT-Creation-Date: 2022-07-20 14:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,28 +25,28 @@ msgstr ""
 msgid "Quality"
 msgstr ""
 
-#: ../qml/Components/PreplayDialog.qml:44
+#: ../qml/Components/PreplayDialog.qml:45
 msgid "Play"
 msgstr ""
 
-#: ../qml/Components/PreplayDialog.qml:72
+#: ../qml/Components/PreplayDialog.qml:73
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:117 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:119 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:122 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:124 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:128
+#: ../qml/Main.qml:130
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:138
+#: ../qml/Main.qml:140
 msgid "Liked videos"
 msgstr ""
 
