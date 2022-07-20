@@ -23,9 +23,6 @@ import QtWebEngine 1.10
 
 Page {
     id: videoDetails
-
-    property bool main_ws_ready: false
-
     property string video_id
     property string video_title
     property string description
@@ -44,10 +41,9 @@ Page {
         title: video_title
     }
 
-    // GridLayout {
-        // columns: root.width > units.gu(70) ? 2 : 1
-    ColumnLayout {
-        // id: layout
+    GridLayout {
+        columns: root.width > units.gu(70) ? 2 : 1
+    //ColumnLayout {
         anchors {
             topMargin: header.height
             fill: parent
@@ -62,7 +58,8 @@ Page {
                 id: webview
                 anchors.fill: parent
 
-                // FIXME: The layout is still out of frame and the webview is upscaled,
+                // FIXME: The layout is still out of frame and the webview is upscaled, which leads to a lower resolution.
+
                 settings.fullScreenSupportEnabled:true
 
                 onFullScreenRequested: {
@@ -147,16 +144,10 @@ Page {
         }
     }
 
-    // FIXME: Since the first websocket to connect has to always be the main one, I need add a small delay. This won't be nessesery without preload
-    Timer {
-        interval: 100
-        running: main_ws_ready
-        onTriggered: websocket.active = true
-    }
-
     WebSocket {
         id: websocket
         url: "ws://localhost:8999"
+        active: true
 
         onStatusChanged: function(status) {
             switch (status) {
@@ -189,12 +180,12 @@ Page {
                     break;
                 }
                 case "videoDetailsEvent": {
-                    print(JSON.stringify(json.payload));
+                    //print(JSON.stringify(json.payload));
                     description = json.payload.description;
                     break;
                 }
                 case "error": {
-                    print(json.payload)
+                    print(json.payload);
                 }
             }
         }

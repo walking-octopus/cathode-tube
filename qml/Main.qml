@@ -60,12 +60,19 @@ MainView {
         }
 
         hint.status: "Hidden" // FIXME: The hint stops being hidden after closing it
-        preloadContent: true // FIXME: Do not preload the VideoDetails
+
+        // Delay loading bottom edge until after the main WS is open
+        // to save on startup time
+        preloadContent: false
+        Timer {
+            interval: 5
+            running: websocket.status == WebSocket.Open
+            onTriggered: bottomEdge.preloadContent = true
+        }
 
         contentComponent: VideoDetails {
             id: videoPage
 
-            main_ws_ready: websocket.active
             video_id: playingVideo.video_id
             video_title: playingVideo.video_title
             channel_name: playingVideo.channel_name
@@ -73,6 +80,7 @@ MainView {
             quality: playingVideo.quality
         }
     }
+
 
     PreplayDialog {
         id: preplayDialog
