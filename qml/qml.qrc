@@ -5,7 +5,7 @@
         <file>Pages/SplashScreen.qml</file>
         <file>Pages/LoginPage.qml</file>
         <file>Pages/SidebarPage.qml</file>
-        <file>Pages/VideoDetails.qml</file>
+        <file>Pages/VideoPage.qml</file>
         <file>Pages/Search.qml</file>
         <file>Pages/SearchResults.qml</file>
         <file>Pages/History.qml</file>

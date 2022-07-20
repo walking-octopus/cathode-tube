@@ -73,7 +73,7 @@ MainView {
             onTriggered: bottomEdge.preloadContent = true
         }
 
-        contentComponent: VideoDetails {
+        contentComponent: VideoPage {
             id: videoPage
 
             video_id: playingVideo.video_id
