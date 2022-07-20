@@ -219,6 +219,7 @@ async function start() {
           }).format(videoDetails.metadata.view_count);
 
           videoDetails.metadata.rating = returnYouTubeDislike.data.rating;
+
           videoDetails.metadata.dislikes = {
             count: returnYouTubeDislike.data.dislikes,
             short_count_text: Intl.NumberFormat('en-US', {
@@ -283,6 +284,24 @@ async function start() {
               break;
             }
           }
+
+          break;
+        }
+
+        case 'SetSubscription': {
+          if (json.payload.channel_id === '') {
+            break;
+          }
+
+          if (json.payload.isSubscribed) {
+            await youtube.interact.subscribe(json.payload.channel_id);
+          } else {
+            await youtube.interact.unsubscribe(json.payload.channel_id);
+          }
+
+          ws.send(JSON.stringify(
+            newMessage('updateSubscription', json.payload.isSubscribed),
+          ));
 
           break;
         }

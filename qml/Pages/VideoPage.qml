@@ -115,7 +115,22 @@ Page {
                     }
 
                     Button {
-                        text: !videoData.metadata.is_subscribed ? `Subscribe (${videoData.metadata.subscriber_count.split(" ")[0]})` : "Subscribed"
+                        text: !videoData.metadata.is_subscribed ? 
+                            i18n.tr("Subscribe (%1)").arg(videoData.metadata.subscriber_count.split(" ")[0]) :
+                            i18n.tr("Subscribed")
+
+                        onClicked: {
+                            websocket.sendTextMessage(
+                                JSON.stringify({
+                                    topic: "SetSubscription",
+                                    payload: {
+                                        channel_id: videoData.metadata.channel_id,
+                                        isSubscribed: !videoData.metadata.is_subscribed
+                                    },
+                                }),
+                            );
+                        }
+
                         color: !videoData.metadata.is_subscribed ? UbuntuColors.red : UbuntuColors.warmGrey
                     }
                 }
@@ -267,6 +282,11 @@ Page {
                 }
                 case "videoDetailsEvent": {
                     videoData = json.payload;
+                    break;
+                }
+                case "updateSubscription": {
+                    videoData.metadata.is_subscribed = json.payload;
+                    videoData = videoData;
                     break;
                 }
                 case "ratingEvent": {

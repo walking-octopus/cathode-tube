@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 18:30+0000\n"
+"POT-Creation-Date: 2022-07-20 18:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,10 +96,18 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: ../qml/Pages/Search.qml:50
+#: ../qml/Pages/Search.qml:51
 msgid "Search on YouTube..."
 msgstr ""
 
 #: ../qml/Pages/SidebarPage.qml:29 cathode-tube.desktop.in.h:1
 msgid "Cathode"
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:119
+msgid "Subscribe (%1)"
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:120
+msgid "Subscribed"
 msgstr ""
