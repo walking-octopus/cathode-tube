@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { WebSocketServer } from 'ws';
 import Innertube from 'youtubei.js';
+import axios from 'axios';
 
 const { env } = process;
 
@@ -69,7 +70,6 @@ async function start() {
     ws.on('message', async (data) => {
       const json = JSON.parse(data);
 
-      // STYLE: Different feeds require different parsing, so you may want to separate them
       switch (json.topic) {
         case 'GetFeed': {
           const feedType = json.payload;
@@ -206,11 +206,21 @@ async function start() {
           if (json.payload.id === '') {
             break;
           }
-          // console.log(json);
 
-          const videoDetail = await youtube.getDetails(json.payload.id);
+          let videoDetails = await youtube.getDetails(json.payload.id);
+          const returnYouTubeDislike = await axios.get(`https://returnyoutubedislikeapi.com/votes?videoId=${json.payload.id}`);
+
+          videoDetails.metadata.rating = returnYouTubeDislike.data.rating;
+          videoDetails.metadata.dislikes = {
+            count: returnYouTubeDislike.data.dislikes,
+            short_count_text: Intl.NumberFormat('en-US', {
+              notation: 'compact',
+              maximumFractionDigits: 1,
+            }).format(returnYouTubeDislike.data.dislikes),
+          };
+
           ws.send(JSON.stringify(
-            newMessage('videoDetailsEvent', videoDetail),
+            newMessage('videoDetailsEvent', videoDetails),
           ));
 
           break;

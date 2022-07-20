@@ -42,6 +42,10 @@ Page {
     header: PageHeader {
         id: header
         title: video_title
+
+        // FIXME: This is a hack, but I couldn't find a proper way to hide the header
+        height: !videoPlayer.isFullScreen ? units.gu(6.125) : 0
+        visible: !videoPlayer.isFullScreen
     }
 
     GridLayout {
@@ -63,7 +67,7 @@ Page {
                 id: videoPlayer
                 anchors.fill: parent
 
-                // FIXME: The layout is still out of frame and the webview is upscaled, which leads to a lower resolution.
+                // FIXME: The layout is still out of frame and the webview is upscaled.
 
                 settings.fullScreenSupportEnabled: true
 
@@ -118,15 +122,44 @@ Page {
 
                 Item { Layout.fillWidth: true }
 
-                Label {
-                    text: !!videoData ? videoData.metadata.likes.short_count_text : ""
+                ColumnLayout {
+                    Label {
+                        text: "14k views"
+                    }
+
+                    ProgressBar {
+                        Layout.preferredWidth: 150
+                        value: videoData.metadata.rating / 5
+                    }
+
+                    RowLayout {
+                        Icon {
+                            name: "thumb-up"
+                            width: units.gu(3); height: width
+                        }
+                        Label {
+                            text: videoData.metadata.likes.short_count_text
+                        }
+
+                        Item {
+                            width: units.gu(1)
+                        }
+
+                        Icon {
+                            name: "thumb-down"
+                            width: units.gu(3); height: width
+                        }
+                        Label {
+                            text: videoData.metadata.dislikes.short_count_text
+                        }
+                    }
                 }
             }
 
             Text {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.topMargin: units.gu(1)
+                Layout.topMargin: units.gu(2)
 
                 text: !!videoData ? videoData.description : ""
 
