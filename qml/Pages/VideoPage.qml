@@ -67,6 +67,13 @@ Page {
                 id: videoPlayer
                 anchors.fill: parent
 
+                // function play() {
+                //     runJavaScript(`document.getElementsByTagName("video")[0].play()`);
+                // }
+                // function pause() {
+                //     runJavaScript(`document.getElementsByTagName("video")[0].pause()`);
+                // }
+
                 // FIXME: The layout is still there out of frame, making it a hack.
 
                 settings.fullScreenSupportEnabled: true
@@ -81,8 +88,8 @@ Page {
                     request.accept();
                 }
         
-                zoomFactor: units.gu(1) / 8
                 url: !!video_source ? video_source : "about:blank"
+                zoomFactor: units.gu(1) / 8
             }
         }
 
@@ -137,13 +144,15 @@ Page {
 
                 Item { Layout.fillWidth: true }
 
+                // TODO: Add video sharing, add playlist and download buttons
+
                 ColumnLayout {
                     Label {
-                        text: videoData.metadata.view_count // TODO: Shorten the text
+                        text: videoData.metadata.view_count
                     }
 
                     ProgressBar {
-                        Layout.preferredWidth: 150
+                        Layout.preferredWidth: units.gu(18)
                         value: videoData.metadata.rating / 5
                     }
 
