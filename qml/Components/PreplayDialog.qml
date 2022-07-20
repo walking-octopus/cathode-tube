@@ -36,7 +36,8 @@ Component {
         OptionSelector {
             id: qualitySelector
             text: i18n.tr("Quality")
-            model: ['1080p', '720p', '480p', '360p', '240p', '140p']
+            model: ['720p', '480p', '360p', '240p', '140p']
+            // FIXME: For some reason, YouTube.js can't find a quality for `1080p`, so I'll remove it from the list until it's fixed.
         }
 
         RowLayout {

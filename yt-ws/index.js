@@ -206,7 +206,7 @@ async function start() {
           if (json.payload.id === '') {
             break;
           }
-          console.log(json);
+          // console.log(json);
 
           const videoDetail = await youtube.getDetails(json.payload.id);
           ws.send(JSON.stringify(
