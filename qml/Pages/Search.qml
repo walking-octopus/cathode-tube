@@ -42,6 +42,7 @@ Page {
             width: Math.min(parent.width, units.gu(36))
 
             inputMethodHints: Qt.ImhNoPredictiveText
+            focus: true
 
             primaryItem: Icon {
                 width: units.gu(2); height: width
