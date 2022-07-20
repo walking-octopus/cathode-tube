@@ -76,20 +76,23 @@ async function start() {
           let feed;
 
           switch (feedType) {
-            case 'Home':
+            case 'Home': {
               feed = await youtube.getHomeFeed();
               feed.feedType = 'Home';
               break;
+            }
 
-            case 'Subscriptions':
+            case 'Subscriptions': {
               feed = await youtube.getSubscriptionsFeed();
               feed.feedType = 'Subscriptions';
               break;
+            }
 
-            case 'Trending':
+            case 'Trending': {
               feed = await youtube.getTrending();
               feed.feedType = 'Trending';
               break;
+            }
 
             default: {
               ws.send(JSON.stringify(
@@ -207,8 +210,13 @@ async function start() {
             break;
           }
 
-          let videoDetails = await youtube.getDetails(json.payload.id);
+          const videoDetails = await youtube.getDetails(json.payload.id);
           const returnYouTubeDislike = await axios.get(`https://returnyoutubedislikeapi.com/votes?videoId=${json.payload.id}`);
+
+          videoDetails.metadata.view_count = Intl.NumberFormat('en-US', {
+            notation: 'compact',
+            maximumFractionDigits: 1,
+          }).format(videoDetails.metadata.view_count);
 
           videoDetails.metadata.rating = returnYouTubeDislike.data.rating;
           videoDetails.metadata.dislikes = {
@@ -226,6 +234,59 @@ async function start() {
           break;
         }
 
+        case 'SetRating': {
+          if (json.payload.id === '') {
+            break;
+          }
+
+          switch (json.payload.action) {
+            case 'Like': {
+              await youtube.interact.like(json.payload.id);
+
+              ws.send(JSON.stringify(
+                newMessage('ratingEvent', {
+                  type: 'Like',
+                }),
+              ));
+
+              break;
+            }
+
+            // FIXME: Upstream bug. The removeLike crashes the program.
+
+            // case 'RemoveLike': {
+            //   await youtube.interact.removeLike(json.payload.id);
+
+            //   ws.send(JSON.stringify(
+            //     newMessage('ratingEvent', {
+            //       type: 'RemoveLike',
+            //     }),
+            //   ));
+
+            //   break;
+            // }
+
+            case 'Dislike': {
+              await youtube.interact.dislike(json.payload.id);
+
+              ws.send(JSON.stringify(
+                newMessage('ratingEvent', {
+                  type: 'Dislike',
+                }),
+              ));
+
+              break;
+            }
+            // FIXME: Blocked by upstreem. YouTube.js doesn't implement `removeDislike`.
+
+            default: {
+              break;
+            }
+          }
+
+          break;
+        }
+
         default: {
           ws.send(JSON.stringify(
             newMessage('error', new Error('Wrong query').message),
@@ -238,9 +299,3 @@ async function start() {
 }
 
 start();
-
-// Topic: GetFeed
-// Payload:
-//
-// Topic: SignIn
-// Payload: "XGA-DA"

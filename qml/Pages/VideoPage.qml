@@ -33,7 +33,7 @@ Page {
     property string thumbnail_url
 
     property string video_source
-    property var videoData
+    property var videoData // FIXME: The metadata often remains undefined.
 
     width: bottomEdge.width
     height: bottomEdge.height
@@ -67,7 +67,7 @@ Page {
                 id: videoPlayer
                 anchors.fill: parent
 
-                // FIXME: The layout is still out of frame and the webview is upscaled.
+                // FIXME: The layout is still there out of frame, making it a hack.
 
                 settings.fullScreenSupportEnabled: true
 
@@ -99,7 +99,7 @@ Page {
                 Rectangle {
                     color: UbuntuColors.orange
 
-                    height: channelLayout.height / 1.1; width: height;
+                    height: channelLayout.height / 1.05; width: height;
                     Layout.rightMargin: units.gu(0.5)
                 }
 
@@ -124,7 +124,7 @@ Page {
 
                 ColumnLayout {
                     Label {
-                        text: "14k views"
+                        text: videoData.metadata.view_count // TODO: Shorten the text
                     }
 
                     ProgressBar {
@@ -135,7 +135,22 @@ Page {
                     RowLayout {
                         Icon {
                             name: "thumb-up"
+                            color: videoData.metadata.is_liked ? UbuntuColors.green : "black"
                             width: units.gu(3); height: width
+
+                            TapHandler {
+                                onTapped: {
+                                    websocket.sendTextMessage(
+                                        JSON.stringify({
+                                            topic: "SetRating",
+                                            payload: {
+                                                id: video_id,
+                                                action: !videoData.metadata.is_liked ? "Like" : "RemoveLike"
+                                            },
+                                        }),
+                                    );
+                                }
+                            }
                         }
                         Label {
                             text: videoData.metadata.likes.short_count_text
@@ -147,7 +162,22 @@ Page {
 
                         Icon {
                             name: "thumb-down"
+                            color: videoData.metadata.is_disliked ? UbuntuColors.red : "black"
                             width: units.gu(3); height: width
+
+                            TapHandler {
+                                onTapped: {
+                                    websocket.sendTextMessage(
+                                        JSON.stringify({
+                                            topic: "SetRating",
+                                            payload: {
+                                                id: video_id,
+                                                action: "Dislike"
+                                            },
+                                        }),
+                                    );
+                                }
+                            }
                         }
                         Label {
                             text: videoData.metadata.dislikes.short_count_text
@@ -239,8 +269,30 @@ Page {
                     videoData = json.payload;
                     break;
                 }
+                case "ratingEvent": {
+                    switch (json.payload.type) {
+                        case "Like": {
+                            videoData.metadata.is_liked = true;
+                            videoData.metadata.is_disliked = false;
+                            videoData = videoData; // QML wouldn't update the props otherwise
+                            break;
+                        }
+                        case "RemoveLike": {
+                            videoData.metadata.is_liked = false;
+                            videoData = videoData;
+                            break;
+                        }
+                        case "Dislike": {
+                            videoData.metadata.is_disliked = true;
+                            videoData.metadata.is_liked = false;
+                            videoData = videoData;
+                            break;
+                        }
+                    }
+                    break;
+                }
                 case "error": {
-                    print(json.payload);
+                    print(JSON.stringify(json.payload));
                 }
             }
         }
