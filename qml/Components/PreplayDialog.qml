@@ -25,18 +25,20 @@ Component {
     
     Dialog {
         id: dialog
-        property string video_title
+    
         property string video_id
+        property string video_title
         property string channel_name
         property string thumbnail_url
 
         title: video_title
-        text: i18n.tr("~Download~ or watch this video")
+        text: i18n.tr("Download or watch this video")
 
         OptionSelector {
             id: qualitySelector
             text: i18n.tr("Quality")
             model: ['720p', '480p', '360p', '240p', '140p']
+
             // FIXME: For some reason, YouTube.js can't find a quality for `1080p`, so I'll remove it from the list until it's fixed.
         }
 
@@ -50,10 +52,13 @@ Component {
                     playingVideo.video_title = video_title;
                     playingVideo.channel_name = channel_name;
                     playingVideo.thumbnail_url = thumbnail_url;
-                    playingVideo.quality = qualitySelector.model[qualitySelector.selectedIndex];
-                    playingVideo.video_id = video_id;
+
+                    playingVideo.selectedVideo = {
+                        "quality": qualitySelector.model[qualitySelector.selectedIndex],
+                        "videoID": video_id,
+                    };
                     
-                    bottomEdge.commit();
+                    miniPlayer.showDetails();
                     PopupUtils.close(dialog);
                 }
             }

@@ -34,17 +34,16 @@ MainView {
     Item {
         id: playingVideo
 
-        property string video_id
+        property var selectedVideo: { "videoID": "", "quality": "" }
+
         property string video_title
         property string channel_name
         property string thumbnail_url
-        property string quality
     }
 
     MiniPlayer {
         id: miniPlayer
 
-        video_id: playingVideo.video_id
         video_title: playingVideo.video_title
         channel_name: playingVideo.channel_name
         thumbnail_url: playingVideo.thumbnail_url
@@ -64,7 +63,7 @@ MainView {
         // Delay loading bottom edge until after the main WS is open
         // to save on startup time
 
-        // FIXME: Why even load it if nothing's playing?
+        // FIXME: Why even load it if nothing's playing? This leads to errors, caused by videoData being undefined.
 
         preloadContent: false
         Timer {
@@ -76,11 +75,11 @@ MainView {
         contentComponent: VideoPage {
             id: videoPage
 
-            video_id: playingVideo.video_id
+            selectedVideo: playingVideo.selectedVideo
+
             video_title: playingVideo.video_title
             channel_name: playingVideo.channel_name
             thumbnail_url: playingVideo.thumbnail_url
-            quality: playingVideo.quality
         }
     }
 
@@ -101,12 +100,8 @@ MainView {
             when: width > units.gu(87.5);
             PageColumn {
                 id: sidebar
-                minimumWidth: preferredWidth;
-                maximumWidth: preferredWidth;
+                minimumWidth: preferredWidth; maximumWidth: preferredWidth;
                 preferredWidth: units.gu(20) + width/7.5;
-
-                // TODO: Hide the sidebar on the login page or video player.
-                // You can set preferredWidth to 0 to hide the sidebar, but it might be a hack.
             }
             PageColumn {fillWidth: true;}
         }

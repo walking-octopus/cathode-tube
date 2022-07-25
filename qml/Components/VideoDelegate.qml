@@ -38,7 +38,9 @@ Component {
             title.text: videoTitle
             title.maximumLineCount: 2
             title.wrapMode: Text.WordWrap
+
             subtitle.text: channel.name
+
             summary.text: [views, published].filter(element => Boolean(element)).join(' | ')
             summary.visible: (views != "N/A") ? true : false
 
@@ -47,11 +49,12 @@ Component {
             Image {
                 id: image
                 source: thumbnail
-                width: units.gu(16*1.12)
-                height: units.gu(9*1.12)
-                sourceSize.width: 336
-                sourceSize.height: 188
+
+                width: units.gu(16*1.12); height: units.gu(9*1.12)
+
+                sourceSize.width: 336; sourceSize.height: 188
                 fillMode: Image.PreserveAspectFit
+
                 SlotsLayout.position: SlotsLayout.Leading
 
                 opacity: 0
@@ -76,11 +79,11 @@ Component {
                         rightMargin: units.gu(0.85)
                         bottomMargin: units.gu(0.5)
                     }
+                    visible: !!duration
 
                     text: duration ? duration.simple_text : ""
-                    visible: !!duration
-                    color: "white"
                     textSize: Label.Small
+                    color: "white"
                     font.weight: Font.DemiBold
 
                     UbuntuShape {

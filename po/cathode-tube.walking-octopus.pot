@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 22:52+0000\n"
+"POT-Creation-Date: 2022-07-25 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,36 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Components/PreplayDialog.qml:34
-msgid "~Download~ or watch this video"
+#: ../qml/Components/PreplayDialog.qml:35
+msgid "Download or watch this video"
 msgstr ""
 
-#: ../qml/Components/PreplayDialog.qml:38
+#: ../qml/Components/PreplayDialog.qml:39
 msgid "Quality"
 msgstr ""
 
-#: ../qml/Components/PreplayDialog.qml:45
+#: ../qml/Components/PreplayDialog.qml:47
 msgid "Play"
 msgstr ""
 
-#: ../qml/Components/PreplayDialog.qml:73
+#: ../qml/Components/PreplayDialog.qml:78
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:119 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:114 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:124 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:119 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:130
+#: ../qml/Main.qml:125
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:140
+#: ../qml/Main.qml:135
 msgid "Liked videos"
 msgstr ""
 
@@ -104,18 +104,18 @@ msgstr ""
 msgid "Cathode"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:139
+#: ../qml/Pages/VideoPage.qml:137
 msgid "Subscribe (%1)"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:140
+#: ../qml/Pages/VideoPage.qml:138
 msgid "Subscribed"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:162
+#: ../qml/Pages/VideoPage.qml:160
 msgid "%1 views"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:224
+#: ../qml/Pages/VideoPage.qml:222
 msgid "Published on %1"
 msgstr ""

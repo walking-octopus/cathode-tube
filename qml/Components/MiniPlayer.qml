@@ -23,7 +23,6 @@ import QtGraphicalEffects 1.12
 Rectangle {
     id: bgRectangle
 
-    property string video_id
     property string video_title
     property string channel_name
     property string thumbnail_url
@@ -44,33 +43,31 @@ Rectangle {
     layer.enabled: true
     layer.effect: DropShadow{
         anchors.fill: bgRectangle
-        visible: bgRectangle.visible
 
         source: bgRectangle
+        visible: bgRectangle.visible
 
-        horizontalOffset: units.gu(0.38)
-        verticalOffset: units.gu(0.38)
+        horizontalOffset: units.gu(0.38); verticalOffset: units.gu(0.38)
         radius: units.gu(1)
         color: "#80000000"
     }
 
     color: theme.name == "Ubuntu.Components.Themes.Ambiance" ? "white" : "#3B3B3B" // Dark color might look too gray
-    visible: !!video_id // TODO: Add a visibility transition
+    visible: !!video_title // TODO: Add a visibility transition
     
     MouseArea {
         anchors.fill: layout
         onClicked: showDetails()
     }
 
-    // Using ListItemLayout feels like a hack, but seems to work fine
+    // Using ListItemLayout feels like a hack, but it works fine.
     ListItemLayout {
         id: layout
         
         Image {
             source: thumbnail_url
 
-            width: units.gu(10)
-            height: units.gu(6)
+            width: units.gu(10); height: units.gu(6)
             SlotsLayout.position: SlotsLayout.Leading
         }
 
@@ -94,11 +91,11 @@ Rectangle {
 
             TapHandler {
                 onTapped: {
-                    playingVideo.video_id = '';
                     playingVideo.video_title = '';
                     playingVideo.channel_name = '';
                     playingVideo.thumbnail_url = '';
-                    playingVideo.quality = '';
+
+                    playingVideo.selectedVideo = {"videoID": "", "quality": ""};
                 }
             }
         }

@@ -24,16 +24,14 @@ import QtWebEngine 1.10
 Page {
     id: videoDetails
 
-    // These should be grouped into something like a turple, since you need both to stream a video
-    property string video_id
-    property string quality
+    property var selectedVideo: {"videoID": "", "quality": ""}
+    property var videoData // FIXME: The metadata often remains undefined, leading to errors.
+
+    property string streamingURL
 
     property string video_title
     property string channel_name
     property string thumbnail_url
-
-    property string video_source
-    property var videoData // FIXME: The metadata often remains undefined.
 
     width: bottomEdge.width
     height: bottomEdge.height
@@ -89,7 +87,7 @@ Page {
                     request.accept();
                 }
         
-                url: !!video_source ? video_source : "about:blank"
+                url: !!streamingURL ? streamingURL : "about:blank"
                 zoomFactor: units.gu(1) / 8
             }
         }
@@ -245,11 +243,12 @@ Page {
 
         // FIXME: Changing the video quality, while still watching the same video, doesn't do anything.
 
-        onVideo_idChanged: {
-            if (video_id == "") {
+        onSelectedVideoChanged: {
+            if (selectedVideo.videoID == "") {
                 print("Closing the video...")
-                video_source = "";
+                streamingURL = "";
                 videoData = undefined;
+                return;
             }
 
             print("Fetching the info..");
@@ -257,15 +256,15 @@ Page {
             websocket.sendTextMessage(JSON.stringify({
                 topic: "GetStreamingData",
                 payload: {
-                    id: video_id,
-                    quality: quality,
+                    id: selectedVideo.videoID,
+                    quality: selectedVideo.quality,
                 },
             }));
 
             websocket.sendTextMessage(JSON.stringify({
                 topic: "GetVideoDetails",
                 payload: {
-                    id: video_id,
+                    id: selectedVideo.videoID,
                 },
             }));
         }
@@ -302,8 +301,8 @@ Page {
 
             switch (json.topic) {
                 case "streamingDataEvent": {
-                    video_source = json.payload.selected_format.url;
-                    print(video_source);
+                    streamingURL = json.payload.selected_format.url;
+                    print(streamingURL);
                     break;
                 }
                 case "videoDetailsEvent": {
