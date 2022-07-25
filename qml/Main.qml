@@ -39,6 +39,8 @@ MainView {
         property string video_title
         property string channel_name
         property string thumbnail_url
+
+        property alias videoPlayer: bottomEdge.contentItem
     }
 
     MiniPlayer {
@@ -79,7 +81,6 @@ MainView {
 
             video_title: playingVideo.video_title
             channel_name: playingVideo.channel_name
-            thumbnail_url: playingVideo.thumbnail_url
         }
     }
 

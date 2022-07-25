@@ -75,12 +75,17 @@ Rectangle {
         subtitle.text: channel_name
 
         Icon {
-            name: "media-playback-pause"
+            name: {
+                print(bottomEdge.contentItem)
+                return bottomEdge.contentItem != null && bottomEdge.contentItem.videoPlayer.recentlyAudible ? "media-playback-pause" : "media-playback-start"
+            }
             width: units.gu(3); height: units.gu(3)
             SlotsLayout.position: SlotsLayout.Trailing
 
             TapHandler {
-                onTapped: print("Play")
+                onTapped: bottomEdge.contentItem != null && bottomEdge.contentItem.videoPlayer.recentlyAudible ?
+                    bottomEdge.contentItem.videoPlayer.pause() :
+                    bottomEdge.contentItem.videoPlayer.play()
             }
         }
 

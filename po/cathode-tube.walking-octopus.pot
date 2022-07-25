@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-25 13:16+0000\n"
+"POT-Creation-Date: 2022-07-25 22:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,20 +33,20 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:114 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:115 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:119 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:120 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:125
+#: ../qml/Main.qml:126
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:135
+#: ../qml/Main.qml:136
 msgid "Liked videos"
 msgstr ""
 
@@ -104,18 +104,18 @@ msgstr ""
 msgid "Cathode"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:137
+#: ../qml/Pages/VideoPage.qml:145
 msgid "Subscribe (%1)"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:138
+#: ../qml/Pages/VideoPage.qml:146
 msgid "Subscribed"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:160
+#: ../qml/Pages/VideoPage.qml:168
 msgid "%1 views"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:222
+#: ../qml/Pages/VideoPage.qml:230
 msgid "Published on %1"
 msgstr ""
