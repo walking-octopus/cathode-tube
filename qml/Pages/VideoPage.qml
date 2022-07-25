@@ -51,7 +51,6 @@ Page {
     GridLayout {
         id: layout
         columns: root.width > units.gu(100) && !videoPlayer.isFullScreen ? 2 : 1
-
         // FIXME: Setting the columns to 1 is a temporary hack for full screen.
 
         anchors {
@@ -66,6 +65,8 @@ Page {
             WebEngineView {
                 id: videoPlayer
                 anchors.fill: parent
+
+                // TODO: Enable sleep-lock when playing the video
 
                 // function play() {
                 //     runJavaScript(`document.getElementsByTagName("video")[0].play()`);
@@ -93,138 +94,156 @@ Page {
             }
         }
 
-        // FIXME: Use a scroll view.
-        // Also, somehow you can scroll the feed, even when it's covered by the video player
+        // FIXME: Scrolling the ScrollView scrolls the home feed, but only sometimes...
 
-        ColumnLayout {
+        ScrollView {
             Layout.maximumWidth: layout.columns > 1 ? parent.width / 2.3 : parent.width
-            Layout.margins: units.gu(1.5)
+            Layout.fillHeight: true; Layout.fillWidth: true
+            contentItem: contentFlickable
+        }
 
-            RowLayout {
-                Layout.fillWidth: true
+        Flickable {
+            id: contentFlickable
+            width: parent.width; height: parent.height
+            contentHeight: contentLayout.height
+            anchors.margins: units.gu(2)
 
-                Rectangle {
-                    color: UbuntuColors.orange
+            ColumnLayout {
+                id: contentLayout
 
-                    height: channelLayout.height / 1.05; width: height;
-                    Layout.rightMargin: units.gu(0.5)
-                }
+                width: parent.width;
 
-                ColumnLayout {
-                    id: channelLayout
-                    Layout.maximumWidth: parent.width / 2.5
+                RowLayout {
+                    Layout.fillWidth: true
 
-                    Label {
-                        text: channel_name
+                    Rectangle {
+                        color: UbuntuColors.orange
 
-                        elide: Text.ElideRight
-                        Layout.fillWidth: true
+                        height: channelLayout.height / 1.05; width: height;
+                        Layout.rightMargin: units.gu(0.5)
                     }
 
-                    Button {
-                        text: !videoData.metadata.is_subscribed ? 
-                            i18n.tr("Subscribe (%1)").arg(videoData.metadata.subscriber_count.split(" ")[0]) :
-                            i18n.tr("Subscribed")
+                    ColumnLayout {
+                        id: channelLayout
+                        Layout.maximumWidth: parent.width / 2.5
 
-                        onClicked: {
-                            websocket.sendTextMessage(
-                                JSON.stringify({
+                        Label {
+                            text: channel_name
+
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
+
+                        Button {
+                            text: !videoData.metadata.is_subscribed ? 
+                                i18n.tr("Subscribe (%1)").arg(videoData.metadata.subscriber_count.split(" ")[0]) :
+                                i18n.tr("Subscribed")
+
+                            onClicked: {
+                                websocket.sendTextMessage(JSON.stringify({
                                     topic: "SetSubscription",
                                     payload: {
                                         channel_id: videoData.metadata.channel_id,
                                         isSubscribed: !videoData.metadata.is_subscribed
                                     },
-                                }),
-                            );
+                                }));
+                            }
+
+                            color: !videoData.metadata.is_subscribed ? UbuntuColors.red : UbuntuColors.warmGrey
+                        }
+                    }
+
+                    Item { Layout.fillWidth: true }
+
+                    // TODO: Add video sharing, add playlist and download buttons
+
+                    ColumnLayout {
+                        Label {
+                            text: i18n.tr("%1 views").arg(videoData.metadata.view_count)
                         }
 
-                        color: !videoData.metadata.is_subscribed ? UbuntuColors.red : UbuntuColors.warmGrey
-                    }
-                }
+                        ProgressBar {
+                            Layout.preferredWidth: units.gu(18)
+                            value: videoData.metadata.rating / 5
+                        }
 
-                Item { Layout.fillWidth: true }
+                        RowLayout {
+                            Icon {
+                                name: "thumb-up"
+                                color: videoData.metadata.is_liked ? UbuntuColors.green : "black"
+                                width: units.gu(3); height: width
 
-                // TODO: Add video sharing, add playlist and download buttons
-
-                ColumnLayout {
-                    Label {
-                        text: videoData.metadata.view_count
-                    }
-
-                    ProgressBar {
-                        Layout.preferredWidth: units.gu(18)
-                        value: videoData.metadata.rating / 5
-                    }
-
-                    RowLayout {
-                        Icon {
-                            name: "thumb-up"
-                            color: videoData.metadata.is_liked ? UbuntuColors.green : "black"
-                            width: units.gu(3); height: width
-
-                            TapHandler {
-                                onTapped: {
-                                    websocket.sendTextMessage(
-                                        JSON.stringify({
+                                TapHandler {
+                                    onTapped: {
+                                        websocket.sendTextMessage(JSON.stringify({
                                             topic: "SetRating",
                                             payload: {
                                                 id: video_id,
                                                 action: !videoData.metadata.is_liked ? "Like" : "RemoveLike"
                                             },
-                                        }),
-                                    );
+                                        }));
+                                    }
                                 }
                             }
-                        }
-                        Label {
-                            text: videoData.metadata.likes.short_count_text
-                        }
+                            Label {
+                                text: videoData.metadata.likes.short_count_text
+                            }
 
-                        Item {
-                            width: units.gu(1)
-                        }
+                            Item {
+                                width: units.gu(1)
+                            }
 
-                        Icon {
-                            name: "thumb-down"
-                            color: videoData.metadata.is_disliked ? UbuntuColors.red : "black"
-                            width: units.gu(3); height: width
+                            Icon {
+                                name: "thumb-down"
+                                color: videoData.metadata.is_disliked ? UbuntuColors.red : "black"
+                                width: units.gu(3); height: width
 
-                            TapHandler {
-                                onTapped: {
-                                    websocket.sendTextMessage(
-                                        JSON.stringify({
+                                TapHandler {
+                                    onTapped: {
+                                        websocket.sendTextMessage(JSON.stringify({
                                             topic: "SetRating",
                                             payload: {
                                                 id: video_id,
                                                 action: "Dislike"
                                             },
-                                        }),
-                                    );
+                                        }));
+                                    }
                                 }
                             }
-                        }
-                        Label {
-                            text: videoData.metadata.dislikes.short_count_text
+                            Label {
+                                text: videoData.metadata.dislikes.short_count_text
+                            }
                         }
                     }
                 }
-            }
 
-            Text {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.topMargin: units.gu(2)
+                Label {
+                    //Layout.fillWidth: true
+                    Layout.topMargin: units.gu(0.6)
 
-                text: !!videoData ? videoData.description : ""
+                    text: i18n.tr("Published on %1").arg(videoData.metadata.publish_date_text)
 
-                wrapMode: Text.WordWrap
-                color: theme.palette.normal.baseText
+                }
+
+                Text {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.topMargin: units.gu(1)
+
+                    text: !!videoData ? videoData.description : ""
+
+                    wrapMode: Text.WordWrap
+                    color: theme.palette.normal.baseText
+                }
             }
         }
     }
 
+
     Connections {
         target: videoDetails
+
+        // FIXME: Changing the video quality, while still watching the same video, doesn't do anything.
 
         onVideo_idChanged: {
             if (video_id == "") {
@@ -233,24 +252,22 @@ Page {
                 videoData = undefined;
             }
 
-            print("Fetching the info..")
-            websocket.sendTextMessage(
-                JSON.stringify({
-                    topic: "GetStreamingData",
-                    payload: {
-                        id: video_id,
-                        quality: quality,
-                    },
-                }),
-            );
-            websocket.sendTextMessage(
-                JSON.stringify({
-                    topic: "GetVideoDetails",
-                    payload: {
-                        id: video_id,
-                    },
-                }),
-            );
+            print("Fetching the info..");
+
+            websocket.sendTextMessage(JSON.stringify({
+                topic: "GetStreamingData",
+                payload: {
+                    id: video_id,
+                    quality: quality,
+                },
+            }));
+
+            websocket.sendTextMessage(JSON.stringify({
+                topic: "GetVideoDetails",
+                payload: {
+                    id: video_id,
+                },
+            }));
         }
     }
 
@@ -303,7 +320,7 @@ Page {
                         case "Like": {
                             videoData.metadata.is_liked = true;
                             videoData.metadata.is_disliked = false;
-                            videoData = videoData; // QML wouldn't update the props otherwise
+                            videoData = videoData; // QML wouldn't update the props otherwise.
                             break;
                         }
                         case "RemoveLike": {
@@ -318,6 +335,7 @@ Page {
                             break;
                         }
                     }
+
                     break;
                 }
                 case "error": {
