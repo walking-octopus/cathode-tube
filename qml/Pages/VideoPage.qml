@@ -20,39 +20,41 @@ import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
 import QtWebSockets 1.1
 import QtWebEngine 1.10
+import QtSystemInfo 5.5
 
 Page {
     id: videoDetails
 
     property var selectedVideo: {"videoID": "", "quality": ""}
-    property var videoData // FIXME: The metadata often remains undefined, leading to errors.
+    property var videoData // FIXME: The metadata often remains undefined, leading to errors. Use a Loader!
+
+    property alias videoPlayer: videoPlayer
 
     property string streamingURL
 
     property string video_title
     property string channel_name
-    property string thumbnail_url
 
-    width: bottomEdge.width
-    height: bottomEdge.height
+    width: bottomEdge.width; height: bottomEdge.height
 
     flickable: null
     header: PageHeader {
         id: header
         title: video_title
 
-        // FIXME: This is a hack, but I couldn't find a proper way to hide the header
-        height: !videoPlayer.isFullScreen ? units.gu(6.125) : 0
+        // Setting the height to 0 is a hack, but I couldn't find a proper way to hide the header.
         visible: !videoPlayer.isFullScreen
+        height: visible ? units.gu(6.125) : 0
     }
 
     GridLayout {
         id: layout
-        columns: root.width > units.gu(100) && !videoPlayer.isFullScreen ? 2 : 1
+        columns: root.width > units.gu(110) && !videoPlayer.isFullScreen ? 2 : 1
         // FIXME: Setting the columns to 1 is a temporary hack for full screen.
 
         anchors {
-            topMargin: header.height // FIXME: The player is partialy covered in full-screen mode.
+            // FIXME: The player might be partialy covered in full-screen mode.
+            topMargin: header.height
             fill: parent
         }
         
@@ -64,14 +66,16 @@ Page {
                 id: videoPlayer
                 anchors.fill: parent
 
-                // TODO: Enable sleep-lock when playing the video
+                ScreenSaver {
+                    screenSaverEnabled: !Qt.application.active || !videoPlayer.recentlyAudible
+                }
 
-                // function play() {
-                //     runJavaScript(`document.getElementsByTagName("video")[0].play()`);
-                // }
-                // function pause() {
-                //     runJavaScript(`document.getElementsByTagName("video")[0].pause()`);
-                // }
+                function play() {
+                    runJavaScript(`document.getElementsByTagName("video")[0].play()`);
+                }
+                function pause() {
+                    runJavaScript(`document.getElementsByTagName("video")[0].pause()`);
+                }
 
                 // FIXME: The layout is still there out of frame, making it a hack.
 
@@ -87,24 +91,29 @@ Page {
                     request.accept();
                 }
         
-                url: !!streamingURL ? streamingURL : "about:blank"
+                url: streamingURL
+
+                visible: !!streamingURL
+                lifecycleState: !!streamingURL ? WebEngineView.LifecycleState.Active : WebEngineView.LifecycleState.Discarded
+
                 zoomFactor: units.gu(1) / 8
             }
         }
 
         // FIXME: Scrolling the ScrollView scrolls the home feed, but only sometimes...
+        // FIXME: The maximumWidth can slightly clip the content
 
         ScrollView {
-            Layout.maximumWidth: layout.columns > 1 ? parent.width / 2.3 : parent.width
+            Layout.maximumWidth: layout.columns > 1 ? parent.width / 2.4 : parent.width
             Layout.fillHeight: true; Layout.fillWidth: true
             contentItem: contentFlickable
         }
 
         Flickable {
             id: contentFlickable
+            anchors.margins: units.gu(2)
             width: parent.width; height: parent.height
             contentHeight: contentLayout.height
-            anchors.margins: units.gu(2)
 
             ColumnLayout {
                 id: contentLayout
@@ -123,7 +132,6 @@ Page {
 
                     ColumnLayout {
                         id: channelLayout
-                        Layout.maximumWidth: parent.width / 2.5
 
                         Label {
                             text: channel_name
@@ -177,7 +185,7 @@ Page {
                                             topic: "SetRating",
                                             payload: {
                                                 id: video_id,
-                                                action: !videoData.metadata.is_liked ? "Like" : "RemoveLike"
+                                                action: !videoData.metadata.is_liked ? "Like" : "RemoveRating"
                                             },
                                         }));
                                     }
@@ -202,7 +210,7 @@ Page {
                                             topic: "SetRating",
                                             payload: {
                                                 id: video_id,
-                                                action: "Dislike"
+                                                action: !videoData.metadata.is_disliked ? "Dislike" : "RemoveRating"
                                             },
                                         }));
                                     }
@@ -228,9 +236,9 @@ Page {
                     Layout.fillHeight: true
                     Layout.topMargin: units.gu(1)
 
-                    text: !!videoData ? videoData.description : ""
+                    text: videoData.description
 
-                    wrapMode: Text.WordWrap
+                    wrapMode: Text.Wrap
                     color: theme.palette.normal.baseText
                 }
             }
@@ -245,7 +253,7 @@ Page {
 
         onSelectedVideoChanged: {
             if (selectedVideo.videoID == "") {
-                print("Closing the video...")
+                print("Closing the video...");
                 streamingURL = "";
                 videoData = undefined;
                 return;
@@ -322,7 +330,7 @@ Page {
                             videoData = videoData; // QML wouldn't update the props otherwise.
                             break;
                         }
-                        case "RemoveLike": {
+                        case "RemoveRating": {
                             videoData.metadata.is_liked = false;
                             videoData = videoData;
                             break;
