@@ -75,25 +75,23 @@ Rectangle {
         subtitle.text: channel_name
 
         Icon {
-            name: {
-                print(bottomEdge.contentItem)
-                return bottomEdge.contentItem != null && bottomEdge.contentItem.videoPlayer.recentlyAudible ? "media-playback-pause" : "media-playback-start"
-            }
-            width: units.gu(3); height: units.gu(3)
-            SlotsLayout.position: SlotsLayout.Trailing
+            name: playingVideo.videoPage != null && playingVideo.videoPage.videoPlayer.recentlyAudible ?
+                "media-playback-pause" :
+                "media-playback-start"
 
             TapHandler {
-                onTapped: bottomEdge.contentItem != null && bottomEdge.contentItem.videoPlayer.recentlyAudible ?
-                    bottomEdge.contentItem.videoPlayer.pause() :
-                    bottomEdge.contentItem.videoPlayer.play()
+                onTapped: playingVideo.videoPage != null && playingVideo.videoPage.videoPlayer.recentlyAudible ?
+                    playingVideo.videoPage.videoPlayer.pause() :
+                    playingVideo.videoPage.videoPlayer.play()
             }
+
+            width: units.gu(3); height: width
+            SlotsLayout.position: SlotsLayout.Trailing
         }
 
         Icon {
             name: "close"
-            width: units.gu(3); height: units.gu(3)
-            SlotsLayout.position: SlotsLayout.Trailing
-
+            
             TapHandler {
                 onTapped: {
                     playingVideo.video_title = '';
@@ -103,6 +101,9 @@ Rectangle {
                     playingVideo.selectedVideo = {"videoID": "", "quality": ""};
                 }
             }
+
+            width: units.gu(3); height: width
+            SlotsLayout.position: SlotsLayout.Trailing
         }
     }
 }

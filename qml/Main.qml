@@ -40,7 +40,7 @@ MainView {
         property string channel_name
         property string thumbnail_url
 
-        property alias videoPlayer: bottomEdge.contentItem
+        property alias videoPage: bottomEdge.contentItem
     }
 
     MiniPlayer {
@@ -69,7 +69,7 @@ MainView {
 
         preloadContent: false
         Timer {
-            interval: 8
+            interval: 100
             running: websocket.status == WebSocket.Open
             onTriggered: bottomEdge.preloadContent = true
         }
