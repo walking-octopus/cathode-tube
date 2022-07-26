@@ -253,19 +253,17 @@ async function start() {
               break;
             }
 
-            // FIXME: Upstream bug. The removeLike crashes the program.
+            case 'RemoveRating': {
+              await youtube.interact.removeLike(json.payload.id);
 
-            // case 'RemoveLike': {
-            //   await youtube.interact.removeLike(json.payload.id);
+              ws.send(JSON.stringify(
+                newMessage('ratingEvent', {
+                  type: 'RemoveRating',
+                }),
+              ));
 
-            //   ws.send(JSON.stringify(
-            //     newMessage('ratingEvent', {
-            //       type: 'RemoveLike',
-            //     }),
-            //   ));
-
-            //   break;
-            // }
+              break;
+            }
 
             case 'Dislike': {
               await youtube.interact.dislike(json.payload.id);

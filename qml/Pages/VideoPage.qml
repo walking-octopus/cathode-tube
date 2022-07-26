@@ -184,7 +184,7 @@ Page {
                                         websocket.sendTextMessage(JSON.stringify({
                                             topic: "SetRating",
                                             payload: {
-                                                id: video_id,
+                                                id: selectedVideo.videoID,
                                                 action: !videoData.metadata.is_liked ? "Like" : "RemoveRating"
                                             },
                                         }));
@@ -209,7 +209,7 @@ Page {
                                         websocket.sendTextMessage(JSON.stringify({
                                             topic: "SetRating",
                                             payload: {
-                                                id: video_id,
+                                                id: selectedVideo.videoID,
                                                 action: !videoData.metadata.is_disliked ? "Dislike" : "RemoveRating"
                                             },
                                         }));
@@ -332,6 +332,7 @@ Page {
                         }
                         case "RemoveRating": {
                             videoData.metadata.is_liked = false;
+                            videoData.metadata.is_disliked = false;
                             videoData = videoData;
                             break;
                         }
