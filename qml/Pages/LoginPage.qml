@@ -17,7 +17,6 @@
 
 import QtQuick 2.9
 import Ubuntu.Components 1.3
-//import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 Page {
@@ -27,6 +26,7 @@ Page {
     header: PageHeader {
         id: header
         title: i18n.tr("Welcome!")
+        leadingActionBar.actions: null
     }
     title: i18n.tr("Login")
 
@@ -37,33 +37,42 @@ Page {
             right: parent.right
             bottom: parent.bottom
         }
-        spacing: units.gu(0.5)
+        anchors.margins: units.gu(3)
+        spacing: units.gu(1)
 
         Label {
-            text: i18n.tr(`Welcome to Cathode! <br> It works by imitating official YouTube apps through <a href="https://github.com/LuanRT/YouTube.js">YouTube.js</a> instead of the limited official API, allowing complete feature parity to the official apps. While Google's ToS only forbids automated interactions, nobody's certain about their anti-abuse system, so try not to trip over the rate limit or engage in usage patterns that could be mistaken for a bot.`)
-            wrapMode: "WordWrap"
-
-            Layout.fillWidth: true
-            Layout.leftMargin: units.gu(2)
-            Layout.rightMargin: units.gu(2)
-            Layout.topMargin: units.gu(2)
+            text: i18n.tr("Welcome to Cathode!")
+            textSize: Label.XLarge
         }
+
         Label {
-            text: i18n.tr(`To log in, please go to <a href="${verification_url}">${verification_url}</a> and enter "${code}".`)
-            wrapMode: "WordWrap"
+            text: i18n.tr(`It works by imitating official YouTube apps with <a href="https://github.com/LuanRT/YouTube.js">YouTube.js</a>, instead of the limited official API, allowing complete feature parity. <br><br> While Google's ToS only forbids automated interactions, nobody's certain about their anti-abuse system. Try not to trip over the rate-limit or engage in usage patterns that could be mistaken for a bot, like commenting on a lot of videos at once.`)
+            wrapMode: "Wrap"
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+
+        Label {
+            text: i18n.tr('To log in, please go to <a href="%1">%1</a> and enter "%3".').arg(verification_url).arg(code)
+            wrapMode: "Wrap"
 
             Layout.fillWidth: true
-            Layout.leftMargin: units.gu(2)
-            Layout.rightMargin: units.gu(2)
-            Layout.topMargin: units.gu(2)
+            Layout.bottomMargin: units.gu(2)
         }
-        //Button {
-            //text: i18n.tr("Open the page and copy the code")
-            //onClicked: internal.onTokenChanged()
-            //color: UbuntuColors.green
 
-            //Layout.fillWidth: true
-        //}
+        Button {
+            text: i18n.tr("Open and copy")
+            color: theme.palette.normal.positive
+
+            Layout.alignment: Qt.AlignCenter
+            Layout.preferredWidth: implicitWidth + units.gu(3)
+
+            onClicked: {
+                Clipboard.push(code);
+                Qt.openUrlExternally(verification_url);
+            }
+        }
     }
 
 }

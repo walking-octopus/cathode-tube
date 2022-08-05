@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 10:28+0000\n"
+"POT-Creation-Date: 2022-08-05 18:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,20 +33,20 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:115 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:116 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:120 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:121 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:126
+#: ../qml/Main.qml:127
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:136
+#: ../qml/Main.qml:137
 msgid "Liked videos"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Trending"
 msgstr ""
 
-#: ../qml/Pages/LoginPage.qml:29
+#: ../qml/Pages/LoginPage.qml:28
 msgid "Welcome!"
 msgstr ""
 
@@ -84,8 +84,16 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: ../qml/Pages/LoginPage.qml:43
+#: ../qml/Pages/LoginPage.qml:44
+msgid "Welcome to Cathode!"
+msgstr ""
+
+#: ../qml/Pages/LoginPage.qml:49
 msgid "https://github.com/LuanRT/YouTube.js"
+msgstr ""
+
+#: ../qml/Pages/LoginPage.qml:65
+msgid "Open and copy"
 msgstr ""
 
 #: ../qml/Pages/Playlist.qml:31
@@ -96,7 +104,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: ../qml/Pages/Search.qml:51
+#: ../qml/Pages/Search.qml:52
 msgid "Search on YouTube..."
 msgstr ""
 
