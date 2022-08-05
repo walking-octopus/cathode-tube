@@ -28,7 +28,6 @@ Page {
         title: i18n.tr("Welcome!")
         leadingActionBar.actions: null
     }
-    title: i18n.tr("Login")
 
     ColumnLayout {
         anchors {

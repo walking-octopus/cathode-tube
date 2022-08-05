@@ -128,9 +128,7 @@ MainView {
                     text: i18n.tr("Watch later")
                     onTriggered: pStack.push(
                         Qt.resolvedUrl("./Pages/Playlist.qml"),
-                        {
-                            playlist_id: "WL"
-                        }
+                        { playlist_id: "WL" }
                     )
                 },
                 Action {
@@ -138,9 +136,7 @@ MainView {
                     text: i18n.tr("Liked videos")
                     onTriggered: pStack.push(
                         Qt.resolvedUrl("./Pages/Playlist.qml"),
-                        {
-                            playlist_id: "LL"
-                        }
+                        { playlist_id: "LL" }
                     )
                 }
                 // TODO: Add the notification tab
