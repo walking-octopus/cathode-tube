@@ -29,6 +29,7 @@ Page {
         leadingActionBar.actions: Action {
             iconName: "back"
             text: i18n.tr("Back")
+
             onTriggered: {
                 pStack.removePages(searchPage);
                 pStack.push(Qt.resolvedUrl("./HomePage.qml"))
@@ -38,11 +39,16 @@ Page {
         contents: TextField {
             id: searchField
             anchors.centerIn: parent
-            anchors.margins: 10
             width: Math.min(parent.width, units.gu(36))
 
             inputMethodHints: Qt.ImhNoPredictiveText
-            focus: true
+
+            // A workaround for loss of focus
+            Timer {
+                interval: 50
+                running: true
+                onTriggered: searchField.forceActiveFocus()
+            }
 
             primaryItem: Icon {
                 width: units.gu(2); height: width
@@ -66,16 +72,15 @@ Page {
             model: youtube.suggestions
             delegate: ListItem {
                 ListItemLayout {
+                    anchors.centerIn: parent
                     title.text: suggestion
                 }
 
                 onClicked: pStack.push(
                     Qt.resolvedUrl("./SearchResults.qml"),
-                    {
-                        query: suggestion
-                    },
+                    { query: suggestion },
                 );
-            }        
+            }
 
             Timer {
                 id: searchTimer
@@ -85,12 +90,11 @@ Page {
 
             Connections {
                 target: searchField
+
                 onTextChanged: searchTimer.restart()
                 onAccepted: pStack.push(
                     Qt.resolvedUrl("./SearchResults.qml"),
-                    {
-                        query: searchField.text
-                    },
+                    { query: searchField.text },
                 );
             }
         }
@@ -98,14 +102,5 @@ Page {
 
     SearchModel {
         id: youtube
-    }
-
-    Component.onCompleted: {
-        // FIXME: The focus quickly shifts away from the search
-        if (searchField.text == "") {
-            searchField.forceActiveFocus()
-        } else {
-            searchTimer.restart()
-        }
     }
 }
