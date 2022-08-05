@@ -50,16 +50,20 @@ Page {
                 anchors.centerIn: parent
 
                 Icon {
-                    width: units.gu(2); height: width
                     name: iconName
+                    color: theme.palette.normal.foregroundText
+
+                    width: units.gu(2); height: width
                     SlotsLayout.position: SlotsLayout.First
                 }
 
                 title.text: text
 
                 Icon {
-                    width: units.gu(2); height: width
                     name: "go-next"
+                    color: theme.palette.normal.foregroundText
+
+                    width: units.gu(2); height: width
                     SlotsLayout.position: SlotsLayout.Last
                 }
             }

@@ -117,12 +117,12 @@ Page {
 
             ColumnLayout {
                 id: contentLayout
-
                 width: parent.width;
 
                 RowLayout {
                     Layout.fillWidth: true
 
+                    // TODO: Fetching the channel thumbnail might require the switch to v2 or an extra request
                     Rectangle {
                         color: UbuntuColors.orange
 
@@ -176,7 +176,7 @@ Page {
                         RowLayout {
                             Icon {
                                 name: "thumb-up"
-                                color: videoData.metadata.is_liked ? UbuntuColors.green : "black"
+                                color: videoData.metadata.is_liked ? UbuntuColors.green : theme.palette.normal.foregroundText
                                 width: units.gu(3); height: width
 
                                 TapHandler {
@@ -191,17 +191,16 @@ Page {
                                     }
                                 }
                             }
+
                             Label {
                                 text: videoData.metadata.likes.short_count_text
                             }
 
-                            Item {
-                                width: units.gu(1)
-                            }
+                            Item { width: units.gu(1) }
 
                             Icon {
                                 name: "thumb-down"
-                                color: videoData.metadata.is_disliked ? UbuntuColors.red : "black"
+                                color: videoData.metadata.is_disliked ? UbuntuColors.red : theme.palette.normal.foregroundText
                                 width: units.gu(3); height: width
 
                                 TapHandler {

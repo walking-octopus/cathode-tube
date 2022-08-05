@@ -85,6 +85,7 @@ Rectangle {
                     playingVideo.videoPage.videoPlayer.play()
             }
 
+            color: theme.palette.normal.foregroundText
             width: units.gu(3); height: width
             SlotsLayout.position: SlotsLayout.Trailing
         }
@@ -102,6 +103,7 @@ Rectangle {
                 }
             }
 
+            color: theme.palette.normal.foregroundText
             width: units.gu(3); height: width
             SlotsLayout.position: SlotsLayout.Trailing
         }
