@@ -60,12 +60,14 @@ MainView {
             right: parent.right
         }
 
-        hint.status: "Hidden" // FIXME: The hint stops being hidden after closing it
+        hint.status: "Hidden"
+        visible: false
 
         // Delay loading bottom edge until after the main WS is open
         // to save on startup time
 
         // FIXME: Why even load it if nothing's playing? This leads to errors, caused by videoData being undefined.
+        // Note: The WebSocket must have a bit of time to connect before sending a message. Preloading is required. 
 
         preloadContent: false
         Timer {

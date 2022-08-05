@@ -25,8 +25,28 @@ import QtSystemInfo 5.5
 Page {
     id: videoDetails
 
+    readonly property var emptyVideo: {
+        "metadata": {
+            "is_subscribed": false,
+            "view_count": 0,
+            "rating": 0,
+            "is_liked": false,
+            "is_disliked": false,
+            "likes": {
+                "short_count_text": "0"
+            },
+            "dislikes": {
+                "short_count_text": "0"
+            },
+            "publish_date_text": "",
+            "subscriber_count": "0"
+        },
+        "description": ""
+    }
+    // FIXME: The metadata often remains undefined, leading to errors. This is a hack. Use a Loader!
+
     property var selectedVideo: {"videoID": "", "quality": ""}
-    property var videoData // FIXME: The metadata often remains undefined, leading to errors. Use a Loader!
+    property var videoData: emptyVideo
 
     property alias videoPlayer: videoPlayer
 
@@ -44,7 +64,7 @@ Page {
 
         // Setting the height to 0 is a hack, but I couldn't find a proper way to hide the header.
         visible: !videoPlayer.isFullScreen
-        height: visible ? units.gu(6.125) : 0
+        height: visible ? implicitHeight : 0
     }
 
     GridLayout {
@@ -196,7 +216,7 @@ Page {
                                 text: videoData.metadata.likes.short_count_text
                             }
 
-                            Item { width: units.gu(1) }
+                            Item { width: units.gu(0.5) }
 
                             Icon {
                                 name: "thumb-down"
@@ -253,8 +273,10 @@ Page {
         onSelectedVideoChanged: {
             if (selectedVideo.videoID == "") {
                 print("Closing the video...");
+
                 streamingURL = "";
-                videoData = undefined;
+                videoData = emptyVideo;
+
                 return;
             }
 
