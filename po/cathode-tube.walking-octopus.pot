@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 20:02+0000\n"
+"POT-Creation-Date: 2022-08-08 10:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,24 +33,20 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:30 cathode-tube.desktop.in.h:1
-msgid "Cathode"
-msgstr ""
-
-#: ../qml/Main.qml:118 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:117 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:123 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:122 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:129
+#: ../qml/Main.qml:128
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:139
+#: ../qml/Main.qml:136
 msgid "Liked videos"
 msgstr ""
 
@@ -106,6 +102,10 @@ msgstr ""
 
 #: ../qml/Pages/Search.qml:57
 msgid "Search on YouTube..."
+msgstr ""
+
+#: ../qml/Pages/SidebarPage.qml:29 cathode-tube.desktop.in.h:1
+msgid "Cathode"
 msgstr ""
 
 #: ../qml/Pages/VideoPage.qml:165
