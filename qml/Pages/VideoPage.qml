@@ -21,6 +21,7 @@ import Ubuntu.Components 1.3
 import QtWebSockets 1.1
 import QtWebEngine 1.10
 import QtSystemInfo 5.5
+import QtSensors 5.0
 import "../Components"
 
 Page {
@@ -66,6 +67,23 @@ Page {
         // Setting the height to 0 is a hack, but I couldn't find a proper way to hide the header.
         visible: !videoPlayer.isFullScreen
         height: visible ? implicitHeight : 0
+    }
+    
+    // TODO: (Testing...) Switch to full-screen in landscape
+    OrientationSensor {
+        id: orientationSensor
+        active: true
+
+        onReadingChanged: {
+            if (reading.orientation >= OrientationReading.TopUp && reading.orientation <= OrientationReading.RightUp) {
+                let orientation = reading.orientation;
+                let isLandscape = orientation === OrientationReading.LeftUp || orientation === OrientationReading.RightUp;
+
+                if (isLandscape && !!streamingURL) {
+                    window.showFullScreen();
+                }
+            }
+        }
     }
 
     GridLayout {
