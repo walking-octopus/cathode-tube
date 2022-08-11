@@ -9,7 +9,9 @@ const homeDir = env.HOME;
 const xdgConfig = env.XDG_CONFIG_HOME || (homeDir ? `${homeDir}/.config` : undefined);
 
 const appPath = `${xdgConfig}/cathode-tube.walking-octopus`;
-!existsSync(appPath) && mkdirSync(appPath);
+if (!existsSync(appPath)) {
+  mkdirSync(appPath);
+}
 
 function newMessage(topic, payload) {
   const message = { topic };
@@ -146,7 +148,7 @@ async function start() {
             break;
           }
 
-          let continuation = await lastFeed.getContinuation();
+          const continuation = await lastFeed.getContinuation();
           continuation.feedType = lastFeed.feedType;
           ws.send(JSON.stringify(
             newMessage('continuationEvent', continuation),
@@ -195,8 +197,7 @@ async function start() {
             ws.send(JSON.stringify(
               newMessage('streamingDataEvent', qualityData),
             ));
-          }
-          catch {
+          } catch {
             ws.send(JSON.stringify(
               newMessage('error', new Error("Can't fetch video stream").message),
             ));
@@ -274,9 +275,10 @@ async function start() {
                 }),
               ));
 
+              // TODO: Submit the vote to Return YouTube Dislike
+
               break;
             }
-            // FIXME: Blocked by upstreem. YouTube.js doesn't implement `removeDislike`.
 
             default: {
               break;
