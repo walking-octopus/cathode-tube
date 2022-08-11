@@ -62,6 +62,7 @@ MainView {
 
         hint.status: "Hidden"
         visible: false
+        onCollapseCompleted: visible = false
 
         // Delay loading bottom edge until after the main WS is open
         // to save on startup time

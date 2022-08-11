@@ -258,9 +258,9 @@ Page {
                     spacing: units.gu(3)
 
                     IconButton {
-                        text: i18n.tr("Share")
-                        iconName: "share"
-                        onTriggered: print("TODO: Share")
+                        text: i18n.tr("Save")
+                        iconName: "document-save"
+                        onTriggered: print("TODO: Download")
                     }
 
                     IconButton {
@@ -270,9 +270,16 @@ Page {
                     }
 
                     IconButton {
-                        text: i18n.tr("Save")
-                        iconName: "document-save"
-                        onTriggered: print("TODO: Download")
+                        text: i18n.tr("Share")
+                        iconName: "share"
+                        onTriggered: {
+                            pStack.push(
+                                Qt.resolvedUrl("./SharePage.qml"),
+                                { "url": `https://youtube.com/watch?${selectedVideo.videoID}` },
+                            );
+
+                            bottomEdge.collapse();
+                        }
                     }
                 }
 
