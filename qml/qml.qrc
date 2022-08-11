@@ -17,5 +17,6 @@
         <file>Components/SearchModel.qml</file>
         <file>Components/HistoryModel.qml</file>
         <file>Components/PlaylistModel.qml</file>
+        <file>Components/IconButton.qml</file>
     </qresource>
 </RCC>

@@ -21,6 +21,7 @@ import Ubuntu.Components 1.3
 import QtWebSockets 1.1
 import QtWebEngine 1.10
 import QtSystemInfo 5.5
+import "../Components"
 
 Page {
     id: videoDetails
@@ -137,7 +138,7 @@ Page {
 
             ColumnLayout {
                 id: contentLayout
-                width: parent.width;
+                width: parent.width
 
                 RowLayout {
                     Layout.fillWidth: true
@@ -192,8 +193,10 @@ Page {
                             Layout.preferredWidth: units.gu(18)
                             value: videoData.metadata.rating / 5
                         }
-
+                        
                         RowLayout {
+                            Layout.topMargin: units.gu(0.4)
+
                             Icon {
                                 name: "thumb-up"
                                 color: videoData.metadata.is_liked ? UbuntuColors.green : theme.palette.normal.foregroundText
@@ -247,7 +250,30 @@ Page {
                     Layout.topMargin: units.gu(0.6)
 
                     text: i18n.tr("Published on %1").arg(videoData.metadata.publish_date_text)
+                }
 
+                Row {
+                    Layout.topMargin: units.gu(1)
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: units.gu(3)
+
+                    IconButton {
+                        text: i18n.tr("Share")
+                        iconName: "share"
+                        onTriggered: print("TODO: Share")
+                    }
+
+                    IconButton {
+                        text: i18n.tr("Add to")
+                        iconName: "add-to-playlist"
+                        onTriggered: print("TODO: Add playlist item")
+                    }
+
+                    IconButton {
+                        text: i18n.tr("Save")
+                        iconName: "document-save"
+                        onTriggered: print("TODO: Download")
+                    }
                 }
 
                 Text {
