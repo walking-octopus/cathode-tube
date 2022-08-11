@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-11 17:26+0000\n"
+"POT-Creation-Date: 2022-08-11 21:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,15 +38,19 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:123 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:123 ../qml/Pages/Notifications.qml:28
+msgid "Notifications"
+msgstr ""
+
+#: ../qml/Main.qml:130 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:129
+#: ../qml/Main.qml:136
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:137
+#: ../qml/Main.qml:144
 msgid "Liked videos"
 msgstr ""
 
@@ -92,20 +96,20 @@ msgstr ""
 msgid "Open and copy"
 msgstr ""
 
-#: ../qml/Pages/Playlist.qml:31
-msgid "items"
+#: ../qml/Pages/Notifications.qml:33 ../qml/Pages/Search.qml:31
+#: ../qml/Pages/SearchResults.qml:33 ../qml/Pages/SharePage.qml:21
+msgid "Back"
 msgstr ""
 
-#: ../qml/Pages/Search.qml:31 ../qml/Pages/SearchResults.qml:33
-#: ../qml/Pages/SharePage.qml:21
-msgid "Back"
+#: ../qml/Pages/Playlist.qml:31
+msgid "items"
 msgstr ""
 
 #: ../qml/Pages/Search.qml:57
 msgid "Search on YouTube..."
 msgstr ""
 
-#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:273
+#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:294
 msgid "Share"
 msgstr ""
 
@@ -113,26 +117,26 @@ msgstr ""
 msgid "Cathode"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:166
+#: ../qml/Pages/VideoPage.qml:187
 msgid "Subscribe (%1)"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:167
+#: ../qml/Pages/VideoPage.qml:188
 msgid "Subscribed"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:189
+#: ../qml/Pages/VideoPage.qml:210
 msgid "%1 views"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:252
+#: ../qml/Pages/VideoPage.qml:273
 msgid "Published on %1"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:261
+#: ../qml/Pages/VideoPage.qml:282
 msgid "Save"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:267
+#: ../qml/Pages/VideoPage.qml:288
 msgid "Add to"
 msgstr ""

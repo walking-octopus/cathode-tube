@@ -158,6 +158,16 @@ async function start() {
           break;
         }
 
+        case 'GetNotifications': {
+          const notifications = await youtube.getNotifications();
+
+          ws.send(JSON.stringify(
+            newMessage('notificationsEvent', notifications),
+          ));
+
+          break;
+        }
+
         case 'GetSearchSuggestions': {
           if (json.payload === '') {
             break;

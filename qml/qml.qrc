@@ -10,6 +10,7 @@
         <file>Pages/SearchResults.qml</file>
         <file>Pages/History.qml</file>
         <file>Pages/Playlist.qml</file>
+        <file>Pages/Notifications.qml</file>
         <file>Pages/SharePage.qml</file>
         <file>Components/VideoDelegate.qml</file>
         <file>Components/PreplayDialog.qml</file>
