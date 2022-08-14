@@ -99,6 +99,14 @@ Page {
 
                     subtitle.text: sent_time
 
+                    Rectangle {
+                        width: units.gu(0.8); height: width;
+                        radius: width*0.5
+                        color: theme.palette.normal.focus
+                        SlotsLayout.position: SlotsLayout.Leading
+                        visible: !read
+                    }
+
                     Image {
                         id: image
                         source: !!video_thumbnail ? video_thumbnail.url : ""
