@@ -45,7 +45,7 @@ Page {
         }
 
         Label {
-            text: i18n.tr(`It works by imitating official YouTube apps with <a href="https://github.com/LuanRT/YouTube.js">YouTube.js</a>, instead of the limited official API, allowing complete feature parity. <br><br> While Google's ToS only forbids automated interactions, nobody's certain about their anti-abuse system. Try not to trip over the rate-limit or engage in usage patterns that could be mistaken for a bot, like commenting on a lot of videos at once.`)
+            text: i18n.tr("It works by imitating official YouTube apps with <a href=\"https://github.com/LuanRT/YouTube.js\">YouTube.js</a>, instead of the limited official API, allowing complete feature parity. <br/><br/> While Google's ToS only forbids automated interactions, nobody's certain about their anti-abuse system. Try not to trip over the rate-limit or engage in usage patterns that could be mistaken for a bot, like commenting on a lot of videos at once.")
 
             wrapMode: "Wrap"
             onLinkActivated: Qt.openUrlExternally(link)

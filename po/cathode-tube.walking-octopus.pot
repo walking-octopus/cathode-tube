@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-14 17:41+0000\n"
+"POT-Creation-Date: 2022-08-14 17:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,7 +89,17 @@ msgid "Welcome to Cathode!"
 msgstr ""
 
 #: ../qml/Pages/LoginPage.qml:48
-msgid "https://github.com/LuanRT/YouTube.js"
+msgid ""
+"It works by imitating official YouTube apps with <a href=\"https://github."
+"com/LuanRT/YouTube.js\">YouTube.js</a>, instead of the limited official API, "
+"allowing complete feature parity. <br/><br/> While Google's ToS only forbids "
+"automated interactions, nobody's certain about their anti-abuse system. Try "
+"not to trip over the rate-limit or engage in usage patterns that could be "
+"mistaken for a bot, like commenting on a lot of videos at once."
+msgstr ""
+
+#: ../qml/Pages/LoginPage.qml:58
+msgid "To log in, please go to <a href=\"%1\">%1</a> and enter \"%3\"."
 msgstr ""
 
 #: ../qml/Pages/LoginPage.qml:68
