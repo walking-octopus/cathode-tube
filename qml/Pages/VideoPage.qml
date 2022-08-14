@@ -200,8 +200,6 @@ Page {
 
                     Item { Layout.fillWidth: true }
 
-                    // TODO: Add video sharing, add playlist and download buttons
-
                     ColumnLayout {
                         Label {
                             text: i18n.tr("%1 views").arg(videoData.metadata.view_count)
@@ -213,7 +211,7 @@ Page {
                         }
                         
                         RowLayout {
-                            Layout.topMargin: units.gu(0.4)
+                            Layout.topMargin: units.gu(0.5)
 
                             Icon {
                                 name: "thumb-up"
@@ -271,7 +269,7 @@ Page {
                 }
 
                 Row {
-                    Layout.topMargin: units.gu(1)
+                    Layout.topMargin: units.gu(1.5)
                     Layout.alignment: Qt.AlignHCenter
                     spacing: units.gu(3)
 
@@ -306,8 +304,16 @@ Page {
                     Layout.fillHeight: true
                     Layout.topMargin: units.gu(1)
 
-                    text: videoData.description
-
+                    text: {
+                        function replaceURLs(text) { 
+                            const urlRegex = /(((http(s)?:\/\/)|(www\.))[^\s]+)/g;
+                            return text.replace(urlRegex, '<a href="$1">$1</a>');
+                        }
+                           
+                        return replaceURLs(videoData.description);
+                    }
+                    
+                    onLinkActivated: Qt.openUrlExternally(link)
                     wrapMode: Text.Wrap
                     color: theme.palette.normal.baseText
                 }
