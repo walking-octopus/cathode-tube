@@ -56,6 +56,7 @@ Page {
 
             switch (json.topic) {
                 case "notificationsEvent": {
+                    // Replace `title` with `short_text` because of QML weird
                     json.payload.items = json.payload.items.map(function(obj) {
                         obj['short_text'] = obj['title']; // Assign new key
                         delete obj['title']; // Delete old key
@@ -83,29 +84,31 @@ Page {
             model: notificationModel
             delegate: ListItem {
                 height: modelLayout.height + (divider.visible ? divider.height : 0)
-                onClicked: Qt.openUrlExternally(video_url)
+                onClicked: {
+                    if (!!video_url && video_url != "N/A")
+                        Qt.openUrlExternally(video_url)
+                }
 
                 ListItemLayout {
                     id: modelLayout
                     anchors.centerIn: parent
 
-                    height: units.gu(13)
-
                     title.text: short_text
                     title.maximumLineCount: 2
                     title.wrapMode: Text.WordWrap
-                    
+
                     subtitle.text: sent_time
 
                     Image {
                         id: image
-                        source: video_thumbnail.url
+                        source: !!video_thumbnail ? video_thumbnail.url : ""
+                        visible: !!video_thumbnail
         
                         width: units.gu(16/1.1); height: units.gu(9/1.1)
                         
                         sourceSize.width: 336; sourceSize.height: 188
                         fillMode: Image.PreserveAspectCrop
-                        // I don't know why the black bars keep appearing. Might be an upstream bug.
+                        // The image has a weird aspect ratio, so it need to be cropped.
                 
                         SlotsLayout.position: SlotsLayout.Trailing
         
@@ -127,14 +130,7 @@ Page {
                 }
             }
 
-            // onAtYEndChanged: {
-            //     if (view.atYEnd && youtube.model.count > 0) {
-            //         print("Loading tail notifications...");
-            //
-            //         youtube.getContinuation();
-            //     }
-            //     // TODO: Add an activity indicator for continuations
-            // }
+            // TODO: Add notification continuations
         }
 
     }

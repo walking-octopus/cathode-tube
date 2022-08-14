@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-11 21:17+0000\n"
+"POT-Creation-Date: 2022-08-14 17:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "https://github.com/LuanRT/YouTube.js"
 msgstr ""
 
-#: ../qml/Pages/LoginPage.qml:64
+#: ../qml/Pages/LoginPage.qml:68
 msgid "Open and copy"
 msgstr ""
 
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Search on YouTube..."
 msgstr ""
 
-#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:294
+#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:289
 msgid "Share"
 msgstr ""
 
@@ -117,26 +117,26 @@ msgstr ""
 msgid "Cathode"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:187
+#: ../qml/Pages/VideoPage.qml:184
 msgid "Subscribe (%1)"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:188
+#: ../qml/Pages/VideoPage.qml:185
 msgid "Subscribed"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:210
+#: ../qml/Pages/VideoPage.qml:205
 msgid "%1 views"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:273
+#: ../qml/Pages/VideoPage.qml:268
 msgid "Published on %1"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:282
+#: ../qml/Pages/VideoPage.qml:277
 msgid "Save"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:288
+#: ../qml/Pages/VideoPage.qml:283
 msgid "Add to"
 msgstr ""

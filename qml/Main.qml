@@ -119,11 +119,18 @@ MainView {
                     onTriggered: pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"))
                 },
                 Action {
+                    iconName: "notification"
+                    text: i18n.tr("Notifications")
+                    onTriggered: pStack.push(
+                        Qt.resolvedUrl("./Pages/Notifications.qml")
+                    )
+                },
+                Action {
                     iconName: "history"
                     text: i18n.tr("History")
                     onTriggered: pStack.push(Qt.resolvedUrl("./Pages/History.qml"))
                 },
-                // TODO: Playlist menu can't be added until upstream does it
+                // TODO: Library page is blocked by YouTube.js v2
                 Action {
                     iconName: "voicemail"
                     text: i18n.tr("Watch later")
@@ -140,7 +147,7 @@ MainView {
                         { playlist_id: "LL" }
                     )
                 }
-                // TODO: Add the notification tab
+                // TODO: Add the downloads tab
             ]
         }
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
