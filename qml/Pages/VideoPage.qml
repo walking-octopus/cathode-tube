@@ -305,8 +305,9 @@ Page {
                     Layout.topMargin: units.gu(1)
 
                     text: {
-                        function replaceURLs(text) { 
+                        function replaceURLs(text) {
                             const urlRegex = /(((http(s)?:\/\/)|(www\.))[^\s]+)/g;
+                            text = text.replace(/(?:\r\n|\r|\n)/g, ' <br> ');
                             return text.replace(urlRegex, '<a href="$1">$1</a>');
                         }
                            
