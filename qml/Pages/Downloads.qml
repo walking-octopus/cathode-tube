@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQuick.Layouts 1.3
 import Ubuntu.Components 1.3
 import Qt.labs.folderlistmodel 1.0
 
@@ -37,8 +38,17 @@ Page {
             model: videoList
             delegate: ListItem {
                 height: modelLayout.height + (divider.visible ? divider.height : 0)
-                // onClicked: Qt.openUrlExternally(fileURL)
-                // TODO: Add proper ContentHub support for opening offline videos
+                trailingActions: ListItemActions {
+                    actions: [
+                        // TODO: Implement video deletion
+                        Action {
+                            iconName: "delete"
+                        }
+                    ]
+                }
+
+                onClicked: Qt.openUrlExternally(fileURL.replace("file://", "video://"))
+                // TODO: Add ContentHub support for opening offline videos
 
                 ListItemLayout {
                     id: modelLayout
@@ -69,11 +79,62 @@ Page {
                         return [formatDate(fileModified), formatBytes(fileSize)].filter(element => !!element).join(' | ')
                     }
 
-                    // TODO: Add video deletion
                 }
             }
-        }
 
-        // TODO: Add placeholder item for empty video list
+            ColumnLayout {
+                anchors.fill: parent
+                anchors.topMargin: header.height
+                anchors.margins: units.gu(2)
+                spacing: units.gu(2)
+        
+                visible: view.count === 0 && !videoList.loading
+        
+                Item { Layout.fillHeight: true; Layout.fillWidth: true }
+        
+                UbuntuShape {
+                    Layout.alignment: Qt.AlignCenter
+                    Layout.preferredWidth: units.gu(16); Layout.preferredHeight: width
+                    Layout.bottomMargin: units.gu(2)
+        
+                    radius: "medium"
+                    source: Image {
+                        source: Qt.resolvedUrl("../../assets/logo.png")
+                    }
+                }
+        
+                Label {
+                    text: i18n.tr("Downloaded videos will appear here")
+                    textSize: Label.Large
+                    font.bold: true
+
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.alignment: Qt.AlignCenter
+                }
+        
+                Label {
+                    text: i18n.tr("You'll need to access the files externally for offline playback, since the app requires an internet connection.")
+
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.alignment: Qt.AlignCenter
+                }
+                
+                Label {
+                    text: i18n.tr("They're stored at `~/.local/share/cathode-tube.walking-octopus`.")
+                    textSize: Label.Small
+
+                    wrapMode: Text.Wrap
+                    Layout.fillWidth: true
+                    horizontalAlignment: Text.AlignHCenter
+                    Layout.alignment: Qt.AlignCenter
+                }
+        
+                Item { Layout.fillHeight: true; }
+            }
+        }
     }
 }

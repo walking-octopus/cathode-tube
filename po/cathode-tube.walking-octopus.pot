@@ -8,14 +8,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 14:24+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
 
 #: ../qml/Components/DownloadDialog.qml:12
 msgid "Downloading"
@@ -41,38 +33,52 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:138 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:137 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:143 ../qml/Pages/Notifications.qml:28
+#: ../qml/Main.qml:142 ../qml/Pages/Notifications.qml:28
 msgid "Notifications"
 msgstr ""
 
-#: ../qml/Main.qml:148
+#: ../qml/Main.qml:147
 msgid "Downloads"
 msgstr ""
 
-#: ../qml/Main.qml:154 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:152 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:160
+#: ../qml/Main.qml:158
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:168
+#: ../qml/Main.qml:166
 msgid "Liked videos"
 msgstr ""
 
-#: ../qml/Pages/Downloads.qml:10
+#: ../qml/Pages/Downloads.qml:11
 msgid "Downloaded videos"
 msgstr ""
 
-#: ../qml/Pages/Downloads.qml:15 ../qml/Pages/History.qml:32
+#: ../qml/Pages/Downloads.qml:16 ../qml/Pages/History.qml:32
 #: ../qml/Pages/HomePage.qml:36 ../qml/Pages/Playlist.qml:37
 msgid "Menu"
+msgstr ""
+
+#: ../qml/Pages/Downloads.qml:107
+msgid "Downloaded videos will appear here"
+msgstr ""
+
+#: ../qml/Pages/Downloads.qml:118
+msgid ""
+"You'll need to access the files externally for offline playback, since the "
+"app requires an internet connection."
+msgstr ""
+
+#: ../qml/Pages/Downloads.qml:127
+msgid "They're stored at `~/.local/share/cathode-tube.walking-octopus`."
 msgstr ""
 
 #: ../qml/Pages/History.qml:27 ../qml/Pages/HomePage.qml:32

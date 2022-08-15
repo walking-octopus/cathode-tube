@@ -103,7 +103,6 @@ MainView {
         }
     }
 
-
     PreplayDialog {
         id: preplayDialog
     }
@@ -146,7 +145,6 @@ MainView {
                 Action {
                     iconName: "document-save-as"
                     text: i18n.tr("Downloads")
-                    // TODO: Add the downloads tab
                     onTriggered: pStack.push(Qt.resolvedUrl("./Pages/Downloads.qml"))
                 },
                 Action {
