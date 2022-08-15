@@ -22,7 +22,8 @@ import Ubuntu.Components.Popups 1.3
 
 Component {
     ListItem {
-        height: units.gu(13)
+        // height: units.gu(13)
+        height: (layout.height + (divider.visible ? divider.height : 0)) * 1.12
         
         onClicked: PopupUtils.open(preplayDialog, null, {
             'video_id': id,
@@ -41,7 +42,7 @@ Component {
 
             subtitle.text: channel.name
 
-            summary.text: [views, published].filter(element => Boolean(element)).join(' | ')
+            summary.text: [views, published].filter(element => !!element).join(' | ')
             summary.visible: (views != "N/A") ? true : false
 
             // TODO: Add leadingActions alias for watch later, downloads, and playlist managment
@@ -50,7 +51,7 @@ Component {
                 id: image
                 source: thumbnail
 
-                width: units.gu(16*1.12); height: units.gu(9*1.12)
+                width: units.gu(16*1.15); height: units.gu(9*1.15)
 
                 sourceSize.width: 336; sourceSize.height: 188
                 fillMode: Image.PreserveAspectFit
@@ -76,8 +77,8 @@ Component {
                     anchors {
                         right: parent.right
                         bottom: parent.bottom
-                        rightMargin: units.gu(0.85)
-                        bottomMargin: units.gu(0.5)
+                        rightMargin: units.gu(1)
+                        bottomMargin: units.gu(0.8)
                     }
                     visible: !!duration
 
@@ -91,17 +92,17 @@ Component {
                             fill: parent
                             leftMargin: units.gu(-0.45)
                             rightMargin: units.gu(-0.45)
-                            topMargin: units.gu(-0.1)
-                            bottomMargin: units.gu(-0.1)
+                            topMargin: units.gu(-0.15)
+                            bottomMargin: units.gu(-0.15)
                         }
                         z: -1
 
                         color: "black"
-                        opacity: 0.58
+                        opacity: 0.65
                         radius: "small"
                     }
                 }
             }
         }
     }
-} 
+}
