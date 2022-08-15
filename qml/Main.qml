@@ -17,6 +17,7 @@
 
 import QtQuick 2.12
 import Ubuntu.Components 1.3
+import Ubuntu.Components.Popups 1.3
 import QtWebSockets 1.1
 import "./Pages"
 import "./Components"
@@ -41,6 +42,23 @@ MainView {
         property string thumbnail_url
 
         property alias videoPage: bottomEdge.contentItem
+
+        property int progress: 0
+
+        function download() {
+            websocket.sendTextMessage(JSON.stringify({
+                topic: "DownloadVideo",
+                payload: {
+                    video_title: `${video_title} | ${channel_name}`,
+                    video_id: selectedVideo.videoID,
+                    quality: selectedVideo.quality
+                },
+            }));
+
+            PopupUtils.open(downloadDialog, null, {
+                'video': playingVideo,
+            });
+        }
     }
 
     MiniPlayer {
@@ -64,11 +82,10 @@ MainView {
         visible: false
         onCollapseCompleted: visible = false
 
-        // Delay loading bottom edge until after the main WS is open
-        // to save on startup time
+        // Delay loading bottom edge until after the main WS is open to save on startup time
 
-        // FIXME: Why even load it if nothing's playing? This leads to errors, caused by videoData being undefined.
-        // Note: The WebSocket must have a bit of time to connect before sending a message. Preloading is required. 
+        // FIXME: Why even load it if nothing's playing?
+        // The WebSocket needs some time to connect before sending a message. Preloading is thus required.
 
         preloadContent: false
         Timer {
@@ -81,7 +98,6 @@ MainView {
             id: videoPage
 
             selectedVideo: playingVideo.selectedVideo
-
             video_title: playingVideo.video_title
             channel_name: playingVideo.channel_name
         }
@@ -90,6 +106,10 @@ MainView {
 
     PreplayDialog {
         id: preplayDialog
+    }
+
+    DownloadDialog {
+        id: downloadDialog
     }
 
     AdaptivePageLayout {
@@ -121,9 +141,13 @@ MainView {
                 Action {
                     iconName: "notification"
                     text: i18n.tr("Notifications")
-                    onTriggered: pStack.push(
-                        Qt.resolvedUrl("./Pages/Notifications.qml")
-                    )
+                    onTriggered: pStack.push(Qt.resolvedUrl("./Pages/Notifications.qml"))
+                },
+                Action {
+                    iconName: "document-save-as"
+                    text: i18n.tr("Downloads")
+                    // TODO: Add the downloads tab
+                    onTriggered: pStack.push(Qt.resolvedUrl("./Pages/Downloads.qml"))
                 },
                 Action {
                     iconName: "history"
@@ -147,9 +171,9 @@ MainView {
                         { playlist_id: "LL" }
                     )
                 }
-                // TODO: Add the downloads tab
             ]
         }
+
         Component.onCompleted: pStack.push(Qt.resolvedUrl("./Pages/SplashScreen.qml"))
     }
 
@@ -193,12 +217,22 @@ MainView {
                             code: json.payload.code,
                         },
                     );
+
                     break;
                 }
 
                 case "loginEvent": {
                     pStack.primaryPage.isEnabled = true;
                     pStack.push(Qt.resolvedUrl("./Pages/HomePage.qml"));
+                    break;
+                }
+
+                case "videoDownloadEvent": {
+                    playingVideo.progress = json.payload;
+
+                    if (playingVideo.progress == 100)
+                        playingVideo.progress = 0;
+
                     break;
                 }
             }

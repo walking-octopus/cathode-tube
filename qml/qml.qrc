@@ -11,9 +11,11 @@
         <file>Pages/History.qml</file>
         <file>Pages/Playlist.qml</file>
         <file>Pages/Notifications.qml</file>
+        <file>Pages/Downloads.qml</file>
         <file>Pages/SharePage.qml</file>
         <file>Components/VideoDelegate.qml</file>
         <file>Components/PreplayDialog.qml</file>
+        <file>Components/DownloadDialog.qml</file>
         <file>Components/MiniPlayer.qml</file>
         <file>Components/FeedModel.qml</file>
         <file>Components/SearchModel.qml</file>

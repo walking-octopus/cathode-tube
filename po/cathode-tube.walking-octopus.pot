@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-14 19:45+0000\n"
+"POT-Creation-Date: 2022-08-15 14:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../qml/Components/DownloadDialog.qml:12
+msgid "Downloading"
+msgstr ""
 
 #: ../qml/Components/PreplayDialog.qml:35
 msgid "Download or watch this video"
@@ -26,42 +30,54 @@ msgid "Quality"
 msgstr ""
 
 #: ../qml/Components/PreplayDialog.qml:47
+msgid "Download"
+msgstr ""
+
+#: ../qml/Components/PreplayDialog.qml:68
 msgid "Play"
 msgstr ""
 
-#: ../qml/Components/PreplayDialog.qml:78
+#: ../qml/Components/PreplayDialog.qml:90
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:118 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:138 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:123 ../qml/Pages/Notifications.qml:28
+#: ../qml/Main.qml:143 ../qml/Pages/Notifications.qml:28
 msgid "Notifications"
 msgstr ""
 
-#: ../qml/Main.qml:130 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:148
+msgid "Downloads"
+msgstr ""
+
+#: ../qml/Main.qml:154 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:136
+#: ../qml/Main.qml:160
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:144
+#: ../qml/Main.qml:168
 msgid "Liked videos"
+msgstr ""
+
+#: ../qml/Pages/Downloads.qml:10
+msgid "Downloaded videos"
+msgstr ""
+
+#: ../qml/Pages/Downloads.qml:15 ../qml/Pages/History.qml:32
+#: ../qml/Pages/HomePage.qml:36 ../qml/Pages/Playlist.qml:37
+msgid "Menu"
 msgstr ""
 
 #: ../qml/Pages/History.qml:27 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/Playlist.qml:30 ../qml/Pages/Playlist.qml:31
 msgid "Loading..."
-msgstr ""
-
-#: ../qml/Pages/History.qml:32 ../qml/Pages/HomePage.qml:36
-#: ../qml/Pages/Playlist.qml:37
-msgid "Menu"
 msgstr ""
 
 #: ../qml/Pages/HomePage.qml:44

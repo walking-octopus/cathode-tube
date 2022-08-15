@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync, createWriteStream } from 'fs';
 import { WebSocketServer } from 'ws';
 import Innertube from 'youtubei.js';
 import axios from 'axios';
@@ -7,10 +7,17 @@ const { env } = process;
 
 const homeDir = env.HOME;
 const xdgConfig = env.XDG_CONFIG_HOME || (homeDir ? `${homeDir}/.config` : undefined);
+const xdgData = env.XDG_DATA_HOME || (homeDir ? `${homeDir}/.local/share` : undefined);
 
+// Too show. Needs to be converted to async
 const appPath = `${xdgConfig}/cathode-tube.walking-octopus`;
 if (!existsSync(appPath)) {
   mkdirSync(appPath);
+}
+
+const videoDownloadDir = `${xdgData}/cathode-tube.walking-octopus`;
+if (!existsSync(videoDownloadDir)) {
+  mkdirSync(videoDownloadDir);
 }
 
 function newMessage(topic, payload) {
@@ -312,6 +319,31 @@ async function start() {
           ws.send(JSON.stringify(
             newMessage('updateSubscription', json.payload.isSubscribed),
           ));
+
+          break;
+        }
+
+        case 'DownloadVideo': {
+          if (json.payload.video_id === '' || json.payload.video_title === '' || json.payload.quality === '') {
+            break;
+          }
+
+          const stream = youtube.download(json.payload.video_id, {
+            quality: json.payload.quality,
+            format: 'mp4',
+            type: 'videoandaudio',
+          });
+
+          stream.pipe(createWriteStream(`${videoDownloadDir}/${json.payload.video_title}.mp4`));
+
+          stream.on('progress', (info) => {
+            // TODO: Add file size info
+            ws.send(JSON.stringify(
+              newMessage('videoDownloadEvent', info.percentage),
+            ));
+          });
+
+          stream.on('error', (err) => console.error('[DOWNLOAD ERROR]', err));
 
           break;
         }

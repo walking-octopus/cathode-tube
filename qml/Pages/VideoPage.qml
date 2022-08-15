@@ -276,7 +276,7 @@ Page {
                     IconButton {
                         text: i18n.tr("Save")
                         iconName: "document-save"
-                        onTriggered: print("TODO: Download")
+                        onTriggered: playingVideo.download()
                     }
 
                     IconButton {
@@ -326,7 +326,7 @@ Page {
     Connections {
         target: videoDetails
 
-        // FIXME: Changing the video quality, while still watching the same video, doesn't do anything.
+        // FIXME: Video downloads trigger the video player
 
         onSelectedVideoChanged: {
             if (selectedVideo.videoID == "") {

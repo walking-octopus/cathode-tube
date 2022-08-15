@@ -44,7 +44,29 @@ Component {
 
         RowLayout {
             Button {
+                text: i18n.tr("Download")
+
+                color: UbuntuColors.blue
+                Layout.fillWidth: true
+
+                onClicked: {
+                    playingVideo.video_title = video_title;
+                    playingVideo.channel_name = channel_name;
+                    playingVideo.thumbnail_url = thumbnail_url;
+
+                    playingVideo.selectedVideo = {
+                        "quality": qualitySelector.model[qualitySelector.selectedIndex],
+                        "videoID": video_id,
+                    };
+
+                    playingVideo.download();
+                    PopupUtils.close(dialog);
+                }
+            }
+
+            Button {
                 text: i18n.tr("Play")
+
                 color: theme.palette.normal.positive
                 Layout.fillWidth: true
 
@@ -57,21 +79,11 @@ Component {
                         "quality": qualitySelector.model[qualitySelector.selectedIndex],
                         "videoID": video_id,
                     };
-                    
+
                     miniPlayer.showDetails();
                     PopupUtils.close(dialog);
                 }
             }
-
-            // Button {
-            //     text: "Download"
-            //     color: UbuntuColors.blue
-            //     Layout.fillWidth: true
-            //     visible: false
-
-            //     // TODO: Add the download
-            //     onClicked: PopupUtils.close(dialog)
-            // }
         }
 
         Button {
