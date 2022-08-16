@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 17:55+0000\n"
+"POT-Creation-Date: 2022-08-16 20:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,28 +41,28 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:137 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:144 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:142 ../qml/Pages/Notifications.qml:28
+#: ../qml/Main.qml:149 ../qml/Pages/Notifications.qml:28
 msgid "Notifications"
 msgstr ""
 
-#: ../qml/Main.qml:147
+#: ../qml/Main.qml:154
 msgid "Downloads"
 msgstr ""
 
-#: ../qml/Main.qml:152 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:159 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:158
+#: ../qml/Main.qml:165
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:166
+#: ../qml/Main.qml:173
 msgid "Liked videos"
 msgstr ""
 
@@ -75,17 +75,17 @@ msgstr ""
 msgid "Menu"
 msgstr ""
 
-#: ../qml/Pages/Downloads.qml:107
+#: ../qml/Pages/Downloads.qml:111
 msgid "Downloaded videos will appear here"
 msgstr ""
 
-#: ../qml/Pages/Downloads.qml:118
+#: ../qml/Pages/Downloads.qml:122
 msgid ""
 "You'll need to access the files externally for offline playback, since the "
 "app requires an internet connection."
 msgstr ""
 
-#: ../qml/Pages/Downloads.qml:127
+#: ../qml/Pages/Downloads.qml:131
 msgid "They're stored at `~/.local/share/cathode-tube.walking-octopus`."
 msgstr ""
 

@@ -38,16 +38,20 @@ Page {
             model: videoList
             delegate: ListItem {
                 height: modelLayout.height + (divider.visible ? divider.height : 0)
-                trailingActions: ListItemActions {
+
+                leadingActions: ListItemActions {
                     actions: [
-                        // TODO: Implement video deletion
                         Action {
                             iconName: "delete"
+                            onTriggered: playingVideo.deleteFile(filePath);
                         }
                     ]
                 }
 
-                onClicked: Qt.openUrlExternally(fileURL.replace("file://", "video://"))
+                onClicked: Qt.openUrlExternally(
+                    // `video://${encodeURIComponent(filePath)}`
+                    `video://${filePath}`
+                )
                 // TODO: Add ContentHub support for opening offline videos
 
                 ListItemLayout {

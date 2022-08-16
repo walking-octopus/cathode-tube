@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync, createWriteStream } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync, createWriteStream, unlink, unlinkSync, rm } from 'fs';
 import { WebSocketServer } from 'ws';
 import Innertube from 'youtubei.js';
 import axios from 'axios';
@@ -319,6 +319,20 @@ async function start() {
           ws.send(JSON.stringify(
             newMessage('updateSubscription', json.payload.isSubscribed),
           ));
+
+          break;
+        }
+
+        case 'DeleteFile': {
+          if (json.payload.path === '') {
+            break;
+          }
+
+          rm(json.payload.path, (err) => {
+            if (!err) { return; }
+            console.error(err);
+            // TODO: Display the error
+          });
 
           break;
         }

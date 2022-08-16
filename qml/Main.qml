@@ -59,6 +59,13 @@ MainView {
                 'video': playingVideo,
             });
         }
+
+        function deleteFile(filePath) {
+            websocket.sendTextMessage(JSON.stringify({
+                topic: "DeleteFile",
+                payload: { path: filePath },
+            }));
+        }
     }
 
     MiniPlayer {
