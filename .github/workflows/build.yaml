@@ -23,7 +23,7 @@ jobs:
           echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 
       - uses: actions/setup-node@v2
-         with:
+        with:
            node-version: '14.x'
 
       - name: Build App
