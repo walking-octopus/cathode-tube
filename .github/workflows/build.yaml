@@ -32,8 +32,14 @@ jobs:
       - name: Libraries build
         run: clickable build --libs
 
-      - name: Build App
-        run: clickable build --output dist
+      - name: Build App(amd64)
+        run: clickable build --arch amd64 --output dist
+        
+      - name: Build App(arm64)
+        run: clickable build --arch arm64 --output dist
+        
+      - name: Build App(armhf)
+        run: clickable build --arch armhf --output dist
 
       - uses: actions/upload-artifact@v3
         with:
