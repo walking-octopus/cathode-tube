@@ -100,6 +100,11 @@ Page {
         Item {
             Layout.fillWidth: true
             Layout.preferredHeight: width / 16.0 * 9.0
+
+            ActivityIndicator {
+                anchors.centerIn: parent
+                running: !videoPlayer.visible // isVideoLoading
+            }
             
             WebEngineView {
                 id: videoPlayer
@@ -157,7 +162,13 @@ Page {
             ColumnLayout {
                 id: contentLayout
                 width: parent.width
-
+                
+                ProgressBar {
+                    Layout.fillWidth: true
+                    indeterminate: true
+                    visible: videoData == emptyVideo //isDescriptionLoading
+                }
+                
                 RowLayout {
                     Layout.fillWidth: true
 
@@ -339,6 +350,7 @@ Page {
             }
 
             print("Fetching the info..");
+            videoData = emptyVideo;
 
             websocket.sendTextMessage(JSON.stringify({
                 topic: "GetStreamingData",
