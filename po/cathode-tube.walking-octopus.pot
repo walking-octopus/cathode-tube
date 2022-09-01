@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-01 09:57+0000\n"
+"POT-Creation-Date: 2022-09-01 11:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,36 +41,40 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:41
-msgid "Today you've spent %1 minutes watching YouTube"
+#: ../qml/Main.qml:83
+msgid "URL Handler"
 msgstr ""
 
-#: ../qml/Main.qml:42
+#: ../qml/Main.qml:93
+msgid "Played %1 YouTube videos."
+msgstr ""
+
+#: ../qml/Main.qml:94
 msgid "No time wasted on YouTube today. Keep it up!"
 msgstr ""
 
-#: ../qml/Main.qml:166 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:207 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:171 ../qml/Pages/Notifications.qml:28
+#: ../qml/Main.qml:212 ../qml/Pages/Notifications.qml:28
 msgid "Notifications"
 msgstr ""
 
-#: ../qml/Main.qml:176
+#: ../qml/Main.qml:217
 msgid "Downloads"
 msgstr ""
 
-#: ../qml/Main.qml:181 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:222 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:187
+#: ../qml/Main.qml:228
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:195
+#: ../qml/Main.qml:236
 msgid "Liked videos"
 msgstr ""
 

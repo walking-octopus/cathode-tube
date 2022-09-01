@@ -55,6 +55,37 @@ MainView {
     //     }
     // }
 
+    Connections {
+        target: UriHandler
+
+        onOpened: {
+            if (uris.length == 0) return
+            print('Incoming call from UriHandler: ' + uris[0]);
+                
+            video_id = uris[0].split("v=")[1];
+            ampersand_pos = video_id.indexOf("&");
+            if (ampersand_pos == -1) return
+
+            video_id = video_id.substring(0, ampersand_pos);
+
+            openLinkTimer.started = true
+        }
+
+    }
+    Timer {
+        id: openLinkTimer
+        property bool started
+        running: started && pStack.primaryPage.isEnabled
+        triggeredOnStart: true
+
+        onTriggered: PopupUtils.open(preplayDialog, null, {
+            'video_id': video_id,
+            'video_title': i18n.tr("URL Handler"),
+            'channel_name': "",
+            'thumbnail_url': ""
+        })
+    }
+
     // I think counting the number of videos watches would be simpler for now.
     Metric {
         id: metricPlayedVideos

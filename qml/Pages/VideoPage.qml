@@ -321,7 +321,7 @@ Page {
                             text = text.replace(/(?:\r\n|\r|\n)/g, ' <br> ');
                             return text.replace(urlRegex, '<a href="$1">$1</a>');
                         }
-                           
+
                         return replaceURLs(videoData.description);
                     }
                     
@@ -408,6 +408,7 @@ Page {
                 }
                 case "videoDetailsEvent": {
                     videoData = json.payload;
+                    channel_name = videoData.metadata.channel_name;
                     break;
                 }
                 case "updateSubscription": {
