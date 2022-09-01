@@ -28,6 +28,9 @@ jobs:
            
       - name: Install dependencies
         run: npm install
+        
+      - name: Libraries build
+        run: clickable build --libs
 
       - name: Build App
         run: clickable build --output dist
