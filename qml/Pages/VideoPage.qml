@@ -366,6 +366,8 @@ Page {
                     id: selectedVideo.videoID,
                 },
             }));
+
+            metricPlayedVideos.increment();
         }
     }
 
