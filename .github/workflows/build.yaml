@@ -29,14 +29,20 @@ jobs:
       - name: Install dependencies
         run: npm install
         
-      - name: Libraries build
+      - name: Libraries build(amd64)
         run: clickable build --libs
 
       - name: Build App(amd64)
         run: clickable build --arch amd64 --output dist
+      
+      - name: Libraries build(arm64)
+        run: clickable build --libs --arch arm64
         
       - name: Build App(arm64)
         run: clickable build --arch arm64 --output dist
+        
+      - name: Libraries build(armhf)
+        run: clickable build --libs --arch armhf
         
       - name: Build App(armhf)
         run: clickable build --arch armhf --output dist
