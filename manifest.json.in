@@ -6,7 +6,8 @@
     "hooks": {
         "cathode-tube": {
             "apparmor": "cathode-tube.apparmor",
-            "desktop":  "cathode-tube.desktop"
+            "desktop":  "cathode-tube.desktop",
+            "urls":  "cathode-tube.url-dispatcher"
         }
     },
     "version": "1.0.0",

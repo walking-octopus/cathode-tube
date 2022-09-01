@@ -19,6 +19,7 @@ import QtQuick 2.12
 import Ubuntu.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import QtWebSockets 1.1
+import UserMetrics 0.1
 import "./Pages"
 import "./Components"
 
@@ -31,6 +32,68 @@ MainView {
 
     width: units.gu(120)
     height: units.gu(75)
+
+    // This isn't perfect. Maybe if I can write my own text into usermetrics,
+    // I can fetch watch time from YouTube itself. (Blocked by YouTube.js v2)
+    // Metric {
+    //     id: metricWatchTime
+    //     name: "watch-time"
+    //     format: i18n.tag("Today you've spent %1 minutes watching YouTube")
+    //     emptyFormat: i18n.tag("No time wasted on YouTube today. Keep it up!"); minimum: 0
+    //     domain: "cathode-tube"
+        
+    //     You can edit the format and use update to push text into it!
+    //     function pushText(value) {
+    //         format = value;
+    //         update(1);
+    //     }
+        
+    //     Timer {
+    //         interval: 60000 // Every minute
+    //         running: !!playingVideo.selectedVideo
+    //         onTriggered: metricWatchTime.increment()
+    //     }
+    // }
+
+    Connections {
+        target: UriHandler
+
+        onOpened: {
+            if (uris.length == 0) return
+            print('Incoming call from UriHandler: ' + uris[0]);
+                
+            video_id = uris[0].split("v=")[1];
+            ampersand_pos = video_id.indexOf("&");
+            if (ampersand_pos == -1) return
+
+            video_id = video_id.substring(0, ampersand_pos);
+
+            openLinkTimer.started = true
+        }
+
+    }
+    Timer {
+        id: openLinkTimer
+        property bool started
+        running: started && pStack.primaryPage.isEnabled
+        triggeredOnStart: true
+
+        onTriggered: PopupUtils.open(preplayDialog, null, {
+            'video_id': video_id,
+            'video_title': i18n.tr("URL Handler"),
+            'channel_name': "",
+            'thumbnail_url': ""
+        })
+    }
+
+    // I think counting the number of videos watches would be simpler for now.
+    Metric {
+        id: metricPlayedVideos
+        name: "played-videos"
+        format: i18n.tag("Played %1 YouTube videos.")
+        emptyFormat: i18n.tag("No time wasted on YouTube today. Keep it up!"); minimum: 0
+        domain: "cathode-tube"
+    }
 
     Item {
         id: playingVideo

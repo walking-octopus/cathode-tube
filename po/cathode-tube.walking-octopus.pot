@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-16 20:49+0000\n"
+"POT-Creation-Date: 2022-09-01 11:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,28 +41,40 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:144 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:83
+msgid "URL Handler"
+msgstr ""
+
+#: ../qml/Main.qml:93
+msgid "Played %1 YouTube videos."
+msgstr ""
+
+#: ../qml/Main.qml:94
+msgid "No time wasted on YouTube today. Keep it up!"
+msgstr ""
+
+#: ../qml/Main.qml:207 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:149 ../qml/Pages/Notifications.qml:28
+#: ../qml/Main.qml:212 ../qml/Pages/Notifications.qml:28
 msgid "Notifications"
 msgstr ""
 
-#: ../qml/Main.qml:154
+#: ../qml/Main.qml:217
 msgid "Downloads"
 msgstr ""
 
-#: ../qml/Main.qml:159 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:222 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:165
+#: ../qml/Main.qml:228
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:173
+#: ../qml/Main.qml:236
 msgid "Liked videos"
 msgstr ""
 
@@ -149,7 +161,7 @@ msgstr ""
 msgid "Search on YouTube..."
 msgstr ""
 
-#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:289
+#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:300
 msgid "Share"
 msgstr ""
 
@@ -157,26 +169,26 @@ msgstr ""
 msgid "Cathode"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:184
+#: ../qml/Pages/VideoPage.qml:195
 msgid "Subscribe (%1)"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:185
+#: ../qml/Pages/VideoPage.qml:196
 msgid "Subscribed"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:205
+#: ../qml/Pages/VideoPage.qml:216
 msgid "%1 views"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:268
+#: ../qml/Pages/VideoPage.qml:279
 msgid "Published on %1"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:277
+#: ../qml/Pages/VideoPage.qml:288
 msgid "Save"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:283
+#: ../qml/Pages/VideoPage.qml:294
 msgid "Add to"
 msgstr ""

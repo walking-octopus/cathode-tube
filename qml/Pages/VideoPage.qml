@@ -100,6 +100,11 @@ Page {
         Item {
             Layout.fillWidth: true
             Layout.preferredHeight: width / 16.0 * 9.0
+
+            ActivityIndicator {
+                anchors.centerIn: parent
+                running: !videoPlayer.visible // isVideoLoading
+            }
             
             WebEngineView {
                 id: videoPlayer
@@ -157,7 +162,13 @@ Page {
             ColumnLayout {
                 id: contentLayout
                 width: parent.width
-
+                
+                ProgressBar {
+                    Layout.fillWidth: true
+                    indeterminate: true
+                    visible: videoData == emptyVideo //isDescriptionLoading
+                }
+                
                 RowLayout {
                     Layout.fillWidth: true
 
@@ -310,7 +321,7 @@ Page {
                             text = text.replace(/(?:\r\n|\r|\n)/g, ' <br> ');
                             return text.replace(urlRegex, '<a href="$1">$1</a>');
                         }
-                           
+
                         return replaceURLs(videoData.description);
                     }
                     
@@ -339,6 +350,7 @@ Page {
             }
 
             print("Fetching the info..");
+            videoData = emptyVideo;
 
             websocket.sendTextMessage(JSON.stringify({
                 topic: "GetStreamingData",
@@ -354,6 +366,8 @@ Page {
                     id: selectedVideo.videoID,
                 },
             }));
+
+            metricPlayedVideos.increment();
         }
     }
 
@@ -394,6 +408,7 @@ Page {
                 }
                 case "videoDetailsEvent": {
                     videoData = json.payload;
+                    channel_name = videoData.metadata.channel_name;
                     break;
                 }
                 case "updateSubscription": {
