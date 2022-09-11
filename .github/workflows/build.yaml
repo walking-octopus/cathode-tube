@@ -1,7 +1,6 @@
 name: CI
 
 on:
-  
   push:
     branches: [ "main" ]
   pull_request:
@@ -13,10 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
-      - name: Install clickable
+      - name: Install Clickable
         run: |
           sudo apt install adb git python3 python3-pip python3-setuptools
           pip3 install --user clickable-ut --upgrade
@@ -24,30 +21,23 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-           node-version: '14.x'
+           node-version: '17.x'
            
       - name: Install dependencies
-        run: npm install
+        run: cd yt-ws; npm install; cd ..
         
-      - name: Libraries build(amd64)
-        run: clickable build --libs
+      - name: Download Node
+        run: |
+          clickable build --libs --arch amd64;
+          clickable build --libs --arch armhf;
+          clickable build --libs --arch arm64;
 
-      - name: Build App(amd64)
-        run: clickable build --arch amd64 --output dist
-      
-      - name: Libraries build(arm64)
-        run: clickable build --libs --arch arm64
-        
-      - name: Build App(arm64)
-        run: clickable build --arch arm64 --output dist
-        
-      - name: Libraries build(armhf)
-        run: clickable build --libs --arch armhf
-        
-      - name: Build App(armhf)
-        run: clickable build --arch armhf --output dist
+      - name: Build the app
+          clickable build --arch amd64;
+          clickable build --arch armhf;
+          clickable build --arch arm64;
 
       - uses: actions/upload-artifact@v3
         with:
-          name: cathodetube
-          path: dist/*
+          name: Builds
+          path: build/*/app/*.click
