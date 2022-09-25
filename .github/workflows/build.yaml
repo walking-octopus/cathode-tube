@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Clickable
+        run: |
+          # For whatever reason, I have to manually install runc before
+          # docker.io or containerd, else it fails because of broken dependency
+          # Using apt-get because apt complains it shouldn't be used in scripts
+          sudo apt-get update
+          sudo apt-get install -y runc
+          sudo apt-get install -y docker.io adb git python3 python3-pip
+          pip3 install --user git+https://gitlab.com/clickable/clickable.git
+          # Clickable requires a reboot. This is a sneaky way to bypass that :^)
+          sudo systemctl unmask docker.service
+          sudo systemctl start docker.service
+
+      - uses: actions/setup-node@v2
+        with:
+           node-version: '17.x'
+           
+      - name: Install dependencies
+        run: cd yt-ws; npm install; cd ..
+        
+      - name: Download Node
+        run: |
+          clickable build --libs --arch amd64;
+          clickable build --libs --arch armhf;
+          clickable build --libs --arch arm64;
+
+      - name: Build the app
+        run: |
+          clickable build --arch amd64;
+          clickable build --arch armhf;
+          clickable build --arch arm64;
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Builds
+          path: build/*/app/*.click
