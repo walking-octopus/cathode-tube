@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cathode-tube.walking-octopus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-25 13:52+0000\n"
+"POT-Creation-Date: 2022-09-25 14:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,40 +41,40 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:83
-msgid "URL Handler"
-msgstr ""
-
-#: ../qml/Main.qml:93
+#: ../qml/Main.qml:60
 msgid "Played %1 YouTube videos."
 msgstr ""
 
-#: ../qml/Main.qml:94
+#: ../qml/Main.qml:61
 msgid "No time wasted on YouTube today. Keep it up!"
 msgstr ""
 
-#: ../qml/Main.qml:207 ../qml/Pages/HomePage.qml:32
+#: ../qml/Main.qml:89
+msgid "URL Handler"
+msgstr ""
+
+#: ../qml/Main.qml:204 ../qml/Pages/HomePage.qml:32
 #: ../qml/Pages/HomePage.qml:57
 msgid "Home"
 msgstr ""
 
-#: ../qml/Main.qml:212 ../qml/Pages/Notifications.qml:28
+#: ../qml/Main.qml:209 ../qml/Pages/Notifications.qml:28
 msgid "Notifications"
 msgstr ""
 
-#: ../qml/Main.qml:217
+#: ../qml/Main.qml:214
 msgid "Downloads"
 msgstr ""
 
-#: ../qml/Main.qml:222 ../qml/Pages/History.qml:27
+#: ../qml/Main.qml:219 ../qml/Pages/History.qml:27
 msgid "History"
 msgstr ""
 
-#: ../qml/Main.qml:228
+#: ../qml/Main.qml:225
 msgid "Watch later"
 msgstr ""
 
-#: ../qml/Main.qml:236
+#: ../qml/Main.qml:233
 msgid "Liked videos"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "Search on YouTube..."
 msgstr ""
 
-#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:300
+#: ../qml/Pages/SharePage.qml:17 ../qml/Pages/VideoPage.qml:303
 msgid "Share"
 msgstr ""
 
@@ -169,26 +169,46 @@ msgstr ""
 msgid "Cathode"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:195
+#: ../qml/Pages/VideoPage.qml:198
 msgid "Subscribe (%1)"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:196
+#: ../qml/Pages/VideoPage.qml:199
 msgid "Subscribed"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:216
+#: ../qml/Pages/VideoPage.qml:219
 msgid "%1 views"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:279
+#: ../qml/Pages/VideoPage.qml:282
 msgid "Published on %1"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:288
+#: ../qml/Pages/VideoPage.qml:291
 msgid "Save"
 msgstr ""
 
-#: ../qml/Pages/VideoPage.qml:294
+#: ../qml/Pages/VideoPage.qml:297
 msgid "Add to"
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:421
+msgid "Subscribed!"
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:421
+msgid "Unsubscribed."
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:431
+msgid "Liked!"
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:438
+msgid "Rating removed."
+msgstr ""
+
+#: ../qml/Pages/VideoPage.qml:445
+msgid "Disliked."
 msgstr ""

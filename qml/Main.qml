@@ -33,8 +33,12 @@ MainView {
     width: units.gu(120)
     height: units.gu(75)
 
-    // This isn't perfect. Maybe if I can write my own text into usermetrics,
-    // I can fetch watch time from YouTube itself. (Blocked by YouTube.js v2)
+    Toast { id: appToast }
+
+    // This isn't perfect. Maybe I can
+    // fetch watch time from YouTube.
+    // (Blocked by YouTube.js v2)
+
     // Metric {
     //     id: metricWatchTime
     //     name: "watch-time"
@@ -47,13 +51,15 @@ MainView {
     //         format = value;
     //         update(1);
     //     }
-        
-    //     Timer {
-    //         interval: 60000 // Every minute
-    //         running: !!playingVideo.selectedVideo
-    //         onTriggered: metricWatchTime.increment()
-    //     }
     // }
+
+    // I think counting the number of videos watches would be simpler for now.
+    Metric {
+        id: metricPlayedVideos
+        name: "played-videos"; domain: "cathode-tube"
+        format: i18n.tag("Played %1 YouTube videos.")
+        emptyFormat: i18n.tag("No time wasted on YouTube today. Keep it up!"); minimum: 0
+    }
 
     Connections {
         target: UriHandler
@@ -84,15 +90,6 @@ MainView {
             'channel_name': "",
             'thumbnail_url': ""
         })
-    }
-
-    // I think counting the number of videos watches would be simpler for now.
-    Metric {
-        id: metricPlayedVideos
-        name: "played-videos"
-        format: i18n.tag("Played %1 YouTube videos.")
-        emptyFormat: i18n.tag("No time wasted on YouTube today. Keep it up!"); minimum: 0
-        domain: "cathode-tube"
     }
 
     Item {

@@ -59,6 +59,8 @@ Page {
 
     width: bottomEdge.width; height: bottomEdge.height
 
+    Toast { id: videoToast }
+
     flickable: null
     header: PageHeader {
         id: header
@@ -174,10 +176,11 @@ Page {
 
                     // TODO: Fetching the channel thumbnail might require the switch to v2 or an extra request
                     ProfilePicture {
+                        name: channel_name
+
                         Layout.preferredWidth: units.gu(6.5)
                         Layout.preferredHeight: width
                         Layout.rightMargin: units.gu(0.3)
-                        name: channel_name
                     }
 
                     ColumnLayout {
@@ -414,6 +417,9 @@ Page {
                 case "updateSubscription": {
                     videoData.metadata.is_subscribed = json.payload;
                     videoData = videoData;
+                    videoToast.show(
+                        json.payload ? i18n.tr("Subscribed!") : i18n.tr("Unsubscribed.")
+                    );
                     break;
                 }
                 case "ratingEvent": {
@@ -422,18 +428,21 @@ Page {
                             videoData.metadata.is_liked = true;
                             videoData.metadata.is_disliked = false;
                             videoData = videoData; // QML wouldn't update the props otherwise.
+                            videoToast.show(i18n.tr("Liked!"));
                             break;
                         }
                         case "RemoveRating": {
                             videoData.metadata.is_liked = false;
                             videoData.metadata.is_disliked = false;
                             videoData = videoData;
+                            videoToast.show(i18n.tr("Rating removed."));
                             break;
                         }
                         case "Dislike": {
                             videoData.metadata.is_disliked = true;
                             videoData.metadata.is_liked = false;
                             videoData = videoData;
+                            videoToast.show(i18n.tr("Disliked."));
                             break;
                         }
                     }

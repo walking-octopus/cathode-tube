@@ -342,6 +342,8 @@ async function start() {
             break;
           }
 
+          // TODO: Parallel video downloads would be a useful feature.
+
           const stream = youtube.download(json.payload.video_id, {
             quality: json.payload.quality,
             format: 'mp4',

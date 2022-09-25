@@ -23,5 +23,6 @@
         <file>Components/PlaylistModel.qml</file>
         <file>Components/IconButton.qml</file>
         <file>Components/ProfilePicture.qml</file>
+        <file>Components/Toast.qml</file>
     </qresource>
 </RCC>
