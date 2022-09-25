@@ -22,5 +22,6 @@
         <file>Components/HistoryModel.qml</file>
         <file>Components/PlaylistModel.qml</file>
         <file>Components/IconButton.qml</file>
+        <file>Components/ProfilePicture.qml</file>
     </qresource>
 </RCC>

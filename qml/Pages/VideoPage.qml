@@ -173,11 +173,11 @@ Page {
                     Layout.fillWidth: true
 
                     // TODO: Fetching the channel thumbnail might require the switch to v2 or an extra request
-                    Rectangle {
-                        color: UbuntuColors.orange
-
-                        height: channelLayout.height / 1.05; width: height;
-                        Layout.rightMargin: units.gu(0.5)
+                    ProfilePicture {
+                        Layout.preferredWidth: units.gu(6.5)
+                        Layout.preferredHeight: width
+                        Layout.rightMargin: units.gu(0.3)
+                        name: channel_name
                     }
 
                     ColumnLayout {
