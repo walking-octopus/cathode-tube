@@ -208,7 +208,7 @@ Page {
                                 }));
                             }
 
-                            color: !videoData.metadata.is_subscribed ? UbuntuColors.red : UbuntuColors.warmGrey
+                            gradient: !videoData.metadata.is_subscribed ? UbuntuColors.orangeGradient : UbuntuColors.greyGradient
                         }
                     }
 
