@@ -5,6 +5,7 @@ kill: cathode-tube
 scripts:
   fetch-dev: cd yt-ws; npm install;
   fetch-production: cd yt-ws; npm install --omit=dev; npm prune --production;
+  patch: patch ./yt-ws/node_modules/youtubei.js/lib/parser/index.js < ./yt-ws/ratings_patch.diff
 
 # NOT FOR PRODUCTION!
 # The review took too long for quick prototyping, so I disabled it.

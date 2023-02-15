@@ -28,6 +28,20 @@ $  clickable build --libs nodejs --arch amd64;
 ```
 where `arch` is one of: `amd64`, `arm64` or `armhf`.
 
+
+_______________________
+
+### Patching YouTube.js v1
+Due to YouTube.js v1 that this project currently uses being no longer supported, some things are slowly starting to break with YouTube updates. I am working on migrating to v2, but in the meantime, you could apply a tiny patch to avoid crashing.
+The most problematic of changes was the new like button, which caused `getDetails()` to crash the app. The workaround is to ignore the like button and use slightly less up-to-date stats from ReturnYouTubeDislike.
+
+To apply the patch, run this after fetching `node_modules`:
+```
+$  clickable script patch
+```
+_________________________
+
+
 To test the build on your workstation:
 ```
 $  clickable desktop

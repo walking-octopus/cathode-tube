@@ -1,0 +1,46 @@
+--- ./index.js	2023-02-15 13:36:32.622560006 +0200
++++ /home/stas/working.js	2023-02-15 13:30:47.000000000 +0200
+@@ -231,18 +231,18 @@
+       const secondary_info_renderer = this.data.continuation.contents.twoColumnWatchNextResults
+         .results.results.contents.find((item) => item.videoSecondaryInfoRenderer).videoSecondaryInfoRenderer;
+ 
+-      const like_btn = primary_info_renderer.videoActions.menuRenderer
+-        .topLevelButtons.find((item) => item.toggleButtonRenderer.defaultIcon.iconType == 'LIKE');
++      // const like_btn = primary_info_renderer.videoActions.menuRenderer
++      //   .topLevelButtons.find((item) => item.toggleButtonRenderer.defaultIcon.iconType == 'LIKE');
+ 
+-      const dislike_btn = primary_info_renderer.videoActions.menuRenderer
+-        .topLevelButtons.find((item) => item.toggleButtonRenderer.defaultIcon.iconType == 'DISLIKE');
++      // const dislike_btn = primary_info_renderer.videoActions.menuRenderer
++      //   .topLevelButtons.find((item) => item.toggleButtonRenderer.defaultIcon.iconType == 'DISLIKE');
+ 
+       const notification_toggle_btn = secondary_info_renderer.subscribeButton.subscribeButtonRenderer
+         ?.notificationPreferenceButton?.subscriptionNotificationToggleButtonRenderer;
+ 
+       // These will always be false if logged out.
+-      processed_data.metadata.is_liked = like_btn.toggleButtonRenderer.isToggled;
+-      processed_data.metadata.is_disliked = dislike_btn.toggleButtonRenderer.isToggled;
++      processed_data.metadata.is_liked = false //like_btn.toggleButtonRenderer.isToggled;
++      processed_data.metadata.is_disliked = false //dislike_btn.toggleButtonRenderer.isToggled;
+       processed_data.metadata.is_subscribed = secondary_info_renderer.subscribeButton.subscribeButtonRenderer?.subscribed || false;
+ 
+       processed_data.metadata.subscriber_count = secondary_info_renderer.owner.videoOwnerRenderer?.subscriberCountText?.simpleText || 'N/A';
+@@ -253,12 +253,12 @@
+       processed_data.metadata.publish_date_text = primary_info_renderer.dateText.simpleText;
+ 
+       // Only parse like count if it's enabled
+-      if (processed_data.metadata.allow_ratings) {
+-        processed_data.metadata.likes = {
+-          count: parseInt(like_btn.toggleButtonRenderer.defaultText.accessibility.accessibilityData.label.replace(/\D/g, '')),
+-          short_count_text: like_btn.toggleButtonRenderer.defaultText.simpleText
+-        };
+-      }
++      // if (processed_data.metadata.allow_ratings) {
++        // processed_data.metadata.likes = {
++          // count: parseInt(like_btn.toggleButtonRenderer.defaultText.accessibility.accessibilityData.label.replace(/\D/g, '')),
++          // short_count_text: like_btn.toggleButtonRenderer.defaultText.simpleText
++        // };
++      // }
+ 
+       processed_data.metadata.owner_badges = secondary_info_renderer.owner.videoOwnerRenderer?.badges?.map((badge) => badge.metadataBadgeRenderer.tooltip) || [];
+     }

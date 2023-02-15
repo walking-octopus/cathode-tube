@@ -238,6 +238,14 @@ async function start() {
 
           videoDetails.metadata.rating = returnYouTubeDislike.data.rating;
 
+          videoDetails.metadata.likes = {
+            count: returnYouTubeDislike.data.dislikes,
+            short_count_text: Intl.NumberFormat('en-US', {
+              notation: 'compact',
+              maximumFractionDigits: 1,
+            }).format(returnYouTubeDislike.data.likes),
+          };
+
           videoDetails.metadata.dislikes = {
             count: returnYouTubeDislike.data.dislikes,
             short_count_text: Intl.NumberFormat('en-US', {
