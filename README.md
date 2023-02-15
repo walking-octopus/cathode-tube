@@ -8,7 +8,9 @@ _____________________________________________
 ## Development status
 
 The core features, like search, playback, video info, playlists, or feeds, work fine.
-Still, quite a few things still need to be implemented, some edge cases are not handled well, hardware acceleration is missing, and the design may need a bit of work.
+Still, quite a few things still need to be implemented, some edge cases are not handled well, hardware acceleration is missing, and the design may need a bit of work. I'd say it's (almost) good enough to be a daily-driver.
+
+Alse, the app's backend is also a little outdated, using the unsupported YouTube.js v1. I'm currently rewriting it for YouTube.js v2 (see issue #5), but in the meantime, some hacks had to be used to keep it together. The new version would make the app speedier, more maintainable, and would unblock new many features.
 
 ## Testing
 
