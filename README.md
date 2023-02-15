@@ -1,5 +1,18 @@
+<img height="128" src="https://raw.githubusercontent.com/walking-octopus/cathode-tube/main/assets/logo.png" align="left"/>
+
 # CathodeTube
-A native YouTube client for UT
+A fast, convergent, and native custom YouTube client for Ubuntu Touch.
+
+_____________________________________________
+
+## Development status
+
+The core features, like search, playback, video info, playlists, or feeds, work fine.
+Still, quite a few things still need to be implemented, some edge cases are not handled well, hardware acceleration is missing, and the design may need a bit of work.
+
+## Testing
+
+If you're a casual user who just wants to help out testing the app, just download the [latest build from GitHub Actions](https://github.com/walking-octopus/cathode-tube/actions). Simply select a `.click` file for your architecture from artifacts and open it with OpenStore. Report any issues, suggestions, or design proposels in [Issues](https://github.com/walking-octopus/cathode-tube/issues). If you want to see this app in your language, feel free to help out with translation! (may require localization updates due to the UI still being subject to change).
 
 ## Building
 
